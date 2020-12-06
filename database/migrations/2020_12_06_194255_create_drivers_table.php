@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMonitorDriversTable extends Migration
+class CreateDriversTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,12 @@ class CreateMonitorDriversTable extends Migration
      */
     public function up()
     {
-        Schema::create('monitor_drivers', function (Blueprint $table) {
+        Schema::create('drivers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('monitor_id')
-                ->constrained()
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
             $table->string('type', 25);
             $table->string('endpoint');
-            $table->text('secret')->nullable();
             $table->timestamps();
-            $table->unique(['monitor_id', 'type', 'endpoint']);
+            $table->unique(['type', 'endpoint']);
         });
     }
 

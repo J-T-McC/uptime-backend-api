@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\MonitorDriver;
+use App\Models\Driver;
 use Illuminate\Http\Request;
 
-class MonitorDriverController extends Controller
+use App\Http\Resources\DriverResource;
+
+class DriverController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +16,7 @@ class MonitorDriverController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**
@@ -41,10 +43,10 @@ class MonitorDriverController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\MonitorDriver  $monitorDriver
+     * @param  \App\Models\Driver  $driver
      * @return \Illuminate\Http\Response
      */
-    public function show(MonitorDriver $monitorDriver)
+    public function show(Driver $driver)
     {
         //
     }
@@ -52,10 +54,10 @@ class MonitorDriverController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\MonitorDriver  $monitorDriver
+     * @param  \App\Models\Driver  $driver
      * @return \Illuminate\Http\Response
      */
-    public function edit(MonitorDriver $monitorDriver)
+    public function edit(Driver $driver)
     {
         //
     }
@@ -64,10 +66,10 @@ class MonitorDriverController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\MonitorDriver  $monitorDriver
+     * @param  \App\Models\Driver  $driver
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, MonitorDriver $monitorDriver)
+    public function update(Request $request, Driver $driver)
     {
         //
     }
@@ -75,10 +77,10 @@ class MonitorDriverController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\MonitorDriver  $monitorDriver
+     * @param  \App\Models\Driver  $driver
      * @return \Illuminate\Http\Response
      */
-    public function destroy(MonitorDriver $monitorDriver)
+    public function destroy(Driver $driver)
     {
         //
     }

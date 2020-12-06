@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MonitorDriver extends Model
+class Driver extends Model
 {
     use HasFactory;
 
@@ -15,8 +15,8 @@ class MonitorDriver extends Model
         'type',
     ];
 
-    public function monitor() {
-        return $this->belongsTo(Monitor::class);
+    public function monitors() {
+        return $this->belongsToMany(Monitor::class, 'driver_monitor');
     }
 
 }

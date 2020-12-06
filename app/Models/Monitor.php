@@ -24,9 +24,12 @@ class Monitor extends SpatieMonitor
     }
 
     public function drivers() {
-        return $this->hasMany(MonitorDriver::class);
+        return $this->belongsToMany(Driver::class);
     }
 
+    /**
+     * @param Builder $query
+     */
     public function scopeOwned(Builder $query)
     {
         $query->where('user_id', auth()->user()->id);

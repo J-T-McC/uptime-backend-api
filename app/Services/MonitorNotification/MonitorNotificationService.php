@@ -4,14 +4,14 @@ namespace App\Services\MonitorNotification;
 
 use App\Models\User;
 use App\Models\Monitor;
-use App\Models\MonitorDriver;
+use App\Models\Driver;
 use Illuminate\Notifications\AnonymousNotifiable;
 use App\Services\MonitorNotification\Exceptions\UndefinedPropertyException;
 
 /**
  * @property-read Monitor $monitor
  * @property-read User $owner
- * @property-read MonitorDriver $drivers
+ * @property-read Driver $drivers
  */
 
 class MonitorNotificationService
