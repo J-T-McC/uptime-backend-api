@@ -2,10 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\OwnerScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
-use Illuminate\Database\Eloquent\Builder;
 use Spatie\UptimeMonitor\Models\Monitor as SpatieMonitor;
 
 class Monitor extends SpatieMonitor
@@ -19,6 +18,14 @@ class Monitor extends SpatieMonitor
         'look_for_string'
     ];
 
+    protected static function booted()
+    {
+        if(!app()->runningInConsole()) {
+            static::addGlobalScope(new OwnerScope);
+        }
+        parent::booted();
+    }
+
     public function user() {
         return $this->belongsTo(User::class);
     }
@@ -28,15 +35,7 @@ class Monitor extends SpatieMonitor
     }
 
     /**
-     * @param Builder $query
-     */
-    public function scopeOwned(Builder $query)
-    {
-        $query->where('user_id', auth()->user()->id);
-    }
-
-    /**
-     * Prevent extended class's duplicate logic from running
+     * Override parents unwanted duplication logic
      * @param SpatieMonitor $monitor
      * @return bool
      */

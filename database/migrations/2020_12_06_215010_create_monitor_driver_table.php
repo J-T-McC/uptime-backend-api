@@ -37,6 +37,6 @@ class CreateMonitorDriverTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('monitor_driver');
+        Schema::dropIfExists('driver_monitor');
     }
 }

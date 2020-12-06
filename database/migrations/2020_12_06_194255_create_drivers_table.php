@@ -15,10 +15,17 @@ class CreateDriversTable extends Migration
     {
         Schema::create('drivers', function (Blueprint $table) {
             $table->id();
+
+            $table->foreignId('user_id')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
             $table->string('type', 25);
             $table->string('endpoint');
             $table->timestamps();
-            $table->unique(['type', 'endpoint']);
+
+            $table->unique(['type', 'endpoint', 'user_id']);
         });
     }
 
@@ -29,6 +36,6 @@ class CreateDriversTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('monitor_drivers');
+        Schema::dropIfExists('drivers');
     }
 }

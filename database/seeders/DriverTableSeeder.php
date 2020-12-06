@@ -18,17 +18,20 @@ class DriverTableSeeder extends Seeder
 
         $mailDriver1 = Driver::create([
             'type' => 'mail',
+            'user_id' => 1,
             'endpoint' => 'test1@example.com'
         ]);
 
         $mailDriver2 = Driver::create([
             'type' => 'mail',
+            'user_id' => 1,
             'endpoint' => 'test2@example.com'
         ]);
 
         $slackDriver = Driver::create([
             'type' => 'slack',
-            'endpoint' => 'https://hooks.slack.com/services/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'
+            'user_id' => 1,
+            'endpoint' => env('SLACK_WEBHOOK')
         ]);
 
         $online =  Monitor::find(1);

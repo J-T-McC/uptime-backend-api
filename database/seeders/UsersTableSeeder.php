@@ -21,5 +21,11 @@ class UsersTableSeeder extends Seeder
             'email' => 'test@example.com',
             'password' => Hash::make('password')
         ]);
+
+        User::insertOrIgnore([
+            'name' => 'Test User 2',
+            'email' => 'test2@example.com',
+            'password' => Hash::make('password')
+        ]);
     }
 }

@@ -20,7 +20,7 @@ class MonitorController extends Controller
      */
     public function index()
     {
-        return new MonitorResource(Monitor::owned()->paginate());
+        return new MonitorResource(Monitor::simplePaginate());
     }
 
     /**
@@ -46,11 +46,15 @@ class MonitorController extends Controller
      * Display the specified resource.
      *
      * @param int $id
-     * @return MonitorResource
+     * @return MonitorResource|JsonResponse
      */
-    public function show(int $id): MonitorResource
+    public function show(int $id)
     {
-        return new MonitorResource([Monitor::owned()->find($id)]);
+        try {
+            return new MonitorResource([Monitor::findOrFail($id)]);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['message' => 'URL Monitor not found'], HttpResponse::NOT_FOUND);
+        }
     }
 
 
@@ -63,7 +67,7 @@ class MonitorController extends Controller
     public function update(MonitorRequest $request, int $id)
     {
         try {
-           Monitor::owned()->findOrFail($id)->update($request->validated());
+           Monitor::findOrFail($id)->update($request->validated());
         } catch (CannotSaveMonitor $e) {
             return response()->json([
                 'message' => 'URL Monitor already exists',
@@ -80,7 +84,7 @@ class MonitorController extends Controller
     public function destroy(int $id)
     {
         try {
-            Monitor::owned()->findOrFail($id)->delete();
+            Monitor::findOrFail($id)->delete();
         } catch (ModelNotFoundException $e) {
             return response()->json(['message' => 'URL Monitor not found'], HttpResponse::NOT_FOUND);
         }
