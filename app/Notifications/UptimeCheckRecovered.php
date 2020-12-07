@@ -31,7 +31,7 @@ class UptimeCheckRecovered extends SpatieUptimeCheckRecovered
      */
     public function via($notifiable)
     {
-        return ['mail','slack'];
+        return config('uptime-monitor.notifications.integrated-services');
     }
 
     /**

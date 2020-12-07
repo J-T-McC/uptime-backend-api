@@ -31,7 +31,7 @@ class CertificateCheckFailed extends SpatieCertificateCheckFailed
      */
     public function via($notifiable)
     {
-        return ['mail','slack'];
+        return config('uptime-monitor.notifications.integrated-services');
     }
 
 //    /**
