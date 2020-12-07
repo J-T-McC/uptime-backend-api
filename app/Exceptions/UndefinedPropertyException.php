@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Services\MonitorNotification\Exceptions;
+namespace App\Exceptions;
 
 use Exception;
 use Throwable;

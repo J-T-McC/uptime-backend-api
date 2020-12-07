@@ -6,7 +6,7 @@ use App\Models\User;
 use App\Models\Monitor;
 use App\Models\Driver;
 use Illuminate\Notifications\AnonymousNotifiable;
-use App\Services\MonitorNotification\Exceptions\UndefinedPropertyException;
+use App\Exceptions\UndefinedPropertyException;
 
 /**
  * @property-read Monitor $monitor
