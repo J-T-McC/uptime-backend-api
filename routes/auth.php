@@ -14,8 +14,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::resource('/monitors', \App\Http\Controllers\MonitorController::class);
-    Route::resource('/drivers', \App\Http\Controllers\DriverController::class);
-});
+Route::post('/token', [\App\Http\Controllers\TokenAuthController::class, 'login']);

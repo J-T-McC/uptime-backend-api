@@ -37,12 +37,18 @@ class DriverTableSeeder extends Seeder
         $online =  Monitor::find(1);
         $offline =  Monitor::find(2);
         $notFound =  Monitor::find(3);
+        $sslExpired =  Monitor::find(4);
 
         $online->drivers()->attach($mailDriver1);
+
         $offline->drivers()->attach($slackDriver);
+
         $notFound->drivers()->attach($mailDriver1);
         $notFound->drivers()->attach($mailDriver2);
         $notFound->drivers()->attach($slackDriver);
+
+        $sslExpired->drivers()->attach($mailDriver1);
+        $sslExpired->drivers()->attach($slackDriver);
 
     }
 }

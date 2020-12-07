@@ -1,5 +1,6 @@
 <?php
 
+
 return [
 
     /*
@@ -7,14 +8,18 @@ return [
      * and 'slack'. Of course you can also specify your own notification classes.
      */
     'notifications' => [
+        'integrated-services' => [
+            'mail',
+            'slack'
+        ],
 
         'notifications' => [
-            \App\Notifications\UptimeCheckFailed::class => ['slack'],
-            \App\Notifications\UptimeCheckRecovered::class => ['slack'],
+            \App\Notifications\UptimeCheckFailed::class => ['enabled'],
+            \App\Notifications\UptimeCheckRecovered::class => ['enabled'],
             \App\Notifications\UptimeCheckSucceeded::class => [],
 
-            \App\Notifications\CertificateCheckFailed::class => ['slack'],
-            \App\Notifications\CertificateExpiresSoon::class => ['slack'],
+            \App\Notifications\CertificateCheckFailed::class => ['enabled'],
+            \App\Notifications\CertificateExpiresSoon::class => ['enabled'],
             \App\Notifications\CertificateCheckSucceeded::class => [],
         ],
 

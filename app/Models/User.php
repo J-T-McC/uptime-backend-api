@@ -51,4 +51,8 @@ class User extends Authenticatable implements MustVerifyEmail
     public function monitors() {
         return $this->hasMany(Monitor::class);
     }
+
+    public function drivers() {
+        return $this->hasMany(Driver::class);
+    }
 }

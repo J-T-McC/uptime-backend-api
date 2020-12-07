@@ -2,12 +2,14 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Monitor;
+use App\Models\Driver;
 use Illuminate\Foundation\Http\FormRequest;
+
 use Illuminate\Validation\Rule;
 
-class MonitorRequest extends FormRequest
+class DriverRequest extends FormRequest
 {
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -16,18 +18,16 @@ class MonitorRequest extends FormRequest
     public function rules()
     {
         return [
-            'url' => [
+            'type' => [
                 'required',
                 'string',
-                'url',
-                Rule::unique(app(Monitor::class)->getTable())
+                Rule::in(config('uptime-monitor.notifications.integrated-services')),
+                Rule::unique(app(Driver::class)->getTable())
                     ->where('user_id', $this->user()->id)
-                    ->where('url', $this->input('url')),
-                'active_url'
+                    ->where('type', $this->input('type'))
+                    ->where('endpoint', $this->input('endpoint'))
             ],
-            'certificate_check_enabled' => 'boolean',
-            'look_for_string' => 'string',
-            'uptime_check_enabled' => 'boolean'
+            'endpoint' => 'required|string',
         ];
     }
 }

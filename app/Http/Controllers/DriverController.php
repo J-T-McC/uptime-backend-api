@@ -3,85 +3,85 @@
 namespace App\Http\Controllers;
 
 use App\Models\Driver;
-use Illuminate\Http\Request;
+use App\Models\Enums\HttpResponse;
 
+use App\Http\Requests\DriverRequest;
 use App\Http\Resources\DriverResource;
+
+use Illuminate\Http\JsonResponse;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class DriverController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return DriverResource
      */
     public function index()
     {
-
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return new DriverResource(Driver::simplePaginate());
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param DriverRequest $request
+     * @return DriverResource|JsonResponse
      */
-    public function store(Request $request)
+    public function store(DriverRequest $request)
     {
-        //
+        $driver = auth()->user()->drivers()->create($request->validated());
+        return new DriverResource([$driver]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Driver  $driver
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return DriverResource|JsonResponse
      */
-    public function show(Driver $driver)
+    public function show(int $id)
     {
-        //
+        try {
+            return new DriverResource([Driver::findOrFail($id)]);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['message' => 'Notification Driver not found'], HttpResponse::NOT_FOUND);
+        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Driver  $driver
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Driver $driver)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Driver  $driver
-     * @return \Illuminate\Http\Response
+     * @param DriverRequest $request
+     * @param int $id
+     * @return JsonResponse
      */
-    public function update(Request $request, Driver $driver)
+    public function update(DriverRequest $request, int $id)
     {
-        //
+        try {
+            Driver::findOrFail($id)->update($request->validated());
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['message' => 'Notification Driver not found'], HttpResponse::NOT_FOUND);
+        }
+        return response()->json(['message' => 'Notification Driver updated'], HttpResponse::SUCCESSFUL);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Driver  $driver
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return JsonResponse
      */
-    public function destroy(Driver $driver)
+    public function destroy(int $id)
     {
-        //
+        try {
+            Driver::findOrFail($id)->delete();
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['message' => 'Notification Driver not found'], HttpResponse::NOT_FOUND);
+        }
+
+        return response()->json(['message' => 'Notification Driver deleted'], HttpResponse::SUCCESSFUL);
     }
 }
