@@ -36,6 +36,7 @@ class Monitor extends SpatieMonitor
 
     /**
      * Override parents unwanted duplication logic
+     * Different users can monitor the same url
      * @param SpatieMonitor $monitor
      * @return bool
      */
