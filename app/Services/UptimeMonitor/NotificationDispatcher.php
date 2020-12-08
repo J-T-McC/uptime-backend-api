@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\MonitorNotification;
+namespace App\Services\UptimeMonitor;
 
 use App\Models\User;
 use App\Models\Monitor;
@@ -14,7 +14,7 @@ use App\Exceptions\UndefinedPropertyException;
  * @property-read Channel $channels
  */
 
-class MonitorNotificationService
+class NotificationDispatcher
 {
 
     private $notification;
@@ -48,7 +48,7 @@ class MonitorNotificationService
         $this->channels->each(function($channel) {
             //Dispatch independently to accommodate multiples of the same channel
             $notifiable = new AnonymousNotifiable();
-            $notifiable = $notifiable->route($channel->type, $channel->endpoint);
+            $notifiable->route($channel->type, $channel->endpoint);
             $notifiable->notify($this->notification);
         });
     }

@@ -11,11 +11,6 @@ return [
             'mail',
             'slack',
             \App\Services\Channels\Discord\DiscordChannel::class,
-
-//teams
-//webhook
-//(with secret)
-//discord
         ],
 
         'notifications' => [
@@ -32,7 +27,7 @@ return [
          * The location from where you are running this Laravel application. This location will be
          * mentioned in all notifications that will be sent.
          */
-        'location' => '',
+//        'location' => '',
 
         /*
          * To keep reminding you that a site is down, notifications
@@ -40,19 +35,19 @@ return [
          */
         'resend_uptime_check_failed_notification_every_minutes' => 0, //TODO change back to 60
 
-        'mail' => [
-            'to' => [],
-        ],
-
-        'slack' => [
-            'webhook_url' => '',
-        ],
-
-        /*
-         * Here you can specify the notifiable to which the notifications should be sent. The default
-         * notifiable will use the variables specified in this config file.
-         */
-        'notifiable' => \App\Models\User::class,
+//        'mail' => [
+//            'to' => [],
+//        ],
+//
+//        'slack' => [
+//            'webhook_url' => '',
+//        ],
+//
+//        /*
+//         * Here you can specify the notifiable to which the notifications should be sent. The default
+//         * notifiable will use the variables specified in this config file.
+//         */
+//        'notifiable' => \App\Models\User::class,
 
         /*
          * The date format used in notifications.

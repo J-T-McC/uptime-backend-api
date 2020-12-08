@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\MonitorNotification;
+namespace App\Services\UptimeMonitor;
 
 use Illuminate\Contracts\Events\Dispatcher;
 use Spatie\UptimeMonitor\Notifications\EventHandler as SpatieEventHandler;
@@ -22,7 +22,7 @@ class EventHandler extends SpatieEventHandler
             }
 
             if ($notification->isStillRelevant()) {
-                new MonitorNotificationService($notification);
+                new NotificationDispatcher($notification);
             }
         });
     }
