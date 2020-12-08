@@ -10,7 +10,13 @@ return [
     'notifications' => [
         'integrated-services' => [
             'mail',
-            'slack'
+            'slack',
+//
+//teams
+//webhook
+//
+//(with secret)
+//discord
         ],
 
         'notifications' => [

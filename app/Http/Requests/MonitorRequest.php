@@ -15,14 +15,21 @@ class MonitorRequest extends FormRequest
      */
     public function rules()
     {
+
+        $id = $this->route()->parameter('monitor');
+
+        $uniqueRule = Rule::unique(app(Monitor::class)->getTable())
+            ->where('user_id', $this->user()->id)
+            ->where('url', $this->input('url'));
+
+        $uniqueRule = !empty($id) ? $uniqueRule->whereNot('id', $id) : $uniqueRule;
+
         return [
             'url' => [
                 'required',
                 'string',
                 'url',
-                Rule::unique(app(Monitor::class)->getTable())
-                    ->where('user_id', $this->user()->id)
-                    ->where('url', $this->input('url')),
+                $uniqueRule,
                 'active_url'
             ],
             'certificate_check_enabled' => 'boolean',
