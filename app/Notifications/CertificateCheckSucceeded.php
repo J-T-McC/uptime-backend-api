@@ -3,9 +3,6 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Notification;
 
 use Spatie\UptimeMonitor\Notifications\Notifications\CertificateCheckSucceeded as SpatieCertificateCheckSucceeded;
 
@@ -24,19 +21,18 @@ class CertificateCheckSucceeded extends SpatieCertificateCheckSucceeded
         return config('uptime-monitor.notifications.integrated-services');
     }
 
-//    /**
-//     * Get the mail representation of the notification.
-//     *
-//     * @param  mixed  $notifiable
-//     * @return \Illuminate\Notifications\Messages\MailMessage
-//     */
-//    public function toMail($notifiable)
-//    {
-//        return (new MailMessage)
-//                    ->line('The introduction to the notification.')
-//                    ->action('Notification Action', url('/'))
-//                    ->line('Thank you for using our application!');
-//    }
+    public function toDiscord()
+    {
+        return (new  \App\Services\Channels\Discord\DiscordMessage())
+            ->error()
+            ->title($this->getMessageText())
+            ->description([
+                "Expires {$this->getMonitor()->formattedCertificateExpirationDate('forHumans')}"
+            ])
+            ->footer($this->getMonitor()->certificate_issuer)
+            ->timestamp(\Carbon\Carbon::now());
+    }
+
 
     /**
      * Get the array representation of the notification.

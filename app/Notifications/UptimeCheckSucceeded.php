@@ -34,19 +34,17 @@ class UptimeCheckSucceeded extends SpatieUptimeCheckSucceeded
         return config('uptime-monitor.notifications.integrated-services');
     }
 
-//    /**
-//     * Get the mail representation of the notification.
-//     *
-//     * @param  mixed  $notifiable
-//     * @return \Illuminate\Notifications\Messages\MailMessage
-//     */
-//    public function toMail($notifiable)
-//    {
-//        return (new MailMessage)
-//                    ->line('The introduction to the notification.')
-//                    ->action('Notification Action', url('/'))
-//                    ->line('Thank you for using our application!');
-//    }
+    public function toDiscord()
+    {
+        return (new  \App\Services\Channels\Discord\DiscordMessage())
+            ->error()
+            ->title($this->getMessageText())
+            ->description([
+                $this->getMessageText()
+            ])
+            ->footer($this->getLocationDescription())
+            ->timestamp(\Carbon\Carbon::now());
+    }
 
     /**
      * Get the array representation of the notification.

@@ -1,6 +1,5 @@
 <?php
 
-
 return [
 
     /*
@@ -11,10 +10,10 @@ return [
         'integrated-services' => [
             'mail',
             'slack',
-//
+            \App\Services\Channels\Discord\DiscordChannel::class,
+
 //teams
 //webhook
-//
 //(with secret)
 //discord
         ],

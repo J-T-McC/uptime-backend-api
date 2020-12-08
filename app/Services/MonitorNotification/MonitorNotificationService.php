@@ -48,7 +48,7 @@ class MonitorNotificationService
         $this->channels->each(function($channel) {
             //Dispatch independently to accommodate multiples of the same channel
             $notifiable = new AnonymousNotifiable();
-            $notifiable->route($channel->type, $channel->endpoint);
+            $notifiable = $notifiable->route($channel->type, $channel->endpoint);
             $notifiable->notify($this->notification);
         });
     }

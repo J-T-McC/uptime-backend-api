@@ -34,6 +34,12 @@ class ChannelTableSeeder extends Seeder
             'endpoint' => env('SLACK_WEBHOOK')
         ]);
 
+        $discordChannel = Channel::create([
+            'type' => 'discord',
+            'user_id' => 1,
+            'endpoint' => env('DISCORD_URL')
+        ]);
+
         $online =  Monitor::find(1);
         $offline =  Monitor::find(2);
         $notFound =  Monitor::find(3);
@@ -41,14 +47,18 @@ class ChannelTableSeeder extends Seeder
 
         $online->channels()->attach($mailChannel1);
 
+        $offline->channels()->attach($mailChannel1);
         $offline->channels()->attach($slackChannel);
+        $offline->channels()->attach($discordChannel);
 
         $notFound->channels()->attach($mailChannel1);
         $notFound->channels()->attach($mailChannel2);
         $notFound->channels()->attach($slackChannel);
+        $notFound->channels()->attach($discordChannel);
 
         $sslExpired->channels()->attach($mailChannel1);
         $sslExpired->channels()->attach($slackChannel);
+        $sslExpired->channels()->attach($discordChannel);
 
     }
 }
