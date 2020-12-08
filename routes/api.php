@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,5 +16,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::resource('/monitors', \App\Http\Controllers\MonitorController::class);
-    Route::resource('/drivers', \App\Http\Controllers\DriverController::class);
+    Route::resource('/channels', \App\Http\Controllers\ChannelController::class);
 });

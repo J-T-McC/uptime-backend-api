@@ -30,8 +30,8 @@ class Monitor extends SpatieMonitor
         return $this->belongsTo(User::class);
     }
 
-    public function drivers() {
-        return $this->belongsToMany(Driver::class);
+    public function channels() {
+        return $this->belongsToMany(Channel::class);
     }
 
     /**

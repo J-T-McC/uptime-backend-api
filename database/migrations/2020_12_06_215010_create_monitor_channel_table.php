@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMonitorDriverTable extends Migration
+class CreateMonitorChannelTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,20 +13,20 @@ class CreateMonitorDriverTable extends Migration
      */
     public function up()
     {
-        Schema::create('driver_monitor', function (Blueprint $table) {
+        Schema::create('channel_monitor', function (Blueprint $table) {
             $table->id();
 
             $table->foreignId('monitor_id')
                 ->constrained()
                 ->onDelete('cascade');
 
-            $table->foreignId('driver_id')
+            $table->foreignId('channel_id')
                 ->constrained()
                 ->onDelete('cascade');
 
             $table->timestamps();
 
-            $table->index(['monitor_id', 'driver_id']);
+            $table->index(['monitor_id', 'channel_id']);
         });
     }
 
@@ -37,6 +37,6 @@ class CreateMonitorDriverTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('driver_monitor');
+        Schema::dropIfExists('channel_monitor');
     }
 }

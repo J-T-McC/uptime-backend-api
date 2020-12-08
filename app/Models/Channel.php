@@ -6,7 +6,7 @@ use App\Models\Scopes\OwnerScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Driver extends Model
+class Channel extends Model
 {
     use HasFactory;
 
@@ -29,7 +29,7 @@ class Driver extends Model
     }
 
     public function monitors() {
-        return $this->belongsToMany(Monitor::class, 'driver_monitor');
+        return $this->belongsToMany(Monitor::class, 'channel_monitor');
     }
 
 }

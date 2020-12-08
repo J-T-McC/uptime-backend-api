@@ -2,13 +2,12 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Driver;
-use App\Models\Monitor;
+use App\Models\Channel;
 use Illuminate\Foundation\Http\FormRequest;
 
 use Illuminate\Validation\Rule;
 
-class DriverRequest extends FormRequest
+class ChannelRequest extends FormRequest
 {
 
     /**
@@ -21,7 +20,7 @@ class DriverRequest extends FormRequest
 
         $id = $this->route()->parameter('monitor');
 
-        $uniqueRule = Rule::unique(app(Driver::class)->getTable())
+        $uniqueRule = Rule::unique(app(Channel::class)->getTable())
             ->where('user_id', $this->user()->id)
             ->where('type', $this->input('type'))
             ->where('endpoint', $this->input('endpoint'));

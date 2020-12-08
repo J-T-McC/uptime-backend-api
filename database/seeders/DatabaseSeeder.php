@@ -15,6 +15,6 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(UsersTableSeeder::class);
         $this->call(MonitorTableSeeder::class);
-        $this->call(DriverTableSeeder::class);
+        $this->call(ChannelTableSeeder::class);
     }
 }

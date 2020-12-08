@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Driver;
+use App\Models\Channel;
 use App\Models\Monitor;
 use Illuminate\Database\Seeder;
 
-class DriverTableSeeder extends Seeder
+class ChannelTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,19 +16,19 @@ class DriverTableSeeder extends Seeder
     public function run()
     {
 
-        $mailDriver1 = Driver::create([
+        $mailChannel1 = Channel::create([
             'type' => 'mail',
             'user_id' => 1,
             'endpoint' => 'test1@example.com'
         ]);
 
-        $mailDriver2 = Driver::create([
+        $mailChannel2 = Channel::create([
             'type' => 'mail',
             'user_id' => 1,
             'endpoint' => 'test2@example.com'
         ]);
 
-        $slackDriver = Driver::create([
+        $slackChannel = Channel::create([
             'type' => 'slack',
             'user_id' => 1,
             'endpoint' => env('SLACK_WEBHOOK')
@@ -39,16 +39,16 @@ class DriverTableSeeder extends Seeder
         $notFound =  Monitor::find(3);
         $sslExpired =  Monitor::find(4);
 
-        $online->drivers()->attach($mailDriver1);
+        $online->channels()->attach($mailChannel1);
 
-        $offline->drivers()->attach($slackDriver);
+        $offline->channels()->attach($slackChannel);
 
-        $notFound->drivers()->attach($mailDriver1);
-        $notFound->drivers()->attach($mailDriver2);
-        $notFound->drivers()->attach($slackDriver);
+        $notFound->channels()->attach($mailChannel1);
+        $notFound->channels()->attach($mailChannel2);
+        $notFound->channels()->attach($slackChannel);
 
-        $sslExpired->drivers()->attach($mailDriver1);
-        $sslExpired->drivers()->attach($slackDriver);
+        $sslExpired->channels()->attach($mailChannel1);
+        $sslExpired->channels()->attach($slackChannel);
 
     }
 }

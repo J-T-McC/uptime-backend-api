@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDriversTable extends Migration
+class CreateChannelsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateDriversTable extends Migration
      */
     public function up()
     {
-        Schema::create('drivers', function (Blueprint $table) {
+        Schema::create('channels', function (Blueprint $table) {
             $table->id();
 
             $table->foreignId('user_id')
@@ -36,6 +36,6 @@ class CreateDriversTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('drivers');
+        Schema::dropIfExists('channels');
     }
 }
