@@ -18,7 +18,6 @@ class CreateMonitorEventsTable extends Migration
 
             $table->foreignId('monitor_id')
                 ->constrained()
-                ->onUpdate('cascade')
                 ->onDelete('cascade');
 
             $table->unsignedTinyInteger('category');

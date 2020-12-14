@@ -18,11 +18,11 @@ class CreateChannelsTable extends Migration
 
             $table->foreignId('user_id')
                 ->constrained()
-                ->onUpdate('cascade')
                 ->onDelete('cascade');
 
             $table->string('type', 25);
             $table->string('endpoint');
+            $table->text('description')->nullable();
             $table->timestamps();
 
             $table->unique(['type', 'endpoint', 'user_id']);

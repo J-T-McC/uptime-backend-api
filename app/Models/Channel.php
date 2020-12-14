@@ -14,6 +14,7 @@ class Channel extends Model
         'endpoint',
         'secret',
         'type',
+        'description',
     ];
 
     protected static function booted()

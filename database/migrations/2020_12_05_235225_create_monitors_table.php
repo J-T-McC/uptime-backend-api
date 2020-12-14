@@ -20,13 +20,12 @@ class CreateMonitorsTable extends Migration
 
             $table->foreignId('user_id')
                 ->constrained()
-                ->onUpdate('cascade')
                 ->onDelete('cascade');
 
             $table->string('url');
 
             $table->boolean('uptime_check_enabled')->default(true);
-            $table->string('look_for_string')->default('');
+            $table->string('look_for_string')->nullable();
             $table->string('uptime_check_interval_in_minutes')->default(5);
             $table->string('uptime_status')->default(UptimeStatus::NOT_YET_CHECKED);
             $table->text('uptime_check_failure_reason')->nullable();
@@ -43,7 +42,7 @@ class CreateMonitorsTable extends Migration
             $table->string('certificate_status')->default(CertificateStatus::NOT_YET_CHECKED);
             $table->timestamp('certificate_expiration_date')->nullable();
             $table->string('certificate_issuer')->nullable();
-            $table->string('certificate_check_failure_reason')->default('');
+            $table->string('certificate_check_failure_reason')->nullable();
 
             $table->unique(['user_id', 'url']);
 
