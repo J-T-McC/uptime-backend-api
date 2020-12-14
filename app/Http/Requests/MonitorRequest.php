@@ -33,7 +33,7 @@ class MonitorRequest extends FormRequest
                 'active_url'
             ],
             'certificate_check_enabled' => 'boolean',
-            'look_for_string' => 'string',
+            'look_for_string' => 'string|nullable',
             'uptime_check_enabled' => 'boolean'
         ];
     }
