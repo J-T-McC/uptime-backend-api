@@ -13,6 +13,15 @@ return [
             \App\Services\Channels\Discord\DiscordChannel::class,
         ],
 
+        /*
+         * Additional endpoint validation requirements for creating and updating channel records by type
+         */
+        'service-endpoint-rules' => [
+            'mail' => '|email',
+            'slack' => '|url|active_url',
+            'discord' => '|url|active_url',
+        ],
+
         'notifications' => [
             \App\Notifications\UptimeCheckFailed::class => ['enabled'],
             \App\Notifications\UptimeCheckRecovered::class => ['enabled'],
@@ -33,21 +42,7 @@ return [
          * To keep reminding you that a site is down, notifications
          * will be resent every given number of minutes.
          */
-        'resend_uptime_check_failed_notification_every_minutes' => 0, //TODO change back to 60
-
-//        'mail' => [
-//            'to' => [],
-//        ],
-//
-//        'slack' => [
-//            'webhook_url' => '',
-//        ],
-//
-//        /*
-//         * Here you can specify the notifiable to which the notifications should be sent. The default
-//         * notifiable will use the variables specified in this config file.
-//         */
-//        'notifiable' => \App\Models\User::class,
+        'resend_uptime_check_failed_notification_every_minutes' => 1, //TODO change back to 60
 
         /*
          * The date format used in notifications.
@@ -73,7 +68,7 @@ return [
          * When an uptime check fails we'll check the uptime for that monitor every time `monitor:check-uptime`
          * runs regardless of this setting.
          */
-        'run_interval_in_minutes' => 0, //TODO change back to 5
+        'run_interval_in_minutes' => 1, //TODO change back to 5
 
         /*
          * To speed up the uptime checking process the package can perform the uptime check of several
