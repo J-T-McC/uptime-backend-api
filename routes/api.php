@@ -8,4 +8,5 @@ Route::middleware('auth:sanctum')->group(function () {
     });
     Route::resource('/monitors', \App\Http\Controllers\MonitorController::class);
     Route::resource('/channels', \App\Http\Controllers\ChannelController::class);
+    Route::resource('/monitors-channels', \App\Http\Controllers\MonitorChannelController::class, ['PUT', 'PATCH']);
 });
