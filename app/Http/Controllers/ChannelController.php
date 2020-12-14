@@ -15,36 +15,33 @@ class ChannelController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return ChannelResource
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function index()
     {
-        return new ChannelResource(Channel::simplePaginate());
+        return ChannelResource::collection(Channel::orderBy('type')->get());
     }
 
     /**
      * Store a newly created resource in storage.
-     *
      * @param ChannelRequest $request
-     * @return ChannelResource|JsonResponse
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function store(ChannelRequest $request)
     {
         $channel = auth()->user()->channels()->create($request->validated());
-        return new ChannelResource([$channel]);
+        return ChannelResource::collection([$channel]);
     }
 
     /**
      * Display the specified resource.
-     *
      * @param int $id
-     * @return ChannelResource|JsonResponse
+     * @return JsonResponse|\Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function show(int $id)
     {
         try {
-            return new ChannelResource([Channel::findOrFail($id)]);
+            return ChannelResource::collection([Channel::findOrFail($id)]);
         } catch (ModelNotFoundException $e) {
             return response()->json(['message' => 'Notification Channel not found'], HttpResponse::NOT_FOUND);
         }

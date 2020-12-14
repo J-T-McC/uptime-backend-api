@@ -2,9 +2,9 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Http\Resources\Json\JsonResource;
 
-class ChannelResource extends ResourceCollection
+class ChannelResource extends JsonResource
 {
     /**
      * Transform the resource collection into an array.
@@ -14,6 +14,18 @@ class ChannelResource extends ResourceCollection
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+
+        $response = [
+            'id' => $this->id,
+            'description' => $this->description,
+            'endpoint' => $this->endpoint,
+            'type' => $this->type,
+        ];
+
+        if($this->pivot) {
+            $response['pivot'] =  $this->pivot;
+        }
+
+        return $response;
     }
 }

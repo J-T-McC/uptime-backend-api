@@ -15,36 +15,33 @@ class MonitorController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return MonitorResource
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function index()
     {
-        return new MonitorResource(Monitor::simplePaginate());
+        return MonitorResource::collection(Monitor::all());
     }
 
     /**
      * Store a newly created resource in storage.
-     *
      * @param MonitorRequest $request
-     * @return MonitorResource|JsonResponse
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function store(MonitorRequest $request)
     {
         $monitor = auth()->user()->monitors()->create($request->validated());
-        return new MonitorResource([$monitor]);
+        return MonitorResource::collection([$monitor]);
     }
 
     /**
      * Display the specified resource.
-     *
      * @param int $id
-     * @return MonitorResource|JsonResponse
+     * @return JsonResponse|\Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function show(int $id)
     {
         try {
-            return new MonitorResource([Monitor::findOrFail($id)]);
+            return MonitorResource::collection([Monitor::findOrFail($id)]);
         } catch (ModelNotFoundException $e) {
             return response()->json(['message' => 'URL Monitor not found'], HttpResponse::NOT_FOUND);
         }
