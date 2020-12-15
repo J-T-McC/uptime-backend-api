@@ -22,6 +22,13 @@ return [
             'discord' => '|url|active_url',
         ],
 
+        /*
+         * Channels listed here will not notify until verified set in channel record
+         */
+        'requires-verification' => [
+            'mail'
+        ],
+
         'notifications' => [
             \App\Notifications\UptimeCheckFailed::class => ['enabled'],
             \App\Notifications\UptimeCheckRecovered::class => ['enabled'],

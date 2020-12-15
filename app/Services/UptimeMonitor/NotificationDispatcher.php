@@ -45,7 +45,14 @@ class NotificationDispatcher
     }
 
     private function dispatchNotifications() {
-        $this->channels->each(function($channel) {
+        $requiresVerification = array_flip(config('uptime-monitor.notifications.requires-verification'));
+
+        $this->channels->each(function($channel) use($requiresVerification) {
+
+            if(isset($requiresVerification[$channel->type]) && !$channel->verified) {
+                return;
+            }
+
             //Dispatch independently to accommodate multiples of the same channel
             $notifiable = new AnonymousNotifiable();
             $notifiable->route($channel->type, $channel->endpoint);

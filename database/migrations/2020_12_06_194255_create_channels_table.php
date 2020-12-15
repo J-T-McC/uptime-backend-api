@@ -23,6 +23,8 @@ class CreateChannelsTable extends Migration
             $table->string('type', 25);
             $table->string('endpoint');
             $table->text('description')->nullable();
+            $table->boolean('verified')->nullable();
+
             $table->timestamps();
 
             $table->unique(['type', 'endpoint', 'user_id']);
