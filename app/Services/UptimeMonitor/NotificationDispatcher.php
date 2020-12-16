@@ -2,6 +2,7 @@
 
 namespace App\Services\UptimeMonitor;
 
+use App\Jobs\DispatchNotification;
 use App\Models\User;
 use App\Models\Monitor;
 use App\Models\Channel;
@@ -45,18 +46,11 @@ class NotificationDispatcher
     }
 
     private function dispatchNotifications() {
-        $requiresVerification = array_flip(config('uptime-monitor.notifications.requires-verification'));
-
-        $this->channels->each(function($channel) use($requiresVerification) {
-
-            if(isset($requiresVerification[$channel->type]) && !$channel->verified) {
-                return;
-            }
-
-            //Dispatch independently to accommodate multiples of the same channel
+        //Dispatch independently to accommodate multiples of the same channel
+        $this->channels->each(function($channel)  {
             $notifiable = new AnonymousNotifiable();
             $notifiable->route($channel->type, $channel->endpoint);
-            $notifiable->notify($this->notification);
+            DispatchNotification::dispatch($notifiable, $this->notification);
         });
     }
 
