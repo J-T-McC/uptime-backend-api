@@ -23,7 +23,9 @@
         "fakerphp/faker": "^1.9.1",
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^5.0",
-        "phpunit/phpunit": "^9.3.3"
+        "phpunit/phpunit": "^9.3.3",
+        "jasonmccreary/laravel-test-assertions": "^1.0",
+        "laravel-shift/factory-generator": "dev-master"
     },
     "config": {
         "optimize-autoloader": true,
