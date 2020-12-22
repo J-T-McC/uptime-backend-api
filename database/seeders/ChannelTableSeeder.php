@@ -19,25 +19,29 @@ class ChannelTableSeeder extends Seeder
         $mailChannel1 = Channel::create([
             'type' => 'mail',
             'user_id' => 1,
-            'endpoint' => 'test1@example.com'
+            'endpoint' => 'test1@example.com',
+            'description' => 'Primary ticket inbox'
         ]);
 
         $mailChannel2 = Channel::create([
             'type' => 'mail',
             'user_id' => 1,
-            'endpoint' => 'test2@example.com'
+            'endpoint' => 'test2@example.com',
+            'description' => 'Personal inbox'
         ]);
 
         $slackChannel = Channel::create([
             'type' => 'slack',
             'user_id' => 1,
-            'endpoint' => env('SLACK_WEBHOOK')
+            'endpoint' => env('SLACK_WEBHOOK'),
+            'description' => 'Dev team slack room'
         ]);
 
         $discordChannel = Channel::create([
             'type' => 'discord',
             'user_id' => 1,
-            'endpoint' => env('DISCORD_URL')
+            'endpoint' => env('DISCORD_URL'),
+            'description' => 'My alert channel on my gaming discord server'
         ]);
 
         $online =  Monitor::find(1);

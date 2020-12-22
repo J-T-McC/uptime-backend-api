@@ -34,6 +34,11 @@ class Monitor extends SpatieMonitor
         return $this->belongsToMany(Channel::class);
     }
 
+    public function monitorEvents() {
+        return $this->hasMany(MonitorEvent::class);
+    }
+
+
     /**
      * Override parents unwanted duplication logic
      * Different users can monitor the same url

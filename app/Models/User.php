@@ -52,6 +52,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Monitor::class);
     }
 
+    public function monitorEvents() {
+        return $this->hasMany(MonitorEvent::class);
+    }
+
     public function channels() {
         return $this->hasMany(Channel::class);
     }

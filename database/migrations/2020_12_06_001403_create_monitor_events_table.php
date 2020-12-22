@@ -20,8 +20,13 @@ class CreateMonitorEventsTable extends Migration
                 ->constrained()
                 ->onDelete('cascade');
 
-            $table->unsignedTinyInteger('category');
+            $table->foreignId('user_id')
+                ->constrained()
+                ->onDelete('cascade');
+
+            $table->unsignedTinyInteger('category')->index();
             $table->unsignedTinyInteger('status');
+            $table->text('error')->nullable();
 
             $table->timestamps();
         });

@@ -56,5 +56,13 @@ class MonitorTableSeeder extends Seeder
         ]);
 
 
+        //online, user 2
+        Monitor::insertOrIgnore([
+            'user_id' => 2,
+            'url' => 'https://httpstat.us/404',
+            'uptime_check_interval_in_minutes' => 1,
+            'certificate_check_enabled' => 0
+        ]);
+
     }
 }
