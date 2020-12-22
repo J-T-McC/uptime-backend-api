@@ -19,7 +19,7 @@ class MonitorController extends Controller
      */
     public function index()
     {
-        return MonitorResource::collection(Monitor::all());
+        return MonitorResource::collection(Monitor::orderBy('uptime_status')->orderBy('created_at', 'DESC')->get());
     }
 
     /**
