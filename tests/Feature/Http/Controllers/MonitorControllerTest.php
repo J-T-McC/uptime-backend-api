@@ -59,10 +59,9 @@ class MonitorControllerTest extends AuthenticatedTestCase
      */
     public function store_returns_an_ok_response()
     {
-        $monitor = \App\Models\Monitor::factory()->make()->toArray();
 
         $response = $this->post(route('monitors.store'), [
-            'url' => $monitor['raw_url']
+            'url' => 'http://example.com'
         ]);
 
         $response->assertOk();
@@ -79,7 +78,7 @@ class MonitorControllerTest extends AuthenticatedTestCase
         $monitor = \App\Models\Monitor::factory()->create();
 
         $response = $this->put(route('monitors.update', ['monitor' => $monitor->id]), [
-           'url' => $this->faker->url
+           'url' => 'http://example.com'
         ]);
 
         $response->assertOk();
