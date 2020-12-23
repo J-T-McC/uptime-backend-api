@@ -3,7 +3,6 @@
 namespace App\Services\UptimeMonitor;
 
 use App\Jobs\DispatchNotification;
-use App\Models\User;
 use App\Models\Monitor;
 use App\Models\Channel;
 use Illuminate\Notifications\AnonymousNotifiable;
@@ -11,10 +10,8 @@ use App\Exceptions\UndefinedPropertyException;
 
 /**
  * @property-read Monitor $monitor
- * @property-read User $owner
  * @property-read Channel $channels
  */
-
 class NotificationDispatcher
 {
 
@@ -36,8 +33,6 @@ class NotificationDispatcher
        switch($name) {
            case 'monitor':
                return $this->notification->event->monitor;
-           case 'owner':
-               return $this->monitor->user;
            case 'channels':
                return $this->monitor->channels;
            default:
