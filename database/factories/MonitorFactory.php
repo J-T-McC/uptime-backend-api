@@ -25,6 +25,7 @@ class MonitorFactory extends Factory
         return [
             'user_id' => User::factory()->create()->id,
             'url' => $this->faker->url,
+            'uptime_check_method' => 'get',
         ];
     }
 }

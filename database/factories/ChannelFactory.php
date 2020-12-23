@@ -8,25 +8,21 @@ use App\Models\Channel;
 class ChannelFactory extends Factory
 {
     /**
-    * The name of the factory's corresponding model.
-    *
-    * @var string
-    */
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
     protected $model = Channel::class;
 
     /**
-    * Define the model's default state.
-    *
-    * @return array
-    */
+     * Define the model's default state.
+     *
+     * @return array
+     */
     public function definition()
     {
 
-        $channels = [
-            'mail' => $this->faker->safeEmail,
-            'discord' => $this->faker->url,
-            'slack' => $this->faker->url,
-        ];
+        $channels = $this->channels();
 
         $choice = array_rand($channels);
 
@@ -34,6 +30,15 @@ class ChannelFactory extends Factory
             'endpoint' => $channels[$choice],
             'type' => $choice,
             'user_id' => \App\Models\User::factory()->create()->id,
+        ];
+    }
+
+    public function channels()
+    {
+        return [
+            'mail' => $this->faker->safeEmail,
+            'slack' => $this->faker->url,
+            'discord' => $this->faker->url,
         ];
     }
 }
