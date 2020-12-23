@@ -21,10 +21,19 @@ class ChannelFactory extends Factory
     */
     public function definition()
     {
+
+        $channels = [
+            'mail' => $this->faker->safeEmail,
+            'discord' => $this->faker->url,
+            'slack' => $this->faker->url,
+        ];
+
+        $choice = array_rand($channels);
+
         return [
-            'endpoint' => $this->faker->unique()->word,
-            'type' => $this->faker->unique()->word,
-            'user_id' => \App\Models\User::factory(),
+            'endpoint' => $channels[$choice],
+            'type' => $choice,
+            'user_id' => \App\Models\User::factory()->create()->id,
         ];
     }
 }
