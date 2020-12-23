@@ -50,7 +50,7 @@ return [
          * To keep reminding you that a site is down, notifications
          * will be resent every given number of minutes.
          */
-        'resend_uptime_check_failed_notification_every_minutes' => 1, //TODO change back to 60
+        'resend_uptime_check_failed_notification_every_minutes' => 30,
 
         /*
          * The date format used in notifications.
@@ -76,7 +76,7 @@ return [
          * When an uptime check fails we'll check the uptime for that monitor every time `monitor:check-uptime`
          * runs regardless of this setting.
          */
-        'run_interval_in_minutes' => 1, //TODO change back to 5
+        'run_interval_in_minutes' => 1,
 
         /*
          * To speed up the uptime checking process the package can perform the uptime check of several
@@ -110,7 +110,7 @@ return [
          * Fire `Spatie\UptimeMonitor\Events\MonitorFailed` event only after
          * the given number of uptime checks have consecutively failed for a monitor.
          */
-        'fire_monitor_failed_event_after_consecutive_failures' => 2,
+        'fire_monitor_failed_event_after_consecutive_failures' => 1,
 
         /*
          * When reaching out to sites this user agent will be used.
