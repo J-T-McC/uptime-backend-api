@@ -14,27 +14,26 @@ class UptimeEventData
 
     public function __construct($monitor = null)
     {
-        $this->model = auth()->user()->monitorEvents()->uptime()->monitorFilter($monitor);
+        $this->model = auth()->user()->uptimeEventCounts()->monitorFilter($monitor);
     }
 
     public function trendedMonthly()
     {
         return $this->model->select(
-            DB::raw('CAST(ROUND((SUM(IF(`status` IN (1, 2), 1, 0)) / COUNT(*)) * 100) as UNSIGNED) as percent'),
-            DB::raw('YEAR(monitor_events.created_at) AS event_year'),
-            DB::raw('WEEK(monitor_events.created_at, 0) + 1 AS event_week')
+            DB::raw('SUM( up + recovered ) / SUM( up + recovered + down ) * 100  as percent'),
+            'filter_year',
+            'filter_week'
         )
             ->groupBy(
-                'event_year',
-                'event_week',
+                'filter_year',
+                'filter_week',
             )
-            ->orderBy('event_year')
-            ->orderBy('event_year', 'DESC')
-            ->orderBy('event_week', 'DESC')
+            ->orderBy('filter_year', 'DESC')
+            ->orderBy('filter_week', 'DESC')
             ->limit(10)
             ->get()->map(function ($series) {
                 $carbon = new Carbon();
-                $series->category = self::getWeeklyRangeCategory($carbon, $series->event_year, $series->event_week);
+                $series->category = self::getWeeklyRangeCategory($carbon, $series->filter_year, $series->filter_week);
                 return $series;
             });
     }
@@ -42,27 +41,34 @@ class UptimeEventData
     public function past90Days()
     {
 
-        $baseQuery = clone $this->model;
+        $percentUp = clone $this->model->select(
+            DB::raw('SUM( up + recovered ) / SUM( up + recovered + down ) * 100 as percent'),
+            DB::raw('"Up" as category'),
+            'filter_year',
+            'filter_week'
+        )->groupBy(
+            'filter_year',
+            'filter_week',
+        )
+            ->orderBy('filter_year', 'DESC')
+            ->orderBy('filter_week', 'DESC')
+            ->limit(1);
 
-        $range = 'monitor_events.created_at >= (NOW() - INTERVAL 90 DAY)';
+        $percentDown = $this->model->select(
+            DB::raw('SUM( down ) / SUM( up + recovered + down ) * 100 as percent'),
+            DB::raw('"Down" as category'),
+            'filter_year',
+            'filter_week'
+        )->groupBy(
+            'filter_year',
+            'filter_week',
+        )
+            ->orderBy('filter_year', 'DESC')
+            ->orderBy('filter_week', 'DESC')
+            ->limit(1);
 
-        $baseQuery = $baseQuery->selectRaw('COUNT(*) AS total')->whereRaw($range);
-
-        return $this->model->select(
-            'status',
-            DB::raw('CAST(ROUND((COUNT(*) / base.total) * 100) as UNSIGNED) AS percent'),
-            DB::raw('base.total as total'),
-        )->crossJoinSub($baseQuery, 'base')
-            ->whereRaw($range)
-            ->groupBy(
-                'total',
-                'status',
-            )
-            ->orderBy('status')
-            ->get()->map(function($point) {
-                $point->category = UptimeStatus::getNameFromValue($point->status);
-                return $point;
-            });
+        return $percentUp->union($percentDown)->get();
+//        DB::raw('SUM( down ) / SUM( up + recovered + down ) * 100 as percent_down'),
     }
 
     public static function getWeeklyRangeCategory(Carbon $carbon, $year, $week)
