@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
-use App\Models\Scopes\OwnerScope;
+use App\Events\IncrementUptimeCount;
+use App\Models\Traits\UsesOwnerScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-
 use Spatie\UptimeMonitor\Models\Monitor as SpatieMonitor;
 
 class Monitor extends SpatieMonitor
 {
-    use HasFactory;
+    use HasFactory, UsesOwnerScope;
 
     protected $fillable = [
         'url',
@@ -17,14 +17,6 @@ class Monitor extends SpatieMonitor
         'certificate_check_enabled',
         'look_for_string'
     ];
-
-    protected static function booted()
-    {
-        if(!app()->runningInConsole()) {
-            static::addGlobalScope(new OwnerScope);
-        }
-        parent::booted();
-    }
 
     public function user() {
         return $this->belongsTo(User::class);
@@ -39,14 +31,35 @@ class Monitor extends SpatieMonitor
     }
 
 
+    public function uptimeEventCounts() {
+        return $this->hasMany(MonitorUptimeEventCount::class);
+    }
+
+
     /**
-     * Override parents unwanted duplication logic
-     * Different users can monitor the same url
+     * Override parents duplication logic
+     * Original prevents different users from monitoring the same url
      * @param SpatieMonitor $monitor
      * @return bool
      */
     protected static function alreadyExists(SpatieMonitor $monitor): bool
     {
        return false;
+    }
+
+    /**
+     * Spatie event library does not fire event for repeated failures
+     * This allows us to record the additional failures for our counts
+     * See @Spatie\UptimeMonitor\Models\Traits\SupportsUptimeCheck
+     * @param string $reason
+     */
+
+    public function uptimeCheckFailed(string $reason)
+    {
+        parent::uptimeCheckFailed($reason);
+
+        if (!$this->shouldFireUptimeCheckFailedEvent()) {
+            event(new IncrementUptimeCount($this));
+        }
     }
 }

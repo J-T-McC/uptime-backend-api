@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-use Laravel\Sanctum\HasApiTokens;
-
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable;
@@ -54,6 +52,10 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function monitorEvents() {
         return $this->hasMany(MonitorEvent::class);
+    }
+
+    public function uptimeEventCounts() {
+        return $this->hasMany(MonitorUptimeEventCount::class);
     }
 
     public function channels() {

@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
-use App\Models\Scopes\OwnerScope;
+use App\Models\Traits\UsesOwnerScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Channel extends Model
 {
-    use HasFactory;
+    use HasFactory, UsesOwnerScope;
 
     protected $fillable = [
         'endpoint',
@@ -17,13 +17,6 @@ class Channel extends Model
         'description',
     ];
 
-    protected static function booted()
-    {
-        if(!app()->runningInConsole()) {
-            static::addGlobalScope(new OwnerScope);
-        }
-        parent::booted();
-    }
 
     public function user() {
         return $this->belongsTo(User::class);
