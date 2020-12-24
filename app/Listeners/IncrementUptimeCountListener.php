@@ -4,30 +4,31 @@ namespace App\Listeners;
 
 use App\Events\IncrementUptimeCount;
 use App\Models\MonitorUptimeEventCount;
+use Carbon\Carbon;
 
 class IncrementUptimeCountListener
 {
 
     private $validColumns = [
-      'up',
-      'down',
-      'recovered'
+        'up',
+        'down',
+        'recovered'
     ];
 
     /**
      * Handle the event.
      *
-     * @param  IncrementUptimeCount  $event
+     * @param IncrementUptimeCount $event
      * @return void
      */
     public function handle(IncrementUptimeCount $event)
     {
-        if(in_array($event->monitor->uptime_status, $this->validColumns)) {
-            $monitorDateFilters = MonitorUptimeEventCount::getDateFilterValues();
-            $monitorCounts = MonitorUptimeEventCount::firstOrCreate(array_merge(
-                ['monitor_id' => $event->monitor->id, 'user_id' => $event->monitor->user_id],
-                $monitorDateFilters
-            ));
+        if (in_array($event->monitor->uptime_status, $this->validColumns)) {
+            $monitorCounts = MonitorUptimeEventCount::firstOrCreate([
+                'monitor_id' => $event->monitor->id,
+                'user_id' => $event->monitor->user_id,
+                'filter_date' => Carbon::now('UTC')->format('Y-m-d')
+            ]);
             $monitorCounts->increment($event->monitor->uptime_status);
         }
     }

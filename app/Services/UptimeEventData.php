@@ -3,7 +3,7 @@
 
 namespace App\Services;
 
-use App\Models\Enums\UptimeStatus;
+use App\Models\MonitorUptimeEventCount;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -14,15 +14,17 @@ class UptimeEventData
 
     public function __construct($monitor = null)
     {
-        $this->model = auth()->user()->uptimeEventCounts()->monitorFilter($monitor);
+        $this->model = MonitorUptimeEventCount::monitorFilter($monitor);
     }
 
     public function trendedMonthly()
     {
+        //TODO handle weeks that exist in two years
         return $this->model->select(
-            DB::raw('SUM( up + recovered ) / SUM( up + recovered + down ) * 100  as percent'),
-            'filter_year',
-            'filter_week'
+            DB::raw('ROUND(SUM( up + recovered ) / SUM( up + recovered + down ) * 100, 10)  as percent'),
+            DB::raw('YEAR(filter_date) as filter_year'),
+            //ISO 8601 week
+            DB::raw('WEEK(filter_date, 3) as filter_week')
         )
             ->groupBy(
                 'filter_year',
@@ -40,44 +42,28 @@ class UptimeEventData
 
     public function past90Days()
     {
+        $min = Carbon::now('UTC')->subDays(90)->format('Y-m-d');
 
-        $percentUp = clone $this->model->select(
-            DB::raw('SUM( up + recovered ) / SUM( up + recovered + down ) * 100 as percent'),
-            DB::raw('"Up" as category'),
-            'filter_year',
-            'filter_week'
-        )->groupBy(
-            'filter_year',
-            'filter_week',
-        )
-            ->orderBy('filter_year', 'DESC')
-            ->orderBy('filter_week', 'DESC')
-            ->limit(1);
+        $percentUp = (clone $this->model)->select(
+            DB::raw('ROUND(SUM( up + recovered ) / SUM( up + recovered + down ) * 100, 4) as percent'),
+            DB::raw('"Up" as category')
+        )->where('filter_date', '>', $min);
 
-        $percentDown = $this->model->select(
-            DB::raw('SUM( down ) / SUM( up + recovered + down ) * 100 as percent'),
-            DB::raw('"Down" as category'),
-            'filter_year',
-            'filter_week'
-        )->groupBy(
-            'filter_year',
-            'filter_week',
-        )
-            ->orderBy('filter_year', 'DESC')
-            ->orderBy('filter_week', 'DESC')
-            ->limit(1);
+        $percentDown = (clone $this->model)->select(
+            DB::raw('ROUND(SUM( down ) / SUM( up + recovered + down ) * 100, 4) as percent'),
+            DB::raw('"Down" as category')
+        )->where('filter_date', '>', $min);
 
         return $percentUp->union($percentDown)->get();
-//        DB::raw('SUM( down ) / SUM( up + recovered + down ) * 100 as percent_down'),
     }
 
     public static function getWeeklyRangeCategory(Carbon $carbon, $year, $week)
     {
         $format = 'M d';
-        $carbon->setISODate($year, $week, 0);
+        $carbon->setISODate($year, $week);
         return $carbon
-                ->startOfWeek(Carbon::SUNDAY)
-                ->format($format) . ' - ' . $carbon->endOfWeek(Carbon::SATURDAY)->format($format);
+                ->startOfWeek()
+                ->format($format) . ' - ' . $carbon->endOfWeek()->format($format);
     }
 
 }

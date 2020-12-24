@@ -28,14 +28,13 @@ class CreateMonitorUptimeEventCountsTable extends Migration
             $table->unsignedBigInteger('recovered')->default(0);
             $table->unsignedBigInteger('down')->default(0);
 
-            $table->unsignedTinyInteger('filter_day');
-            $table->unsignedTinyInteger('filter_week');
-            $table->unsignedTinyInteger('filter_month');
-            $table->unsignedSmallInteger('filter_year');
-
-            $table->unique(['monitor_id', 'filter_day','filter_week','filter_month', 'filter_year'], 'distinct_date_counts');
+            $table->date('filter_date');
 
             $table->timestamps();
+
+            $table->index(['monitor_id', 'user_id', 'filter_date']);
+            $table->index('created_at');
+
         });
     }
 

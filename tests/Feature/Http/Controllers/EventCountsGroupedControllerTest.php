@@ -19,12 +19,8 @@ class EventCountsGroupedControllerTest extends AuthenticatedTestCase
      */
     public function index_returns_an_ok_response()
     {
-
         $response = $this->get(route('event-counts-grouped.index'));
-
         $response->assertOk();
-
-        // TODO: perform additional assertions
     }
 
     /**
@@ -39,5 +35,4 @@ class EventCountsGroupedControllerTest extends AuthenticatedTestCase
         $response->assertOk();
     }
 
-    // test cases...
 }
