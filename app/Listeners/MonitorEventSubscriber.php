@@ -2,13 +2,14 @@
 
 namespace App\Listeners;
 
+use App\Events\IncrementUptimeCount;
 use App\Models\Enums\Category;
 use App\Models\Enums\CertificateStatus;
 use App\Models\Enums\UptimeStatus;
 
 use Spatie\UptimeMonitor\Events\UptimeCheckFailed;
-use Spatie\UptimeMonitor\Events\UptimeCheckSucceeded;
 use Spatie\UptimeMonitor\Events\UptimeCheckRecovered;
+use Spatie\UptimeMonitor\Events\UptimeCheckSucceeded;
 
 use Spatie\UptimeMonitor\Events\CertificateCheckFailed;
 use Spatie\UptimeMonitor\Events\CertificateExpiresSoon;
@@ -18,12 +19,27 @@ class MonitorEventSubscriber
 
 
     /**
-     * Handle Uptime Events
-     *
-     * @param object $event
+     * @param UptimeCheckRecovered $event
      * @return void
      */
-    public function handleUptimeEvent($event)
+    public function handleUptimeEventRecovered(UptimeCheckRecovered $event)
+    {
+        $event->monitor->uptime_status = 'recovered';
+        $event->monitor->monitorEvents()->create([
+            'category' => Category::UPTIME,
+            'status' => UptimeStatus::getStatusFromName($event->monitor->uptime_status),
+            'error' =>  "Recovered after {$event->downtimePeriod->duration()}",
+            'user_id' => $event->monitor->user_id,
+        ]);
+        $this->dispatchIncrementUptimeCountEvent($event);
+    }
+
+
+    /**
+     * @param UptimeCheckFailed $event
+     * @return void
+     */
+    public function handleUptimeEventFailed(UptimeCheckFailed $event)
     {
         $event->monitor->monitorEvents()->create([
             'category' => Category::UPTIME,
@@ -31,6 +47,8 @@ class MonitorEventSubscriber
             'error' => $event->monitor->uptime_check_failure_reason ?? null,
             'user_id' => $event->monitor->user_id,
         ]);
+
+        $this->dispatchIncrementUptimeCountEvent($event);
     }
 
     /**
@@ -56,15 +74,24 @@ class MonitorEventSubscriber
         ]);
     }
 
+    public function dispatchIncrementUptimeCountEvent($event) {
+        event(new IncrementUptimeCount($event->monitor));
+    }
+
     public function subscribe($events)
     {
         $events->listen(
-            [
-                UptimeCheckFailed::class,
-                UptimeCheckRecovered::class,
-                UptimeCheckSucceeded::class,
-            ],
-            [self::class, 'handleUptimeEvent']
+            [UptimeCheckFailed::class],
+            [self::class, 'handleUptimeEventFailed']
+        );
+
+        $events->listen(
+            [UptimeCheckRecovered::class],
+            [self::class, 'handleUptimeEventRecovered']
+        );
+
+        $events->listen([UptimeCheckSucceeded::class],
+            [self::class, 'dispatchIncrementUptimeCountEvent']
         );
 
         $events->listen(

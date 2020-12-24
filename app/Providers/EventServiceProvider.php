@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Events\IncrementUptimeCount;
+use App\Listeners\IncrementUptimeCountListener;
 use App\Listeners\MonitorEventSubscriber;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -18,6 +20,9 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class
         ],
+        IncrementUptimeCount::class => [
+            IncrementUptimeCountListener::class
+        ]
     ];
 
     /**
