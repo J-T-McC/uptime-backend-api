@@ -9,7 +9,7 @@ class Enum
 {
     private static $constCacheArray = null;
 
-    private static function getConstants() {
+    public static function getConstants() {
         if (self::$constCacheArray == null) {
             self::$constCacheArray = [];
         }

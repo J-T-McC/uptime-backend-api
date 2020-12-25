@@ -44,7 +44,7 @@ class IncrementUptimeCountListenerTest extends TestCase
     /**
      * @test
      */
-    public function increments_uptime_status_succeeded()
+    public function increments_uptime_status_up()
     {
         $monitor = \App\Models\Monitor::factory()->create();
         $monitor->url = static::uptimeSucceed;
