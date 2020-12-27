@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Services\UptimeMonitor;
 
 use Illuminate\Support\ServiceProvider;

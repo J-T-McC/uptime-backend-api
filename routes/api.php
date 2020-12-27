@@ -17,4 +17,5 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::resource('/event-counts-grouped', \App\Http\Controllers\EventCountsGroupedController::class, ['GET']);
         Route::resource('/latest-monitor-events', \App\Http\Controllers\LatestMonitorEventsController::class, ['GET']);
     });
+
 });
