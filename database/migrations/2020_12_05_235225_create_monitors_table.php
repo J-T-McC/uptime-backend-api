@@ -26,7 +26,7 @@ class CreateMonitorsTable extends Migration
 
             $table->boolean('uptime_check_enabled')->default(true);
             $table->string('look_for_string')->nullable();
-            $table->string('uptime_check_interval_in_minutes')->default(5);
+            $table->string('uptime_check_interval_in_minutes')->default(1);
             $table->string('uptime_status')->default(UptimeStatus::NOT_YET_CHECKED);
             $table->text('uptime_check_failure_reason')->nullable();
             $table->integer('uptime_check_times_failed_in_a_row')->default(0);
