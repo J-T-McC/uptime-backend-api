@@ -61,7 +61,7 @@ return [
     |
     */
 
-    'home' => env('APP_SPA_URL', env('APP_URL', 'http://localhost')),
+    'home' => '/app/home',
 
     /*
     |--------------------------------------------------------------------------
@@ -133,9 +133,9 @@ return [
     'features' => [
         Features::registration(),
         Features::resetPasswords(),
-         Features::emailVerification(),
-//        Features::updateProfileInformation(),
-//        Features::updatePasswords(),
+        Features::emailVerification(),
+        Features::updateProfileInformation(),
+        Features::updatePasswords(),
 //        Features::twoFactorAuthentication([
 //            'confirmPassword' => true,
 //        ]),

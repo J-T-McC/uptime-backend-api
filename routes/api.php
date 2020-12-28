@@ -2,6 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 
+
+// arbitrary dummy route to accommodate any fortify redirects
+// ex. email verification redirects the request to 'home' route defined in fortify config
+Route::get('/home', function() {
+   return response()->json([]);
+});
+
 Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/authenticated', function () {
