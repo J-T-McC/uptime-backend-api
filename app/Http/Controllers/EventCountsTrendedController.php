@@ -12,7 +12,7 @@ class EventCountsTrendedController extends Controller
      */
     public function index()
     {
-        return response()->json((new UptimeEventData())->trendedMonthly());
+        return response()->json((new UptimeEventData())->trended());
     }
 
     /**
@@ -22,6 +22,6 @@ class EventCountsTrendedController extends Controller
      */
     public function show(int $id)
     {
-        return response()->json((new UptimeEventData($id))->trendedMonthly());
+        return response()->json((new UptimeEventData($id))->trended());
     }
 }

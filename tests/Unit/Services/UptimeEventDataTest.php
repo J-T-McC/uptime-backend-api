@@ -23,16 +23,21 @@ class UptimeEventDataTest extends TestCase
     /**
      * @test
      */
-    public function generates_correct_aggregate_trended_weekly()
+    public function generates_correct_aggregate_trended()
     {
         $this->seedTrendData();
         $uptimeEventData = new UptimeEventData();
-        $trended = $uptimeEventData->trendedMonthly();
+        $trended = $uptimeEventData->trended();
 
-        //expected results for 2020 ISO 8601 first two weeks based on test data
         $expectedResults = [
-            'Dec 30 - Jan 05' => "73.6285",
-            'Jan 06 - Jan 12' => "58.6632",
+            'Jan 1st' => "97.2917",
+            'Jan 2nd' => "69.4444",
+            'Jan 3rd' => "27.7778",
+            'Jan 5th' => "100.0000",
+            'Jan 6th' => "99.9306",
+            'Jan 7th' => "0.0000",
+            'Jan 8th' => "65.2778",
+            'Jan 9th' => "69.4444",
         ];
 
         $trended->each(fn($series) => $this->assertTrue($series->percent === $expectedResults[$series->category]));

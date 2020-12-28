@@ -17,27 +17,20 @@ class UptimeEventData
         $this->model = MonitorUptimeEventCount::monitorFilter($monitor);
     }
 
-    public function trendedMonthly()
+    public function trended()
     {
-        //TODO handle weeks that exist in two years
         return $this->model->select(
             DB::raw('ROUND(SUM( up + recovered ) / SUM( up + recovered + down ) * 100, 10)  as percent'),
-            DB::raw('YEAR(filter_date) as filter_year'),
-            //ISO 8601 week
-            DB::raw('WEEK(filter_date, 3) as filter_week')
+            DB::raw('DATE_FORMAT(filter_date, "%b %D") as category'),
+            'filter_date'
         )
             ->groupBy(
-                'filter_year',
-                'filter_week',
+                'filter_date',
+                'category',
             )
-            ->orderBy('filter_year', 'DESC')
-            ->orderBy('filter_week', 'DESC')
-            ->limit(10)
-            ->get()->map(function ($series) {
-                $carbon = new Carbon();
-                $series->category = self::getWeeklyRangeCategory($carbon, $series->filter_year, $series->filter_week);
-                return $series;
-            });
+            ->orderBy('filter_date', 'DESC')
+            ->limit(14)
+            ->get();
     }
 
     public function past90Days()
