@@ -1,4 +1,4 @@
-# Website Uptime & Certificate Monitoring  
+# Website Uptime & Certificate Monitoring API
 
 This is a backend API to be paired with [Uptime VueJS](https://github.com/J-T-McC/uptime-frontend-vue) (or what ever else you want to use it for).
 
@@ -8,7 +8,7 @@ This repository implements:
 * [Laravel Sanctum](https://laravel.com/docs/8.x/sanctum)
 * [Spatie Uptime Monitor](https://github.com/spatie/laravel-uptime-monitor)
 
-You can try it out at [https://uptime.tysonmccarney.com/](https://uptime.tysonmccarney.com/)
+You can try it out at [https://uptime.tysonmccarney.com/](https://uptKime.tysonmccarney.com/)
 
 ## Requirements
  
