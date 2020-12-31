@@ -8,7 +8,7 @@ This repository implements:
 * [Laravel Sanctum](https://laravel.com/docs/8.x/sanctum)
 * [Spatie Uptime Monitor](https://github.com/spatie/laravel-uptime-monitor)
 
-You can try it out at [https://uptime.tysonmccarney.com/](https://uptKime.tysonmccarney.com/)
+You can try it out at [https://uptime.tysonmccarney.com/](https://uptime.tysonmccarney.com/)
 
 ## Requirements
  
