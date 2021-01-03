@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Channel;
 use App\Models\Enums\HttpResponse;
 use App\Models\Monitor;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -27,7 +28,8 @@ class MonitorChannelController extends Controller
             }
         }
         try {
-            Monitor::findOrFail($id)->channels()->sync($attach);
+            //attach channels to monitor if authenticated user owns them (Channel model scope)
+            Monitor::findOrFail($id)->channels()->sync(Channel::whereIn('id', $attach)->pluck('id')->toArray());
         } catch (ModelNotFoundException $e) {
             return response()->json(['message' => 'URL Monitor not found'], HttpResponse::NOT_FOUND);
         }
