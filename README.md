@@ -34,7 +34,7 @@ Some things to make note of while populating your .env:
 
 APP_URL=https://api.my-domain.com
 APP_SPA_URL=https://app.my-domain.com
-SANCTUM_STATEFUL_DOMAINS=https://app.my-domain.com
+SANCTUM_STATEFUL_DOMAINS=app.my-domain.com
 SESSION_DOMAIN=.my-domain.com
 
 ```
