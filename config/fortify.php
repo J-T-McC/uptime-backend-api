@@ -74,7 +74,7 @@ return [
     |
     */
 
-    'prefix' => 'app',
+    'prefix' => '',
 
     'domain' => null,
 
@@ -89,7 +89,7 @@ return [
     |
     */
 
-    'middleware' => ['stateful-api'],
+    'middleware' => ['web'],
 
     /*
     |--------------------------------------------------------------------------
