@@ -38,16 +38,25 @@ class RouteServiceProvider extends ServiceProvider
         $this->configureRateLimiting();
 
         $this->routes(function () {
+            //api routes for mobile application
             Route::prefix('api')
                 ->middleware('api')
                 ->namespace($this->namespace)
                 ->group(base_path('routes/api.php'));
 
+            //authentication routes for mobile application
+            Route::prefix('api')
+                ->middleware('api')
+                ->namespace($this->namespace)
+                ->group(base_path('routes/mobile-auth.php'));
+
+            //api routes enforcing stateful spa middleware
             Route::prefix('app')
                 ->middleware('stateful-api')
                 ->namespace($this->namespace)
                 ->group(base_path('routes/api.php'));
 
+            //stateful fortify auth routes
             Route::middleware('web')
                 ->namespace($this->namespace)
                 ->group(base_path('routes/web.php'));
