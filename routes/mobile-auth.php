@@ -57,10 +57,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
 //    Route::post('/user/confirm-password', [ConfirmablePasswordController::class, 'store']);
 
     if (Features::enabled(Features::emailVerification())) {
-        Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, '__invoke'])
-            ->middleware(['signed', 'throttle:6,1'])
-            ->name('verification.verify');
-
         Route::post('/email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
             ->middleware(['throttle:6,1'])
             ->name('verification.send');
