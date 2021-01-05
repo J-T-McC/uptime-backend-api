@@ -8,7 +8,6 @@ use Illuminate\Validation\ValidationException;
 
 use Laravel\Fortify\Features;
 use Laravel\Fortify\Http\Controllers\PasswordController;
-use Laravel\Fortify\Http\Controllers\VerifyEmailController;
 use Laravel\Fortify\Http\Controllers\NewPasswordController;
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 use Laravel\Fortify\Http\Controllers\PasswordResetLinkController;
