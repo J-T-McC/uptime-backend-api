@@ -12,7 +12,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/authenticated', function () {
         return new \App\Http\Resources\UserResource(auth()->user());
-    })->middleware();
+    });
 
     Route::middleware(['verified'])->group(function () {
         Route::resource('/monitors', \App\Http\Controllers\MonitorController::class);
