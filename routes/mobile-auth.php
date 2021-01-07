@@ -13,7 +13,6 @@ use Laravel\Fortify\Http\Controllers\NewPasswordController;
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 use Laravel\Fortify\Http\Controllers\PasswordResetLinkController;
 use Laravel\Fortify\Http\Controllers\ProfileInformationController;
-use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 use Laravel\Fortify\Http\Controllers\EmailVerificationNotificationController;
 
 Route::post('/sanctum/token', function (Request $request) {
@@ -36,9 +35,6 @@ Route::post('/sanctum/token', function (Request $request) {
     ], \App\Models\Enums\HttpResponse::SUCCESSFUL);
 });
 
-
-Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
-
 if (Features::enabled(Features::registration())) {
     Route::post('/register', [RegisteredUserController::class, 'store'])->middleware(['guest']);
 }
@@ -54,7 +50,10 @@ if (Features::enabled(Features::resetPasswords())) {
 }
 
 Route::middleware(['auth:sanctum'])->group(function () {
-//    Route::post('/user/confirm-password', [ConfirmablePasswordController::class, 'store']);
+
+    Route::post('/logout', function(Request $request) {
+        return $request->user()->currentAccessToken()->delete();
+    })->name('logout');
 
     if (Features::enabled(Features::emailVerification())) {
         Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, '__invoke'])
