@@ -3,11 +3,11 @@
 namespace Tests\Integration\Listeners;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use Spatie\UptimeMonitor\Helpers\ConsoleOutput;
 use Spatie\UptimeMonitor\MonitorCollection;
 use App\Models\MonitorUptimeEventCount;
 use Tests\TestCase;
-
+use Illuminate\Support\Facades\Artisan;
 
 /**
  * @see \App\Listeners\IncrementUptimeCountListener
@@ -17,26 +17,30 @@ class IncrementUptimeCountListenerTest extends TestCase
 
     use RefreshDatabase;
 
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        //initializes ConsoleOutput singleton allowing us to directly call checkUptime on a monitor later
+        Artisan::call('monitor:check-uptime');
+    }
+
     /**
      * @test
      */
     public function increments_uptime_status_failed()
     {
-        $monitor = \App\Models\Monitor::factory()->create();
-        $monitor->url = static::uptimeFail;
+        $monitor = \App\Models\Monitor::factory(['url' => static::uptimeFail])->create();
         $collection = MonitorCollection::make([$monitor]);
 
-        //no count record for this monitor
         $this->assertTrue(empty(MonitorUptimeEventCount::where('monitor_id', $monitor->id)->first()));
 
         $collection->checkUptime();
 
-        //record exists and incremented by 1
         $this->assertTrue(MonitorUptimeEventCount::where('monitor_id', $monitor->id)->first()->down === 1);
 
         $collection->checkUptime();
 
-        //incremented by 2
         $this->assertTrue(MonitorUptimeEventCount::where('monitor_id', $monitor->id)->first()->down === 2);
 
     }
@@ -50,17 +54,14 @@ class IncrementUptimeCountListenerTest extends TestCase
         $monitor->url = static::uptimeSucceed;
         $collection = MonitorCollection::make([$monitor]);
 
-        //no count record for this monitor
         $this->assertTrue(empty(MonitorUptimeEventCount::where('monitor_id', $monitor->id)->first()));
 
         $collection->checkUptime();
 
-        //record exists and incremented by 1
         $this->assertTrue(MonitorUptimeEventCount::where('monitor_id', $monitor->id)->first()->up === 1);
 
         $collection->checkUptime();
 
-        //incremented by 2
         $this->assertTrue(MonitorUptimeEventCount::where('monitor_id', $monitor->id)->first()->up === 2);
     }
 
@@ -83,7 +84,6 @@ class IncrementUptimeCountListenerTest extends TestCase
         $collection = MonitorCollection::make([$monitor]);
         $collection->checkUptime();
 
-        //record exists and incremented by 1
         $this->assertTrue(MonitorUptimeEventCount::where('monitor_id', $monitor->id)->first()->recovered === 1);
 
         $monitor->url = static::uptimeFail;
@@ -94,7 +94,6 @@ class IncrementUptimeCountListenerTest extends TestCase
         $collection = MonitorCollection::make([$monitor]);
         $collection->checkUptime();
 
-        //incremented by 2
         $this->assertTrue(MonitorUptimeEventCount::where('monitor_id', $monitor->id)->first()->recovered === 2);
     }
 
