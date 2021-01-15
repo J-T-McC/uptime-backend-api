@@ -40,11 +40,11 @@ SESSION_DOMAIN=.my-domain.com
 
 ```
 
-To start the uptime checks, create a cron job to run the scheduler:
+To start the uptime and certificate checks, create a cron job to run the scheduler:
 
 ```shell script
 
-php7.4 /home/forge/api.mydomain.com/artisan schedule:run
+php artisan schedule:run
 
 ```
 
