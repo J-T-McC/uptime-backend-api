@@ -47,8 +47,21 @@ class UptimeEventDataTest extends TestCase
     /**
      * @test
      */
-    public function seedGroupedData()
+    public function generates_correct_aggregate_90days()
     {
+        $this->seed90DayData();
+        $uptimeEventData = new UptimeEventData();
+        $results =  $uptimeEventData->past90Days();
+
+        $expectedResults = [
+            'Down' => "0.0694",
+            'Up' => "99.9306",
+        ];
+
+        $results->each(fn($series) => $this->assertTrue($series->percent === $expectedResults[$series->category]));
+    }
+
+    public function seed90DayData() {
         $this->refreshDatabase();
 
         $user = \App\Models\User::factory()->create();
@@ -65,21 +78,11 @@ class UptimeEventDataTest extends TestCase
                 'recovered' => 1,
             ]);
         }
-
-        $uptimeEventData = new UptimeEventData();
-        $results =  $uptimeEventData->past90Days();
-
-        $expectedResults = [
-            'Down' => "0.0694",
-            'Up' => "99.9306",
-        ];
-
-        $results->each(fn($series) => $this->assertTrue($series->percent === $expectedResults[$series->category]));
     }
-
 
     public function seedTrendData()
     {
+        $this->refreshDatabase();
 
         $seedData = [
             //73.6285

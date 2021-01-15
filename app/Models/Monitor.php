@@ -53,8 +53,7 @@ class Monitor extends SpatieMonitor
      * See @Spatie\UptimeMonitor\Models\Traits\SupportsUptimeCheck
      * @param string $reason
      */
-
-    public function uptimeCheckFailed(string $reason)
+    public function uptimeCheckFailed(string $reason) : void
     {
         parent::uptimeCheckFailed($reason);
 
