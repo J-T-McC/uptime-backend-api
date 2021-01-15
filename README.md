@@ -1,4 +1,5 @@
 # Website Uptime & Certificate Monitoring API
+![run-tests](https://github.com/J-T-McC/uptime-backend-api/workflows/run-tests/badge.svg?branch=main)
 
 This is a backend API to be paired with [Uptime VueJS](https://github.com/J-T-McC/uptime-frontend-vue) (or what ever else you want to use it for).
 
@@ -12,7 +13,7 @@ You can try it out at [https://uptime.tysonmccarney.com/](https://uptime.tysonmc
 
 ## Requirements
  
-* PHP ^7.4
+* PHP ^7.4|^8.0
  
 ## Installation
 
