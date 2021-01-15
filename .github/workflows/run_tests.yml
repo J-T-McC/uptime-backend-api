@@ -15,21 +15,23 @@ jobs:
         php-versions: [ '7.4', '8.0' ]
 
     services:
-      mysql-service:
+      mysql:
         image: mysql:8.0
         env:
-          MYSQL_ALLOW_EMPTY_PASSWORD: yes
           MYSQL_DATABASE: laravel
+          MYSQL_USER: user
+          MYSQL_PASSWORD: secret
+          MYSQL_ROOT_PASSWORD: secretroot
         ports:
           - 3306
-        options: >-
-          --health-cmd="mysqladmin ping"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=3
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     name: PHP ${{ matrix.php-versions }} test on ${{ matrix.operating-system }}
     steps:
+      - run: |
+          mysql --version
+          sudo apt-get install -y mysql-client
+          mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports['3306'] }} -uuser -psecret -e "SHOW DATABASES"
       - uses: shivammathur/setup-php@b7d1d9c9a92d8d8463ce36d7f60da34d461724f8
         with:
           php-version: ${{ matrix.php-versions }}
@@ -44,9 +46,11 @@ jobs:
         run: chmod -R 777 storage bootstrap/cache
       - name: Execute tests (Unit and Feature tests) via PHPUnit
         env:
-          DB_PORT: 3306
+          DB_PORT: ${{ job.services.mysql.ports[3306] }}
           DB_CONNECTION: mysql
-          DB_USERNAME: root
+          DB_USERNAME: user
+          DB_PASSWORD: secret
           DB_DATABASE: laravel
-          DB_HOST: 127.0.0.1
-        run: vendor/bin/phpunit
+        run: |
+          php artisan migrate
+          vendor/bin/phpunit
