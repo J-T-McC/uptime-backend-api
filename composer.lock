@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6af3c9e0fa6932683667dcff2f75a01c",
+    "content-hash": "9da6e9ab3609c7cf9a425049a75d2ec9",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1057,16 +1057,16 @@
         },
         {
             "name": "jtmcc/atomic-deployments",
-            "version": "v0.0.2",
+            "version": "v0.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/J-T-McC/laravel-atomic-deployments.git",
-                "reference": "34836294734dc3dd56070bcbe59a82fd4dadb5fc"
+                "reference": "59dd574415438b57253d2250cb402e230a2df986"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/J-T-McC/laravel-atomic-deployments/zipball/34836294734dc3dd56070bcbe59a82fd4dadb5fc",
-                "reference": "34836294734dc3dd56070bcbe59a82fd4dadb5fc",
+                "url": "https://api.github.com/repos/J-T-McC/laravel-atomic-deployments/zipball/59dd574415438b57253d2250cb402e230a2df986",
+                "reference": "59dd574415438b57253d2250cb402e230a2df986",
                 "shasum": ""
             },
             "require": {
@@ -1107,9 +1107,9 @@
             "description": "Local zero downtime deployments for Laravel applications",
             "support": {
                 "issues": "https://github.com/J-T-McC/laravel-atomic-deployments/issues",
-                "source": "https://github.com/J-T-McC/laravel-atomic-deployments/tree/v0.0.2"
+                "source": "https://github.com/J-T-McC/laravel-atomic-deployments/tree/v0.1.1"
             },
-            "time": "2021-01-20T03:57:39+00:00"
+            "time": "2021-01-21T05:06:34+00:00"
         },
         {
             "name": "laravel/fortify",
@@ -5419,16 +5419,16 @@
         },
         {
             "name": "vlucas/phpdotenv",
-            "version": "v5.2.0",
+            "version": "v5.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vlucas/phpdotenv.git",
-                "reference": "fba64139db67123c7a57072e5f8d3db10d160b66"
+                "reference": "b3eac5c7ac896e52deab4a99068e3f4ab12d9e56"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/fba64139db67123c7a57072e5f8d3db10d160b66",
-                "reference": "fba64139db67123c7a57072e5f8d3db10d160b66",
+                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/b3eac5c7ac896e52deab4a99068e3f4ab12d9e56",
+                "reference": "b3eac5c7ac896e52deab4a99068e3f4ab12d9e56",
                 "shasum": ""
             },
             "require": {
@@ -5443,7 +5443,7 @@
             "require-dev": {
                 "bamarni/composer-bin-plugin": "^1.4.1",
                 "ext-filter": "*",
-                "phpunit/phpunit": "^7.5.20 || ^8.5.2 || ^9.0"
+                "phpunit/phpunit": "^7.5.20 || ^8.5.14 || ^9.5.1"
             },
             "suggest": {
                 "ext-filter": "Required to use the boolean validator."
@@ -5451,7 +5451,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "5.2-dev"
+                    "dev-master": "5.3-dev"
                 }
             },
             "autoload": {
@@ -5483,7 +5483,7 @@
             ],
             "support": {
                 "issues": "https://github.com/vlucas/phpdotenv/issues",
-                "source": "https://github.com/vlucas/phpdotenv/tree/v5.2.0"
+                "source": "https://github.com/vlucas/phpdotenv/tree/v5.3.0"
             },
             "funding": [
                 {
@@ -5495,7 +5495,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-09-14T15:57:31+00:00"
+            "time": "2021-01-20T15:23:13+00:00"
         },
         {
             "name": "voku/portable-ascii",

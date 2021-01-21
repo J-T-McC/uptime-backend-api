@@ -25,5 +25,14 @@ return [
      * Max number of build directories allowed
      * Once limit is hit, old deployments will be removed automatically after a successful build
      */
-    'build-limit' => 5
+    'build-limit' => 5,
+
+    /**
+     * Migrate files|folders from the outgoing production build to your new release using a relative path and pattern
+     * @see https://www.php.net/manual/en/function.glob.php
+     */
+    'migrate' => [
+        'storage/framework/sessions/*',
+    ]
+
 ];
