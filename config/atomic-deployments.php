@@ -33,6 +33,14 @@ return [
      */
     'migrate' => [
         'storage/framework/sessions/*',
-    ]
+    ],
+
+    /**
+     * Deployment class used.
+     *
+     * Add custom deployments by implementing @see \JTMcC\AtomicDeployments\Interfaces\DeploymentInterface
+     * and adding your class to this config property
+     */
+    'deployment-class' => \JTMcC\AtomicDeployments\Services\Deployment::class,
 
 ];
