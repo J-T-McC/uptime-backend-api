@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ca0e20f861ed9019a10be7093218ff9e",
+    "content-hash": "0fb917a9d9b6afdbdb1bf31e07e37a6a",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1057,16 +1057,16 @@
         },
         {
             "name": "jtmcc/atomic-deployments",
-            "version": "v0.2.1",
+            "version": "v0.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/J-T-McC/laravel-atomic-deployments.git",
-                "reference": "0b0f893babda914e6e61700c52ee1ce32348415b"
+                "reference": "92e0279ae096111ffba7af1ce1ce52abb631f318"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/J-T-McC/laravel-atomic-deployments/zipball/0b0f893babda914e6e61700c52ee1ce32348415b",
-                "reference": "0b0f893babda914e6e61700c52ee1ce32348415b",
+                "url": "https://api.github.com/repos/J-T-McC/laravel-atomic-deployments/zipball/92e0279ae096111ffba7af1ce1ce52abb631f318",
+                "reference": "92e0279ae096111ffba7af1ce1ce52abb631f318",
                 "shasum": ""
             },
             "require": {
@@ -1107,9 +1107,9 @@
             "description": "Local zero downtime deployments for Laravel applications",
             "support": {
                 "issues": "https://github.com/J-T-McC/laravel-atomic-deployments/issues",
-                "source": "https://github.com/J-T-McC/laravel-atomic-deployments/tree/v0.2.1"
+                "source": "https://github.com/J-T-McC/laravel-atomic-deployments/tree/v0.3.1"
             },
-            "time": "2021-01-22T23:34:34+00:00"
+            "time": "2021-01-24T03:43:36+00:00"
         },
         {
             "name": "laravel/fortify",

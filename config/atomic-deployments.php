@@ -43,4 +43,14 @@ return [
      */
     'deployment-class' => \JTMcC\AtomicDeployments\Services\Deployment::class,
 
+    /**
+     * Logic used when creating a deployment directory
+     *
+     * Default => git - uses hash for current HEAD
+     * Options: [ git, rand ]
+     *
+     * If your build does not use git, use rand.
+     */
+    'directory-naming' => 'git'
+
 ];
