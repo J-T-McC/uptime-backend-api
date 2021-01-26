@@ -47,7 +47,7 @@ return [
      * Logic used when creating a deployment directory
      *
      * Default => git - uses hash for current HEAD
-     * Options: [ git, rand ]
+     * Options: [ git, datetime, rand ]
      *
      * If your build does not use git, use rand.
      */
