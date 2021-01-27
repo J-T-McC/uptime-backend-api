@@ -11,8 +11,8 @@ abstract class TestCase extends BaseTestCase
 
     const badSSL = 'https://expired.badssl.com';
     const validSSL = 'https://google.com';
-    const uptimeFail = 'https://httpstat.us/500';
-    const uptimeSucceed = 'https://httpstat.us/200';
+    const uptimeFail = 'https://test-response.tysonmccarney.com/500';
+    const uptimeSucceed = 'https://test-response.tysonmccarney.com/200';
 
 
 }
