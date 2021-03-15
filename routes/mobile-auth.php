@@ -56,13 +56,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
     })->name('logout');
 
     if (Features::enabled(Features::emailVerification())) {
-        Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, '__invoke'])
-            ->middleware(['signed', 'throttle:6,1'])
-            ->name('verification.verify');
-
-        Route::post('/email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
-            ->middleware(['throttle:6,1'])
-            ->name('verification.send');
+//        Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, '__invoke'])
+//            ->middleware(['signed', 'throttle:6,1'])
+//            ->name('verification.verify');
+//
+//        Route::post('/email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
+//            ->middleware(['throttle:6,1'])
+//            ->name('verification.send');
     }
 
     if (Features::enabled(Features::updateProfileInformation())) {
