@@ -34,7 +34,7 @@ class UptimeCheckSucceeded extends SpatieUptimeCheckSucceeded
     public function toDiscord()
     {
         return (new  \App\Services\Channels\Discord\DiscordMessage())
-            ->error()
+            ->success()
             ->title($this->getMessageText())
             ->description([
                 $this->getMessageText()

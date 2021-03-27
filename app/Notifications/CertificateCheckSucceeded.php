@@ -24,7 +24,7 @@ class CertificateCheckSucceeded extends SpatieCertificateCheckSucceeded
     public function toDiscord()
     {
         return (new  \App\Services\Channels\Discord\DiscordMessage())
-            ->error()
+            ->success()
             ->title($this->getMessageText())
             ->description([
                 "Expires {$this->getMonitor()->formattedCertificateExpirationDate('forHumans')}"
