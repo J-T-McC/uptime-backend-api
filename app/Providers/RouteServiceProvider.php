@@ -50,12 +50,6 @@ class RouteServiceProvider extends ServiceProvider
                 ->namespace($this->namespace)
                 ->group(base_path('routes/mobile-auth.php'));
 
-            //api routes enforcing stateful spa middleware
-            Route::prefix('app')
-                ->middleware('stateful-api')
-                ->namespace($this->namespace)
-                ->group(base_path('routes/api.php'));
-
             //stateful fortify auth routes
             Route::middleware('web')
                 ->namespace($this->namespace)
