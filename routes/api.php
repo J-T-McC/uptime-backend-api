@@ -25,8 +25,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::apiResource('/channels', ChannelController::class);
         Route::put('/monitors-channels/{monitor}', [MonitorChannelController::class, 'associate']);
 
-        Route::apiResource('/event-counts-trended', EventCountsTrendedController::class, ['GET']);
-        Route::apiResource('/event-counts-grouped', EventCountsGroupedController::class, ['GET']);
+        Route::get('/event-counts-trended', [EventCountsTrendedController::class, 'index']);
+        Route::get('/event-counts-trended/{monitor}', [EventCountsTrendedController::class, 'show']);
+        Route::get('/event-counts-grouped', [EventCountsGroupedController::class, 'index']);
+        Route::get('/event-counts-grouped/{monitor}', [EventCountsGroupedController::class, 'show']);
+
         Route::apiResource('/latest-monitor-events', LatestMonitorEventsController::class, ['GET']);
     });
 });
