@@ -2,13 +2,12 @@
 
 namespace Tests\Unit\Services;
 
+use App\Models\Monitor;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use App\Services\UptimeEventData;
 use App\Models\MonitorUptimeEventCount;
-
-use Tests\Fixtures\Models\Car;
 use Tests\TestCase;
 
 /**
@@ -16,9 +15,7 @@ use Tests\TestCase;
  */
 class UptimeEventDataTest extends TestCase
 {
-
     use RefreshDatabase;
-
 
     /**
      * @test
@@ -43,7 +40,6 @@ class UptimeEventDataTest extends TestCase
         $trended->each(fn($series) => $this->assertTrue($series->percent === $expectedResults[$series->category]));
     }
 
-
     /**
      * @test
      */
@@ -51,7 +47,7 @@ class UptimeEventDataTest extends TestCase
     {
         $this->seed90DayData();
         $uptimeEventData = new UptimeEventData();
-        $results =  $uptimeEventData->past90Days();
+        $results = $uptimeEventData->past90Days();
 
         $expectedResults = [
             'Down' => "0.0694",
@@ -61,17 +57,13 @@ class UptimeEventDataTest extends TestCase
         $results->each(fn($series) => $this->assertTrue($series->percent === $expectedResults[$series->category]));
     }
 
-    public function seed90DayData() {
+    public function seed90DayData()
+    {
         $this->refreshDatabase();
-
-        $user = \App\Models\User::factory()->create();
-        $monitor = \App\Models\Monitor::factory()->create();
 
         for ($i = 0; $i < 100; $i++) {
             $date = Carbon::now('UTC')->subDays($i)->format('Y-m-d');
             MonitorUptimeEventCount::factory()->create([
-                'monitor_id' => $monitor->id,
-                'user_id' => $user->id,
                 'filter_date' => $date,
                 'up' => 1438,
                 'down' => 1,
@@ -130,19 +122,10 @@ class UptimeEventDataTest extends TestCase
             ],
         ];
 
-        $user = \App\Models\User::factory()->create();
-        $monitor = \App\Models\Monitor::factory()->create();
-
         foreach ($seedData as $date => $counts) {
-            MonitorUptimeEventCount::factory()->create(array_merge(
-                [
-                    'monitor_id' => $monitor->id,
-                    'user_id' => $user->id,
-                    'filter_date' => $date
-                ], $counts
-            ));
+            MonitorUptimeEventCount::factory()->create(array_merge([
+                'filter_date' => $date
+            ], $counts));
         }
     }
-
-
 }

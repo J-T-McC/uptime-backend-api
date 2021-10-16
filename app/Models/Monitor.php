@@ -22,7 +22,7 @@ class Monitor extends SpatieMonitor
         'url',
         'uptime_check_enabled',
         'certificate_check_enabled',
-        'look_for_string'
+        'look_for_string',
     ];
 
     public function user(): BelongsTo
