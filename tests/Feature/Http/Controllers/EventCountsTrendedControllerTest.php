@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Models\MonitorEvent;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\AuthenticatedTestCase;
 
 /**
@@ -18,16 +18,13 @@ class EventCountsTrendedControllerTest extends AuthenticatedTestCase
      */
     public function index_returns_an_ok_response()
     {
-
-        \App\Models\MonitorEvent::factory([
+        MonitorEvent::factory([
             'user_id' => $this->testUser->id
         ])->count(10)->create();
 
         $response = $this->get(route('event-counts-trended.index'));
 
         $response->assertOk();
-
-        // TODO: perform additional assertions
     }
 
     /**
@@ -35,12 +32,10 @@ class EventCountsTrendedControllerTest extends AuthenticatedTestCase
      */
     public function show_returns_an_ok_response()
     {
-        $event = \App\Models\MonitorEvent::factory([
+        $event = MonitorEvent::factory([
             'user_id' => $this->testUser->id
         ])->create();
-        $response = $this->get(route('event-counts-trended.show', ['event_counts_trended' => $event->monitor_id]));
+        $response = $this->get(route('event-counts-trended.show', $event->monitor));
         $response->assertOk();
     }
-
-    // test cases...
 }

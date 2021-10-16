@@ -2,10 +2,9 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Models\MonitorEvent;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\AuthenticatedTestCase;
-use Tests\TestCase;
 
 /**
  * @see \App\Http\Controllers\LatestMonitorEventsController
@@ -19,12 +18,9 @@ class LatestMonitorEventsControllerTest extends AuthenticatedTestCase
      */
     public function index_returns_an_ok_response()
     {
-
         $response = $this->get(route('latest-monitor-events.index'));
 
         $response->assertOk();
-
-        // TODO: perform additional assertions
     }
 
     /**
@@ -32,15 +28,10 @@ class LatestMonitorEventsControllerTest extends AuthenticatedTestCase
      */
     public function show_returns_an_ok_response()
     {
+        $event = MonitorEvent::factory()->create();
 
-        $event = \App\Models\MonitorEvent::factory()->create();
-
-        $response = $this->get(route('latest-monitor-events.show', ['latest_monitor_event' => $event->monitor_id]));
+        $response = $this->get(route('latest-monitor-events.show', $event->monitor));
 
         $response->assertOk();
-
-        // TODO: perform additional assertions
     }
-
-    // test cases...
 }

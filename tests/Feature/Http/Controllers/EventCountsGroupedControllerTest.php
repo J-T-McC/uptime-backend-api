@@ -2,10 +2,9 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Models\MonitorEvent;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\AuthenticatedTestCase;
-use Tests\TestCase;
 
 /**
  * @see \App\Http\Controllers\EventCountsGroupedController
@@ -28,11 +27,10 @@ class EventCountsGroupedControllerTest extends AuthenticatedTestCase
      */
     public function show_returns_an_ok_response()
     {
-        $event = \App\Models\MonitorEvent::factory([
+        $event = MonitorEvent::factory([
             'user_id' => $this->testUser->id
         ])->create();
-        $response = $this->get(route('event-counts-grouped.show', ['event_counts_grouped' => $event->monitor_id]));
+        $response = $this->get(route('event-counts-grouped.show', $event->monitor));
         $response->assertOk();
     }
-
 }

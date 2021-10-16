@@ -7,12 +7,10 @@ use App\Models\Scopes\OwnerScope;
 
 trait UsesOwnerScope
 {
-
     protected static function bootUsesOwnerScope()
     {
-        if(!app()->runningInConsole()) {
+        if (!app()->runningInConsole()) {
             static::addGlobalScope(new OwnerScope);
         }
     }
-
 }

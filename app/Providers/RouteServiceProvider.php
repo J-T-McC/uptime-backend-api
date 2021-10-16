@@ -44,12 +44,6 @@ class RouteServiceProvider extends ServiceProvider
                 ->namespace($this->namespace)
                 ->group(base_path('routes/api.php'));
 
-            //authentication routes for mobile application
-            Route::prefix('api')
-                ->middleware('api')
-                ->namespace($this->namespace)
-                ->group(base_path('routes/mobile-auth.php'));
-
             //stateful fortify auth routes
             Route::middleware('web')
                 ->namespace($this->namespace)

@@ -29,6 +29,6 @@ class MonitorChannelControllerTest extends AuthenticatedTestCase
 
         $response = $this->put(route('monitors-channels.update', $monitor), $body);
 
-        $response->assertOk();
+        $response->assertNoContent();
     }
 }

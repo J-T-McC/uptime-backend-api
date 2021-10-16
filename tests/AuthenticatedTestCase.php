@@ -2,18 +2,19 @@
 
 namespace Tests;
 
+use App\Models\User;
+use Laravel\Sanctum\Sanctum;
+
 abstract class AuthenticatedTestCase extends TestCase
 {
-
-    protected $testUser;
+    protected User $testUser;
 
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->testUser = \App\Models\User::factory()->create();
+        $this->testUser = User::factory()->create();
 
-        $this->actingAs($this->testUser);
+        Sanctum::actingAs($this->testUser);
     }
-
 }

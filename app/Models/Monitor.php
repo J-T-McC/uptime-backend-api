@@ -9,6 +9,9 @@ use App\Models\Enums\UptimeStatus;
 use App\Models\Traits\UsesOwnerScope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\UptimeMonitor\Models\Monitor as SpatieMonitor;
 
 class Monitor extends SpatieMonitor
@@ -22,22 +25,22 @@ class Monitor extends SpatieMonitor
         'look_for_string'
     ];
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function channels()
+    public function channels(): BelongsToMany
     {
         return $this->belongsToMany(Channel::class);
     }
 
-    public function monitorEvents()
+    public function monitorEvents(): HasMany
     {
         return $this->hasMany(MonitorEvent::class);
     }
 
-    public function uptimeEventCounts()
+    public function uptimeEventCounts(): HasMany
     {
         return $this->hasMany(MonitorUptimeEventCount::class);
     }

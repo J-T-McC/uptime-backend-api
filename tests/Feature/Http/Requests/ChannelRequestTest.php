@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Requests;
 
+use App\Models\Channel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\AuthenticatedTestCase;
@@ -17,9 +18,10 @@ class ChannelRequestTest extends AuthenticatedTestCase
     /**
      * @test
      */
-    public function store_requires_unique_type_and_endpoint() {
+    public function store_requires_unique_type_and_endpoint()
+    {
 
-        $channel = \App\Models\Channel::factory([
+        $channel = Channel::factory([
             'user_id' => $this->testUser->id,
             'type' => 'mail',
             'endpoint' => $this->faker->safeEmail,
@@ -33,7 +35,7 @@ class ChannelRequestTest extends AuthenticatedTestCase
         $response->assertStatus(422);
 
         //make channel to insert
-        $secondChannel = \App\Models\Channel::factory([
+        $secondChannel = Channel::factory([
             'user_id' => $this->testUser->id,
             'type' => 'mail',
             'endpoint' => $this->faker->safeEmail,
@@ -44,22 +46,22 @@ class ChannelRequestTest extends AuthenticatedTestCase
             'endpoint' => $secondChannel->endpoint
         ], ['Accept' => "application/json"]);
 
-        $secondResponse->assertOk();
-
+        $secondResponse->assertCreated();
     }
 
     /**
      * @test
      */
-    public function update_requires_unique_type_and_endpoint() {
+    public function update_requires_unique_type_and_endpoint()
+    {
 
-        $conflictingChannel = \App\Models\Channel::factory([
+        $conflictingChannel = Channel::factory([
             'user_id' => $this->testUser->id,
             'type' => 'mail',
             'endpoint' => $this->faker->safeEmail,
         ])->create();
 
-        $updateChannel = \App\Models\Channel::factory([
+        $updateChannel = Channel::factory([
             'user_id' => $this->testUser->id,
             'type' => 'mail',
             'endpoint' => $this->faker->safeEmail,
@@ -78,14 +80,13 @@ class ChannelRequestTest extends AuthenticatedTestCase
         ], ['Accept' => "application/json"]);
 
         $response->assertOk();
-
     }
 
     /**
      * @test
      */
-    public function slack_endpoint_requires_url() {
-
+    public function slack_endpoint_requires_url()
+    {
         $response = $this->post(route('channels.store'), [
             'type' => 'slack',
             'endpoint' => 'not a url'
@@ -98,14 +99,14 @@ class ChannelRequestTest extends AuthenticatedTestCase
             'endpoint' => 'http://example.com'
         ], ['Accept' => "application/json"]);
 
-        $secondResponse->assertOk();
+        $secondResponse->assertCreated();
     }
 
     /**
      * @test
      */
-    public function discord_endpoint_requires_url() {
-
+    public function discord_endpoint_requires_url()
+    {
         $response = $this->post(route('channels.store'), [
             'type' => 'discord',
             'endpoint' => 'not a url'
@@ -118,14 +119,14 @@ class ChannelRequestTest extends AuthenticatedTestCase
             'endpoint' => 'http://example.com'
         ], ['Accept' => "application/json"]);
 
-        $secondResponse->assertOk();
+        $secondResponse->assertCreated();
     }
 
     /**
      * @test
      */
-    public function mail_endpoint_requires_email() {
-
+    public function mail_endpoint_requires_email()
+    {
         $response = $this->post(route('channels.store'), [
             'type' => 'mail',
             'endpoint' => 'not an email'
@@ -138,7 +139,6 @@ class ChannelRequestTest extends AuthenticatedTestCase
             'endpoint' => $this->faker->safeEmail
         ], ['Accept' => "application/json"]);
 
-        $secondResponse->assertOk();
+        $secondResponse->assertCreated();
     }
-
 }

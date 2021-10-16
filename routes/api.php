@@ -24,14 +24,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::middleware(['verified'])->group(function () {
         Route::apiResource('/monitors', MonitorController::class);
         Route::apiResource('/channels', ChannelController::class);
-        Route::put('/monitors-channels/{monitor}', [MonitorChannelController::class, 'associate']);
+        Route::put('/monitors-channels/{monitor}', [MonitorChannelController::class, 'update'])->name('monitors-channels.update');
 
-        Route::get('/event-counts-trended', [EventCountsTrendedController::class, 'index']);
-        Route::get('/event-counts-trended/{monitor}', [EventCountsTrendedController::class, 'show']);
-        Route::get('/event-counts-grouped', [EventCountsGroupedController::class, 'index']);
-        Route::get('/event-counts-grouped/{monitor}', [EventCountsGroupedController::class, 'show']);
+        Route::get('/event-counts-trended', [EventCountsTrendedController::class, 'index'])->name('event-counts-trended.index');
+        Route::get('/event-counts-trended/{monitor}', [EventCountsTrendedController::class, 'show'])->name('event-counts-trended.show');
+        Route::get('/event-counts-grouped', [EventCountsGroupedController::class, 'index'])->name('event-counts-grouped.index');
+        Route::get('/event-counts-grouped/{monitor}', [EventCountsGroupedController::class, 'show'])->name('event-counts-grouped.show');
 
-        Route::get('/latest-monitor-events',  [LatestMonitorEventsController::class, 'index']);
-        Route::get('/latest-monitor-events/{monitor}',  [LatestMonitorEventsController::class, 'show']);
+        Route::get('/latest-monitor-events', [LatestMonitorEventsController::class, 'index'])->name('latest-monitor-events.index');
+        Route::get('/latest-monitor-events/{monitor}', [LatestMonitorEventsController::class, 'show'])->name('latest-monitor-events.show');
     });
 });

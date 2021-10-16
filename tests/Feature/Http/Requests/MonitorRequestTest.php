@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Requests;
 
+use App\Models\Monitor;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\AuthenticatedTestCase;
@@ -11,7 +12,6 @@ use Tests\AuthenticatedTestCase;
  */
 class MonitorRequestTest extends AuthenticatedTestCase
 {
-
     use RefreshDatabase, WithFaker;
 
     /**
@@ -19,7 +19,7 @@ class MonitorRequestTest extends AuthenticatedTestCase
      */
     public function store_requires_unique_url_and_user() {
 
-        $channel = \App\Models\Monitor::factory([
+        $channel = Monitor::factory([
             'user_id' => $this->testUser->id,
             'url' => 'http://example.com',
         ])->create();
@@ -36,8 +36,7 @@ class MonitorRequestTest extends AuthenticatedTestCase
             'url' => 'http://google.com',
         ], ['Accept' => "application/json"]);
 
-        $secondResponse->assertOk();
-
+        $secondResponse->assertCreated();
     }
 
     /**
@@ -45,12 +44,12 @@ class MonitorRequestTest extends AuthenticatedTestCase
      */
     public function update_requires_unique_type_and_endpoint() {
 
-        $conflictingMonitor = \App\Models\Monitor::factory([
+        $conflictingMonitor = Monitor::factory([
             'user_id' => $this->testUser->id,
             'url' => 'http://example.com',
         ])->create();
 
-        $updateMonitor = \App\Models\Monitor::factory([
+        $updateMonitor = Monitor::factory([
             'user_id' => $this->testUser->id,
             'url' => 'http://google.com',
         ])->create();
@@ -69,5 +68,4 @@ class MonitorRequestTest extends AuthenticatedTestCase
 
         $response->assertOk();
     }
-
 }

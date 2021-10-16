@@ -15,7 +15,7 @@ class MonitorChannelController extends Controller
      * @param Monitor $monitor
      * @return Response
      */
-    public function associate(Request $request, Monitor $monitor): Response
+    public function update(Request $request, Monitor $monitor): Response
     {
         $channelsToAttach = [];
         foreach ($request->all() as $input => $value) {
