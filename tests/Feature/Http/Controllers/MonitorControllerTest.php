@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Models\Monitor;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\AuthenticatedTestCase;
@@ -13,78 +14,64 @@ class MonitorControllerTest extends AuthenticatedTestCase
 {
     use RefreshDatabase, WithFaker;
 
-
     /**
      * @test
      */
-    public function destroy_returns_an_ok_response()
+    public function it_deletes_monitors()
     {
-        $monitor = \App\Models\Monitor::factory()->create();
+        $monitor = Monitor::factory()->create();
 
-        $response = $this->delete(route('monitors.destroy', ['monitor' => $monitor->id]));
+        $response = $this->deleteJson(route('monitors.destroy', $monitor));
 
-        $response->assertOk();
+        $response->assertNoContent();
         $this->assertDeleted($monitor);
-
     }
 
     /**
      * @test
      */
-    public function index_returns_an_ok_response()
+    public function it_lists_monitors()
     {
-        $response = $this->get(route('monitors.index'));
+        $response = $this->getJson(route('monitors.index'));
 
         $response->assertOk();
-
-        // TODO: perform additional assertions
     }
 
     /**
      * @test
      */
-    public function show_returns_an_ok_response()
+    public function it_shows_monitors()
     {
-        $monitor = \App\Models\Monitor::factory()->create();
+        $monitor = Monitor::factory()->create();
 
-        $response = $this->get(route('monitors.show', [$monitor]));
+        $response = $this->getJson(route('monitors.show', [$monitor]));
 
         $response->assertOk();
-
-        // TODO: perform additional assertions
     }
 
     /**
      * @test
      */
-    public function store_returns_an_ok_response()
+    public function it_stores_monitors()
     {
+        $response = $this->postJson(route('monitors.store'), [
+            'url' => 'http://example.com'
+        ]);
 
-        $response = $this->post(route('monitors.store'), [
+        $response->assertCreated();
+    }
+
+    /**
+     * @test
+     */
+    public function it_updates_monitors()
+    {
+        $monitor = Monitor::factory()->create();
+
+        $response = $this->putJson(route('monitors.update', ['monitor' => $monitor->id]), [
             'url' => 'http://example.com'
         ]);
 
         $response->assertOk();
-
-        // TODO: perform additional assertions
     }
-
-    /**
-     * @test
-     */
-    public function update_returns_an_ok_response()
-    {
-
-        $monitor = \App\Models\Monitor::factory()->create();
-
-        $response = $this->put(route('monitors.update', ['monitor' => $monitor->id]), [
-           'url' => 'http://example.com'
-        ]);
-
-        $response->assertOk();
-
-        // TODO: perform additional assertions
-    }
-
-    // test cases...
 }

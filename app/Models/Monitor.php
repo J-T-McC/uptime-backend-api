@@ -30,7 +30,6 @@ class Monitor extends SpatieMonitor
         return $this->hasMany(MonitorEvent::class);
     }
 
-
     public function uptimeEventCounts() {
         return $this->hasMany(MonitorUptimeEventCount::class);
     }

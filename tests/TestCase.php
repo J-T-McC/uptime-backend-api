@@ -14,5 +14,4 @@ abstract class TestCase extends BaseTestCase
     const uptimeFail = 'https://test-response.tysonmccarney.com/500';
     const uptimeSucceed = 'https://test-response.tysonmccarney.com/200';
 
-
 }

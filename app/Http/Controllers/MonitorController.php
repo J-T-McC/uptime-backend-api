@@ -3,82 +3,74 @@
 namespace App\Http\Controllers;
 
 use App\Models\Monitor;
-use App\Models\Enums\HttpResponse;
-
 use App\Http\Requests\MonitorRequest;
 use App\Http\Resources\MonitorResource;
-
-use Illuminate\Http\JsonResponse;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Response;
 
 class MonitorController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     * List the resource.
+     *
+     * @return AnonymousResourceCollection
      */
-    public function index()
+    public function index(): AnonymousResourceCollection
     {
-        return MonitorResource::collection(Monitor::orderBy('uptime_status')->orderBy('created_at', 'DESC')->get());
+        return MonitorResource::collection(
+            Monitor::query()->orderBy('uptime_status')->latest()->get()
+        );
     }
 
     /**
-     * Store a newly created resource in storage.
-     * @param MonitorRequest $request
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
-     */
-    public function store(MonitorRequest $request)
-    {
-        $monitor = auth()->user()->monitors()->create($request->validated());
-        return MonitorResource::collection([$monitor]);
-    }
-
-    /**
-     * Display the specified resource.
-     * @param int $id
-     * @return JsonResponse|\Illuminate\Http\Resources\Json\AnonymousResourceCollection
-     */
-    public function show(int $id)
-    {
-        try {
-            return MonitorResource::collection([Monitor::findOrFail($id)]);
-        } catch (ModelNotFoundException $e) {
-            return response()->json(['message' => 'URL Monitor not found'], HttpResponse::NOT_FOUND);
-        }
-    }
-
-
-    /**
-     * Update the specified resource in storage.
+     * Create a resource.
      *
      * @param MonitorRequest $request
-     * @param int $id
-     * @return JsonResponse
+     * @return MonitorResource
      */
-    public function update(MonitorRequest $request, int $id)
+    public function store(MonitorRequest $request): MonitorResource
     {
-        try {
-            Monitor::findOrFail($id)->update($request->validated());
-        } catch (ModelNotFoundException $e) {
-            return response()->json(['message' => 'URL Monitor not found'], HttpResponse::NOT_FOUND);
-        }
-        return response()->json(['message' => 'URL Monitor updated'], HttpResponse::SUCCESSFUL);
+        return MonitorResource::make(
+            auth()->user()->monitors()->create($request->validated())
+        );
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Show a resource.
      *
-     * @param int $id
-     * @return JsonResponse
+     * @param Monitor $monitor
+     * @return MonitorResource
      */
-    public function destroy(int $id)
+    public function show(Monitor $monitor): MonitorResource
     {
-        try {
-            Monitor::findOrFail($id)->delete();
-        } catch (ModelNotFoundException $e) {
-            return response()->json(['message' => 'URL Monitor not found'], HttpResponse::NOT_FOUND);
-        }
+        return MonitorResource::make($monitor);
+    }
 
-        return response()->json(['message' => 'URL Monitor deleted'], HttpResponse::SUCCESSFUL);
+
+    /**
+     * Update a resource.
+     *
+     * @param MonitorRequest $request
+     * @param Monitor $monitor
+     * @return MonitorResource
+     */
+    public function update(MonitorRequest $request, Monitor $monitor): MonitorResource
+    {
+        $monitor->update($request->validated());
+
+        return MonitorResource::make($monitor->refresh());
+    }
+
+    /**
+     * Delete a resource.
+     *
+     * @param Monitor $monitor
+     * @return Response
+     */
+    public function destroy(Monitor $monitor): Response
+    {
+        $monitor->delete();
+
+        return response()->noContent();
     }
 }
