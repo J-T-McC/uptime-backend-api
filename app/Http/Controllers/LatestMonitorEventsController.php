@@ -3,58 +3,41 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\MonitorEventResource;
-use App\Models\Enums\Category;
-use App\Models\Enums\CertificateStatus;
-use App\Models\Enums\UptimeStatus;
+use App\Models\Monitor;
 use App\Models\MonitorEvent;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class LatestMonitorEventsController extends Controller
 {
-
     /**
-     * Display a listing of the resource.
+     * @return AnonymousResourceCollection
      */
-    public function index()
+    public function index(): AnonymousResourceCollection
     {
         return MonitorEventResource::collection(
-            MonitorEvent::with('monitor')
-                ->where(fn($query) => self::applyStatusRequirements($query) )
-                ->orderBy('created_at', 'desc')
+            MonitorEvent::query()
+                ->applyStatusRequirements()
+                ->with('monitor')
+                ->latest()
                 ->paginate(5)
         );
     }
 
     /**
      * Display a listing of the resource.
-     * @param int $id
+     *
+     * @param Monitor $monitor
+     * @return AnonymousResourceCollection
      */
-    public function show(int $id)
+    public function show(Monitor $monitor): AnonymousResourceCollection
     {
         return MonitorEventResource::collection(
-            MonitorEvent::with('monitor')
-                ->monitorFilter($id)
-                ->where(fn($query) => self::applyStatusRequirements($query) )
-                ->orderBy('created_at', 'desc')->paginate(5)
+            MonitorEvent::query()
+                ->applyStatusRequirements()
+                ->with('monitor')
+                ->monitorFilter($monitor)
+                ->latest()
+                ->paginate(5)
         );
     }
-
-    private static function applyStatusRequirements(&$query) {
-        $query->where(function ($query) {
-            $query
-                ->where('category', Category::UPTIME)
-                ->whereIn('status', [
-                    UptimeStatus::RECOVERED,
-                    UptimeStatus::OFFLINE,
-                ]);
-        })->orWhere(function ($query) {
-            $query
-                ->where('category', Category::CERTIFICATE)
-                ->whereIn('status', [
-                    CertificateStatus::VALID,
-                    CertificateStatus::INVALID,
-                    CertificateStatus::EXPIRED,
-                ]);
-        });
-    }
-
 }

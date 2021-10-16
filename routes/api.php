@@ -6,6 +6,7 @@ use App\Http\Controllers\EventCountsTrendedController;
 use App\Http\Controllers\LatestMonitorEventsController;
 use App\Http\Controllers\MonitorChannelController;
 use App\Http\Controllers\MonitorController;
+use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Route;
 
 // arbitrary dummy route to accommodate any fortify redirects
@@ -17,7 +18,7 @@ Route::get('/home', function () {
 Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/authenticated', function () {
-        return new \App\Http\Resources\UserResource(auth()->user());
+        return new UserResource(auth()->user());
     });
 
     Route::middleware(['verified'])->group(function () {
@@ -30,6 +31,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/event-counts-grouped', [EventCountsGroupedController::class, 'index']);
         Route::get('/event-counts-grouped/{monitor}', [EventCountsGroupedController::class, 'show']);
 
-        Route::apiResource('/latest-monitor-events', LatestMonitorEventsController::class, ['GET']);
+        Route::get('/latest-monitor-events',  [LatestMonitorEventsController::class, 'index']);
+        Route::get('/latest-monitor-events/{monitor}',  [LatestMonitorEventsController::class, 'show']);
     });
 });
