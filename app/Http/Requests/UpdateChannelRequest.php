@@ -7,27 +7,16 @@ use Illuminate\Foundation\Http\FormRequest;
 
 use Illuminate\Validation\Rule;
 
-class ChannelRequest extends FormRequest
+class UpdateChannelRequest extends FormRequest
 {
-
     /**
      * Get the validation rules that apply to the request.
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
-
-        $id = $this->route()->parameter('channel');
-
         $type = $this->input('type');
-
-        $uniqueRule = Rule::unique(app(Channel::class)->getTable())
-            ->where('user_id', $this->user()->id)
-            ->where('type', $type)
-            ->where('endpoint', $this->input('endpoint'));
-
-        $uniqueRule = !empty($id) ? $uniqueRule->whereNot('id', $id) : $uniqueRule;
 
         $endpointRules = config('uptime-monitor.notifications.service-endpoint-rules.' . $type, '');
 
@@ -36,7 +25,11 @@ class ChannelRequest extends FormRequest
                 'required',
                 'string',
                 Rule::in(array_keys(config('uptime-monitor.notifications.service-endpoint-rules'))),
-                $uniqueRule
+                Rule::unique('channels')
+                    ->where('user_id', $this->user()->id)
+                    ->where('type', $type)
+                    ->where('endpoint', $this->input('endpoint'))
+                    ->whereNot('id', $this->route('channel')->id)
             ],
             'endpoint' => 'required|string' . $endpointRules,
             'description' => 'string|nullable',

@@ -44,7 +44,7 @@ class MonitorControllerTest extends AuthenticatedTestCase
     {
         $monitor = Monitor::factory()->create();
 
-        $response = $this->getJson(route('monitors.show', [$monitor]));
+        $response = $this->getJson(route('monitors.show', $monitor));
 
         $response->assertOk();
     }
@@ -68,7 +68,7 @@ class MonitorControllerTest extends AuthenticatedTestCase
     {
         $monitor = Monitor::factory()->create();
 
-        $response = $this->putJson(route('monitors.update', ['monitor' => $monitor->id]), [
+        $response = $this->putJson(route('monitors.update', $monitor), [
             'url' => 'http://example.com'
         ]);
 
