@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreMonitorRequest;
+use App\Http\Requests\UpdateMonitorRequest;
 use App\Models\Monitor;
-use App\Http\Requests\MonitorRequest;
 use App\Http\Resources\MonitorResource;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
@@ -25,10 +26,10 @@ class MonitorController extends Controller
     /**
      * Create a resource.
      *
-     * @param MonitorRequest $request
+     * @param StoreMonitorRequest $request
      * @return MonitorResource
      */
-    public function store(MonitorRequest $request): MonitorResource
+    public function store(StoreMonitorRequest $request): MonitorResource
     {
         return MonitorResource::make(
             auth()->user()->monitors()->create($request->validated())
@@ -50,11 +51,11 @@ class MonitorController extends Controller
     /**
      * Update a resource.
      *
-     * @param MonitorRequest $request
+     * @param UpdateMonitorRequest $request
      * @param Monitor $monitor
      * @return MonitorResource
      */
-    public function update(MonitorRequest $request, Monitor $monitor): MonitorResource
+    public function update(UpdateMonitorRequest $request, Monitor $monitor): MonitorResource
     {
         $monitor->update($request->validated());
 
