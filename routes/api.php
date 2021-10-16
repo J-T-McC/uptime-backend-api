@@ -23,7 +23,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::middleware(['verified'])->group(function () {
         Route::apiResource('/monitors', MonitorController::class);
         Route::apiResource('/channels', ChannelController::class);
-        Route::apiResource('/monitors-channels', MonitorChannelController::class, ['PUT', 'PATCH']);
+        Route::put('/monitors-channels/{monitor}', [MonitorChannelController::class, 'associate']);
 
         Route::apiResource('/event-counts-trended', EventCountsTrendedController::class, ['GET']);
         Route::apiResource('/event-counts-grouped', EventCountsGroupedController::class, ['GET']);

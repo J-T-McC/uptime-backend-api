@@ -18,22 +18,25 @@ class Monitor extends SpatieMonitor
         'look_for_string'
     ];
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function channels() {
+    public function channels()
+    {
         return $this->belongsToMany(Channel::class);
     }
 
-    public function monitorEvents() {
+    public function monitorEvents()
+    {
         return $this->hasMany(MonitorEvent::class);
     }
 
-    public function uptimeEventCounts() {
+    public function uptimeEventCounts()
+    {
         return $this->hasMany(MonitorUptimeEventCount::class);
     }
-
 
     /**
      * Override parents duplication logic
@@ -43,7 +46,7 @@ class Monitor extends SpatieMonitor
      */
     protected static function alreadyExists(SpatieMonitor $monitor): bool
     {
-       return false;
+        return false;
     }
 
     /**
@@ -52,7 +55,7 @@ class Monitor extends SpatieMonitor
      * See @Spatie\UptimeMonitor\Models\Traits\SupportsUptimeCheck
      * @param string $reason
      */
-    public function uptimeCheckFailed(string $reason) : void
+    public function uptimeCheckFailed(string $reason): void
     {
         parent::uptimeCheckFailed($reason);
 
