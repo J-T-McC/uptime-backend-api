@@ -4,18 +4,18 @@ namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Monitor;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\AuthenticatedTestCase;
 
 /**
- * @see \App\Http\Controllers\MonitorController
+ * @coversDefaultClass  \App\Http\Controllers\MonitorController
  */
 class MonitorControllerTest extends AuthenticatedTestCase
 {
-    use RefreshDatabase, WithFaker;
+    use RefreshDatabase;
 
     /**
      * @test
+     * @covers ::destroy
      */
     public function it_deletes_monitors()
     {
@@ -29,6 +29,7 @@ class MonitorControllerTest extends AuthenticatedTestCase
 
     /**
      * @test
+     * @covers ::index
      */
     public function it_lists_monitors()
     {
@@ -39,6 +40,7 @@ class MonitorControllerTest extends AuthenticatedTestCase
 
     /**
      * @test
+     * @covers ::show
      */
     public function it_shows_monitors()
     {
@@ -51,6 +53,7 @@ class MonitorControllerTest extends AuthenticatedTestCase
 
     /**
      * @test
+     * @covers ::store
      */
     public function it_stores_monitors()
     {
@@ -63,6 +66,7 @@ class MonitorControllerTest extends AuthenticatedTestCase
 
     /**
      * @test
+     * @covers ::update
      */
     public function it_updates_monitors()
     {

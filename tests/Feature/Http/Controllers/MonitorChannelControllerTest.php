@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\AuthenticatedTestCase;
 
 /**
- * @see \App\Http\Controllers\MonitorChannelController
+ * @coversDefaultClass  \App\Http\Controllers\MonitorChannelController
  */
 class MonitorChannelControllerTest extends AuthenticatedTestCase
 {
@@ -16,6 +16,7 @@ class MonitorChannelControllerTest extends AuthenticatedTestCase
 
     /**
      * @test
+     * @covers ::update
      */
     public function it_associates_channels_with_monitors()
     {

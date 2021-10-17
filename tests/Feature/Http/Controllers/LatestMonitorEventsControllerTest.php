@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\AuthenticatedTestCase;
 
 /**
- * @see \App\Http\Controllers\LatestMonitorEventsController
+ * @coversDefaultClass  \App\Http\Controllers\LatestMonitorEventsController
  */
 class LatestMonitorEventsControllerTest extends AuthenticatedTestCase
 {
@@ -15,8 +15,9 @@ class LatestMonitorEventsControllerTest extends AuthenticatedTestCase
 
     /**
      * @test
+     * @covers ::index
      */
-    public function index_returns_an_ok_response()
+    public function it_lists_events()
     {
         $response = $this->get(route('latest-monitor-events.index'));
 
@@ -25,8 +26,9 @@ class LatestMonitorEventsControllerTest extends AuthenticatedTestCase
 
     /**
      * @test
+     * @covers ::show
      */
-    public function show_returns_an_ok_response()
+    public function it_lists_events_for_a_monitor()
     {
         $event = MonitorEvent::factory()->create();
 

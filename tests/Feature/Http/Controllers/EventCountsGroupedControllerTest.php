@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\AuthenticatedTestCase;
 
 /**
- * @see \App\Http\Controllers\EventCountsGroupedController
+ * @coversDefaultClass  \App\Http\Controllers\EventCountsGroupedController
  */
 class EventCountsGroupedControllerTest extends AuthenticatedTestCase
 {
@@ -15,22 +15,27 @@ class EventCountsGroupedControllerTest extends AuthenticatedTestCase
 
     /**
      * @test
+     * @covers ::index
      */
-    public function index_returns_an_ok_response()
+    public function it_lists_event_counts()
     {
         $response = $this->get(route('event-counts-grouped.index'));
+
         $response->assertOk();
     }
 
     /**
      * @test
+     * @covers ::show
      */
-    public function show_returns_an_ok_response()
+    public function sit_shows_event_counts_for_a_monitor()
     {
         $event = MonitorEvent::factory([
             'user_id' => $this->testUser->id
         ])->create();
+
         $response = $this->get(route('event-counts-grouped.show', $event->monitor));
+
         $response->assertOk();
     }
 }

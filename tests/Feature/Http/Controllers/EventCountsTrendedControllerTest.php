@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\AuthenticatedTestCase;
 
 /**
- * @see \App\Http\Controllers\EventCountsTrendedController
+ * @coversDefaultClass  \App\Http\Controllers\EventCountsTrendedController
  */
 class EventCountsTrendedControllerTest extends AuthenticatedTestCase
 {
@@ -15,8 +15,9 @@ class EventCountsTrendedControllerTest extends AuthenticatedTestCase
 
     /**
      * @test
+     * @covers ::index
      */
-    public function index_returns_an_ok_response()
+    public function it_lists_trended_event_counts()
     {
         MonitorEvent::factory([
             'user_id' => $this->testUser->id
@@ -29,13 +30,16 @@ class EventCountsTrendedControllerTest extends AuthenticatedTestCase
 
     /**
      * @test
+     * @covers ::show
      */
-    public function show_returns_an_ok_response()
+    public function it_lists_trended_event_counts_for_a_monitor()
     {
         $event = MonitorEvent::factory([
             'user_id' => $this->testUser->id
         ])->create();
+
         $response = $this->get(route('event-counts-trended.show', $event->monitor));
+
         $response->assertOk();
     }
 }
