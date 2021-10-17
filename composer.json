@@ -21,13 +21,15 @@
     },
     "require-dev": {
         "brianium/paratest": "^6.3",
+        "estahn/phpunit-json-assertions": "^4.0",
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
         "jasonmccreary/laravel-test-assertions": "^2.0",
         "laravel-shift/factory-generator": "dev-master",
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^5.0",
-        "phpunit/phpunit": "^9.3.3"
+        "phpunit/phpunit": "^9.3.3",
+        "ext-json": "*"
     },
     "config": {
         "optimize-autoloader": true,

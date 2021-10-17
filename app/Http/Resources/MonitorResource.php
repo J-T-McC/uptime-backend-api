@@ -21,8 +21,8 @@ class MonitorResource extends JsonResource
             'look_for_string' => $this->look_for_string,
             'uptime_status' => $this->uptime_status,
             'certificate_check_enabled' => $this->certificate_check_enabled,
-            'certificate_status' => $this->look_for_string,
-            'channels' => ChannelResource::collection($this->channels)
+            'certificate_status' => $this->certificate_status,
+            'channels' => $this->whenLoaded('channels', ChannelResource::collection($this->channels))
         ];
     }
 }

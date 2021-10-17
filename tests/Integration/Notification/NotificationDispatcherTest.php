@@ -44,7 +44,7 @@ class NotificationDispatcherTest extends TestCase
     public function notifies_all_channel_types_on_certificate_check_failed_event()
     {
         $this->checkAllChannelsForNotificationEvent(function($monitor, $type, $endpoint) {
-            $monitor->url = static::badSSL;
+            $monitor->url = static::BAD_SSL;
             $monitor->checkCertificate();
             Notification::assertSentTo(
                 [(new AnonymousNotifiable())],
@@ -63,7 +63,7 @@ class NotificationDispatcherTest extends TestCase
 
         $this->checkAllChannelsForNotificationEvent(function($monitor, $type, $endpoint) {
             //override our faker url with one we know has a certificate installed
-            $monitor->url = static::validSSL;
+            $monitor->url = static::VALID_SSL;
             $monitor->checkCertificate();
             Notification::assertSentTo(
                 [(new AnonymousNotifiable())],
@@ -81,7 +81,7 @@ class NotificationDispatcherTest extends TestCase
     {
         $this->checkAllChannelsForNotificationEvent(function($monitor, $type, $endpoint) {
             //override our faker url with one we know has a certificate installed
-            $monitor->url = static::validSSL;
+            $monitor->url = static::VALID_SSL;
             $monitor->checkCertificate();
             Notification::assertNothingSent();
         });
@@ -94,7 +94,7 @@ class NotificationDispatcherTest extends TestCase
     {
         $this->checkAllChannelsForNotificationEvent(function($monitor, $type, $endpoint) {
             //override our faker url with one we know will fail
-            $monitor->url = static::uptimeFail;
+            $monitor->url = static::UPTIME_FAIL;
             $collection = MonitorCollection::make([$monitor]);
             $collection->checkUptime();
             Notification::assertSentTo(
@@ -113,7 +113,7 @@ class NotificationDispatcherTest extends TestCase
     {
         $this->checkAllChannelsForNotificationEvent(function($monitor, $type, $endpoint) {
             //override our faker url with one we know will succeed
-            $monitor->url = static::uptimeSucceed;
+            $monitor->url = static::UPTIME_SUCCEED;
             $collection = MonitorCollection::make([$monitor]);
             $collection->checkUptime();
             Notification::assertNothingSent();
@@ -131,11 +131,11 @@ class NotificationDispatcherTest extends TestCase
             $monitor->uptimeCheckSucceeded('┬─┬ノ( º _ ºノ)');
 
             //override our faker url with one we know will succeed
-            $monitor->url = static::uptimeFail;
+            $monitor->url = static::UPTIME_FAIL;
             $collection = MonitorCollection::make([$monitor]);
             $collection->checkUptime();
 
-            $monitor->url = static::uptimeSucceed;
+            $monitor->url = static::UPTIME_SUCCEED;
             $collection = MonitorCollection::make([$monitor]);
             $collection->checkUptime();
 

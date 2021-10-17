@@ -29,6 +29,7 @@ class ChannelFactory extends Factory
         return [
             'endpoint' => $channels[$choice],
             'type' => $choice,
+            'description' => $this->faker->words(4, true),
             'user_id' => User::factory()->create()->id,
         ];
     }

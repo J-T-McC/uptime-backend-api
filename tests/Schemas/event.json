@@ -1,0 +1,34 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "title": "Event",
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "integer"
+        },
+        "category": {
+            "type": "string"
+        },
+        "status": {
+            "type": "string"
+        },
+        "error": {
+            "type": "string"
+        },
+        "created_at": {
+            "type": "string"
+        },
+        "monitor": {
+            "type": "object",
+            "$ref": "monitor.json"
+        }
+    },
+    "required": [
+        "id",
+        "category",
+        "status",
+        "error",
+        "created_at",
+        "monitor"
+    ]
+}

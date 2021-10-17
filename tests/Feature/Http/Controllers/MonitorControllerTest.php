@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Models\Channel;
 use App\Models\Monitor;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\AuthenticatedTestCase;
@@ -19,7 +20,7 @@ class MonitorControllerTest extends AuthenticatedTestCase
      */
     public function it_deletes_monitors()
     {
-        $monitor = Monitor::factory()->create();
+        $monitor = Monitor::factory()->create(['user_id' => $this->testUser->id]);
 
         $response = $this->deleteJson(route('monitors.destroy', $monitor));
 
@@ -33,9 +34,17 @@ class MonitorControllerTest extends AuthenticatedTestCase
      */
     public function it_lists_monitors()
     {
+        Monitor::factory()
+            ->count(10)
+            ->create(['user_id' => $this->testUser->id])
+            ->each(fn(Monitor $monitor) => $monitor->channels()->sync(
+                Channel::factory()->create(['user_id' => $this->testUser->id])
+            ));
+
         $response = $this->getJson(route('monitors.index'));
 
         $response->assertOk();
+        $this->assertResponseCollectionJson($response, 'monitor.json');
     }
 
     /**
@@ -49,6 +58,7 @@ class MonitorControllerTest extends AuthenticatedTestCase
         $response = $this->getJson(route('monitors.show', $monitor));
 
         $response->assertOk();
+        $this->assertResponseJson($response, 'monitor.json');
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use EnricoStahn\JsonAssert\AssertClass as JsonAssert;
 use Illuminate\Http\Response;
 use Illuminate\Testing\TestResponse;
 use JMac\Testing\Traits\AdditionalAssertions;
@@ -13,10 +14,11 @@ abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication, AdditionalAssertions;
 
-    const badSSL = 'https://expired.badssl.com';
-    const validSSL = 'https://google.com';
-    const uptimeFail = 'https://test-response.tysonmccarney.com/500';
-    const uptimeSucceed = 'https://test-response.tysonmccarney.com/200';
+    const BAD_SSL = 'https://expired.badssl.com';
+    const VALID_SSL = 'https://google.com';
+    const UPTIME_FAIL = 'https://test-response.tysonmccarney.com/500';
+    const UPTIME_SUCCEED = 'https://test-response.tysonmccarney.com/200';
+    const SCHEMA_ROOT = __DIR__ . '/Schemas/';
 
     /**
      * Test form validation rules for a route
@@ -54,5 +56,39 @@ abstract class TestCase extends BaseTestCase
                 EOT
             );
         }
+    }
+
+    /**
+     * Assert response matches json schema
+     *
+     * @param TestResponse $response
+     * @param string $schema
+     */
+    protected function assertResponseJson(TestResponse $response, string $schema)
+    {
+        JsonAssert::assertJsonMatchesSchema(self::getResponseData($response), self::SCHEMA_ROOT . $schema);
+    }
+
+    /**
+     * Assert response collection matches json schema
+     *
+     * @param TestResponse $response
+     * @param string $schema
+     */
+    protected function assertResponseCollectionJson(TestResponse $response, string $schema)
+    {
+        foreach (self::getResponseData($response) as $data) {
+            JsonAssert::assertJsonMatchesSchema($data, self::SCHEMA_ROOT . $schema);
+        }
+    }
+
+    protected static function getResponseData(TestResponse $response)
+    {
+        $data = json_decode($response->content());
+        if (is_object($data) && property_exists($data, 'data')) {
+            $data = $data->data;
+        }
+
+        return $data;
     }
 }

@@ -1,0 +1,21 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "title": "Channel",
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "integer"
+        },
+        "description": {
+            "type": "string"
+        },
+        "type": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "id",
+        "description",
+        "type"
+    ]
+}

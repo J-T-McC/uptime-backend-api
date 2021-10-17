@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Models\Monitor;
 use App\Models\MonitorEvent;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\AuthenticatedTestCase;
@@ -19,9 +20,12 @@ class LatestMonitorEventsControllerTest extends AuthenticatedTestCase
      */
     public function it_lists_events()
     {
+        Monitor::factory()->hasMonitorEvents(10)->create(['user_id' => $this->testUser->id]);
+
         $response = $this->get(route('latest-monitor-events.index'));
 
         $response->assertOk();
+        $this->assertResponseCollectionJson($response, 'event.json');
     }
 
     /**
@@ -30,10 +34,11 @@ class LatestMonitorEventsControllerTest extends AuthenticatedTestCase
      */
     public function it_lists_events_for_a_monitor()
     {
-        $event = MonitorEvent::factory()->create();
+        $monitor = Monitor::factory()->hasMonitorEvents(10)->create(['user_id' => $this->testUser->id]);;
 
-        $response = $this->get(route('latest-monitor-events.show', $event->monitor));
+        $response = $this->get(route('latest-monitor-events.show', $monitor));
 
         $response->assertOk();
+        $this->assertResponseCollectionJson($response, 'event.json');
     }
 }
