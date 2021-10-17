@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Channel;
 
@@ -19,9 +20,8 @@ class ChannelFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
-
         $channels = $this->channels();
 
         $choice = array_rand($channels);
@@ -29,11 +29,12 @@ class ChannelFactory extends Factory
         return [
             'endpoint' => $channels[$choice],
             'type' => $choice,
-            'user_id' => \App\Models\User::factory()->create()->id,
+            'description' => $this->faker->words(4, true),
+            'user_id' => User::factory()->create()->id,
         ];
     }
 
-    public function channels()
+    public function channels(): array
     {
         return [
             'mail' => $this->faker->safeEmail,

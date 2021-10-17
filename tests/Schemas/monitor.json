@@ -1,0 +1,47 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "title": "Monitor",
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "integer"
+        },
+        "url": {
+            "type": "string"
+        },
+        "uptime_check_enabled": {
+            "type": "boolean"
+        },
+        "look_for_string": {
+            "type": [
+                "null",
+                "string"
+            ]
+        },
+        "uptime_status": {
+            "type": "string"
+        },
+        "certificate_check_enabled": {
+            "type": "boolean"
+        },
+        "certificate_status": {
+            "type": "string"
+        },
+        "channels": {
+            "type": [
+                "array",
+                "null"
+            ],
+            "items": {
+                "$ref": "channel.json"
+            }
+        }
+    },
+    "required": [
+        "id",
+        "url",
+        "uptime_check_enabled",
+        "uptime_status",
+        "certificate_check_enabled"
+    ]
+}

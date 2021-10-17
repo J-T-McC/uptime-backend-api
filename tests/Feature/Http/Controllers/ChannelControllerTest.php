@@ -2,94 +2,89 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Models\Channel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\AuthenticatedTestCase;
 
 /**
- * @see \App\Http\Controllers\ChannelController
+ * @coversDefaultClass  \App\Http\Controllers\ChannelController
  */
 class ChannelControllerTest extends AuthenticatedTestCase
 {
-    use RefreshDatabase, WithFaker;
-
+    use RefreshDatabase;
+    use WithFaker;
 
     /**
      * @test
+     * @covers ::destroy
      */
-    public function destroy_returns_an_ok_response()
+    public function it_deletes_channels()
     {
+        $channel = Channel::factory()->create(['user_id' => $this->testUser->id]);
 
-        $channel = \App\Models\Channel::factory()->create();
+        $response = $this->deleteJson(route('channels.destroy', $channel));
 
-        $response = $this->delete(route('channels.destroy', [$channel]));
-
-        $response->assertOk();
+        $response->assertNoContent();
         $this->assertDeleted($channel);
     }
 
     /**
      * @test
+     * @covers ::index
      */
-    public function index_returns_an_ok_response()
+    public function it_lists_channels()
     {
+        Channel::factory()->count(10)->create(['user_id' => $this->testUser->id]);
 
-        $response = $this->get(route('channels.index'));
+        $response = $this->getJson(route('channels.index'));
 
         $response->assertOk();
-
-        // TODO: perform additional assertions
+        $this->assertResponseCollectionJson($response, 'channel.json');
     }
 
     /**
      * @test
+     * @covers ::show
      */
-    public function show_returns_an_ok_response()
+    public function it_shows_channels()
     {
+        $channel = Channel::factory()->create();
 
-        $channel = \App\Models\Channel::factory()->create();
-
-        $response = $this->get(route('channels.show', [$channel]));
+        $response = $this->getJson(route('channels.show', $channel));
 
         $response->assertOk();
-
-        // TODO: perform additional assertions
+        $this->assertResponseJson($response, 'channel.json');
     }
 
     /**
      * @test
+     * @covers ::store
      */
-    public function store_returns_an_ok_response()
+    public function it_stores_channels()
     {
-
-        $response = $this->post(route('channels.store'), [
+        $response = $this->postJson(route('channels.store'), [
             'type' => 'mail',
             'endpoint' => $this->faker->safeEmail
         ]);
 
-        $response->assertOk();
-
-        // TODO: perform additional assertions
+        $response->assertCreated();
     }
 
     /**
      * @test
+     * @covers ::update
      */
-    public function update_returns_an_ok_response()
+    public function it_updates_channels()
     {
+        $channel = Channel::factory()->create();
 
-        $channel = \App\Models\Channel::factory()->create();
-
-        $response = $this->put(route('channels.update', ['channel' => $channel->id]), [
+        $response = $this->put(route('channels.update', $channel), [
             'type' => 'mail',
             'endpoint' => $this->faker->safeEmail,
             'description' => 'Test Update',
         ]);
 
         $response->assertOk();
-
-        // TODO: perform additional assertions
     }
-
-    // test cases...
 }

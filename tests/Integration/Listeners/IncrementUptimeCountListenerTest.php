@@ -30,7 +30,7 @@ class IncrementUptimeCountListenerTest extends TestCase
      */
     public function increments_uptime_status_failed()
     {
-        $monitor = \App\Models\Monitor::factory(['url' => static::uptimeFail])->create();
+        $monitor = \App\Models\Monitor::factory(['url' => static::UPTIME_FAIL])->create();
         $collection = MonitorCollection::make([$monitor]);
 
         $this->assertTrue(empty(MonitorUptimeEventCount::where('monitor_id', $monitor->id)->first()));
@@ -51,7 +51,7 @@ class IncrementUptimeCountListenerTest extends TestCase
     public function increments_uptime_status_up()
     {
         $monitor = \App\Models\Monitor::factory()->create();
-        $monitor->url = static::uptimeSucceed;
+        $monitor->url = static::UPTIME_SUCCEED;
         $collection = MonitorCollection::make([$monitor]);
 
         $this->assertTrue(empty(MonitorUptimeEventCount::where('monitor_id', $monitor->id)->first()));
@@ -76,21 +76,21 @@ class IncrementUptimeCountListenerTest extends TestCase
         //no count record for this monitor
         $this->assertTrue(empty(MonitorUptimeEventCount::where('monitor_id', $monitor->id)->first()));
 
-        $monitor->url = static::uptimeFail;
+        $monitor->url = static::UPTIME_FAIL;
         $collection = MonitorCollection::make([$monitor]);
         $collection->checkUptime();
 
-        $monitor->url = static::uptimeSucceed;
+        $monitor->url = static::UPTIME_SUCCEED;
         $collection = MonitorCollection::make([$monitor]);
         $collection->checkUptime();
 
         $this->assertTrue(MonitorUptimeEventCount::where('monitor_id', $monitor->id)->first()->recovered === 1);
 
-        $monitor->url = static::uptimeFail;
+        $monitor->url = static::UPTIME_FAIL;
         $collection = MonitorCollection::make([$monitor]);
         $collection->checkUptime();
 
-        $monitor->url = static::uptimeSucceed;
+        $monitor->url = static::UPTIME_SUCCEED;
         $collection = MonitorCollection::make([$monitor]);
         $collection->checkUptime();
 

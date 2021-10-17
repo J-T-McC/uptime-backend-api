@@ -2,83 +2,78 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreChannelRequest;
+use App\Http\Requests\UpdateChannelRequest;
 use App\Models\Channel;
-use App\Models\Enums\HttpResponse;
-
-use App\Http\Requests\ChannelRequest;
 use App\Http\Resources\ChannelResource;
-
-use Illuminate\Http\JsonResponse;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Response;
 
 class ChannelController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
-     */
-    public function index()
-    {
-        return ChannelResource::collection(Channel::orderBy('type')->get());
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     * @param ChannelRequest $request
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
-     */
-    public function store(ChannelRequest $request)
-    {
-        $channel = auth()->user()->channels()->create($request->validated());
-        return ChannelResource::collection([$channel]);
-    }
-
-    /**
-     * Display the specified resource.
-     * @param int $id
-     * @return JsonResponse|\Illuminate\Http\Resources\Json\AnonymousResourceCollection
-     */
-    public function show(int $id)
-    {
-        try {
-            return ChannelResource::collection([Channel::findOrFail($id)]);
-        } catch (ModelNotFoundException $e) {
-            return response()->json(['message' => 'Notification Channel not found'], HttpResponse::NOT_FOUND);
-        }
-    }
-
-
-    /**
-     * Update the specified resource in storage.
+     * List the resource.
      *
-     * @param ChannelRequest $request
-     * @param int $id
-     * @return JsonResponse
+     * @return AnonymousResourceCollection
      */
-    public function update(ChannelRequest $request, int $id)
+    public function index(): AnonymousResourceCollection
     {
-        try {
-            Channel::findOrFail($id)->update($request->validated());
-        } catch (ModelNotFoundException $e) {
-            return response()->json(['message' => 'Notification Channel not found'], HttpResponse::NOT_FOUND);
-        }
-        return response()->json(['message' => 'Notification Channel updated'], HttpResponse::SUCCESSFUL);
+        return ChannelResource::collection(
+            Channel::query()->orderBy('type')->get()
+        );
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Create a resource.
      *
-     * @param int $id
-     * @return JsonResponse
+     * @param StoreChannelRequest $request
+     * @return ChannelResource
      */
-    public function destroy(int $id)
+    public function store(StoreChannelRequest $request): ChannelResource
     {
-        try {
-            Channel::findOrFail($id)->delete();
-        } catch (ModelNotFoundException $e) {
-            return response()->json(['message' => 'Notification Channel not found'], HttpResponse::NOT_FOUND);
-        }
+        return ChannelResource::make(
+            auth()->user()->channels()->create(
+                $request->validated()
+            )
+        );
+    }
 
-        return response()->json(['message' => 'Notification Channel deleted'], HttpResponse::SUCCESSFUL);
+    /**
+     * Show a resource.
+     *
+     * @param Channel $channel
+     * @return ChannelResource
+     */
+    public function show(Channel $channel): ChannelResource
+    {
+        return ChannelResource::make($channel);
+    }
+
+
+    /**
+     * Update a resource.
+     *
+     * @param UpdateChannelRequest $request
+     * @param Channel $channel
+     * @return ChannelResource
+     */
+    public function update(UpdateChannelRequest $request, Channel $channel): ChannelResource
+    {
+        $channel->update($request->validated());
+
+        return ChannelResource::make($channel->refresh());
+    }
+
+    /**
+     * Delete a resource.
+     *
+     * @param Channel $channel
+     * @return Response
+     */
+    public function destroy(Channel $channel): Response
+    {
+        $channel->delete();
+
+        return response()->noContent();
     }
 }

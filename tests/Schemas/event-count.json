@@ -1,0 +1,23 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "title": "Event Count",
+    "type": "array",
+    "items": {
+        "type": [
+            "object"
+        ],
+        "properties": {
+            "percent": {
+                "type": "string"
+            },
+            "category": {
+                "type": "string"
+            }
+        },
+        "required": [
+            "percent",
+            "category"
+        ]
+    }
+}
+

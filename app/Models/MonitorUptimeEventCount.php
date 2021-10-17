@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Traits\UsesOwnerScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class MonitorUptimeEventCount extends Model
 {
@@ -12,16 +13,18 @@ class MonitorUptimeEventCount extends Model
 
     protected $fillable = ['monitor_id', 'user_id', 'filter_date'];
 
-    public function monitor() {
+    public function monitor(): BelongsTo
+    {
         return $this->belongsTo(Monitor::class);
     }
 
-    public function user() {
+    public function user(): BelongsTo
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function scopeMonitorFilter($query, $monitor = null) {
-        return $monitor ? $query->where('monitor_id', $monitor) : $query;
+    public function scopeMonitorFilter($query, ?Monitor $monitor = null)
+    {
+        return $monitor ? $query->where('monitor_id', $monitor->id) : $query;
     }
-
 }

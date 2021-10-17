@@ -2,12 +2,13 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Models\Channel;
+use App\Models\Monitor;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\AuthenticatedTestCase;
 
 /**
- * @see \App\Http\Controllers\MonitorChannelController
+ * @coversDefaultClass  \App\Http\Controllers\MonitorChannelController
  */
 class MonitorChannelControllerTest extends AuthenticatedTestCase
 {
@@ -15,24 +16,20 @@ class MonitorChannelControllerTest extends AuthenticatedTestCase
 
     /**
      * @test
+     * @covers ::update
      */
-    public function update_returns_an_ok_response()
+    public function it_associates_channels_with_monitors()
     {
-
-        $monitor = \App\Models\Monitor::factory()->create();
+        $monitor = Monitor::factory()->create();
 
         $body = [
-            "id[" . \App\Models\Channel::factory()->create()->id . "]" => true,
-            "id[" . \App\Models\Channel::factory()->create()->id . "]" => true,
-            "id[" . \App\Models\Channel::factory()->create()->id . "]" => true,
+            "id[" . Channel::factory()->create()->id . "]" => true,
+            "id[" . Channel::factory()->create()->id . "]" => true,
+            "id[" . Channel::factory()->create()->id . "]" => true,
         ];
 
-        $response = $this->put(route('monitors-channels.update', ['monitors_channel' => $monitor->id]), $body);
+        $response = $this->put(route('monitors-channels.update', $monitor), $body);
 
-        $response->assertOk();
-
-        // TODO: perform additional assertions
+        $response->assertNoContent();
     }
-
-    // test cases...
 }

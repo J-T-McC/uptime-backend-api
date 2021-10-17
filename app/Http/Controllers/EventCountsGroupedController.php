@@ -2,26 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Monitor;
 use App\Services\UptimeEventData;
+use Illuminate\Http\JsonResponse;
 
 class EventCountsGroupedController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function index()
+    public function index(): JsonResponse
     {
         return response()->json((new UptimeEventData())->past90Days());
     }
 
     /**
-     * Display a listing of the resource.
-     * @param int $id
-     * @return \Illuminate\Http\JsonResponse
+     * @param Monitor $monitor
+     * @return JsonResponse
      */
-    public function show(int $id)
+    public function show(Monitor $monitor): JsonResponse
     {
-        return response()->json((new UptimeEventData($id))->past90Days());
+        return response()->json((new UptimeEventData($monitor))->past90Days());
     }
 }

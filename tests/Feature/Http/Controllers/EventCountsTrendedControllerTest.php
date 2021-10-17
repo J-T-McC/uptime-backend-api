@@ -2,12 +2,13 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Models\Monitor;
+use App\Models\MonitorEvent;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\AuthenticatedTestCase;
 
 /**
- * @see \App\Http\Controllers\EventCountsTrendedController
+ * @coversDefaultClass  \App\Http\Controllers\EventCountsTrendedController
  */
 class EventCountsTrendedControllerTest extends AuthenticatedTestCase
 {
@@ -15,32 +16,34 @@ class EventCountsTrendedControllerTest extends AuthenticatedTestCase
 
     /**
      * @test
+     * @covers ::index
      */
-    public function index_returns_an_ok_response()
+    public function it_lists_trended_event_counts()
     {
-
-        \App\Models\MonitorEvent::factory([
-            'user_id' => $this->testUser->id
-        ])->count(10)->create();
+        Monitor::factory()
+            ->count(2)
+            ->hasUptimeEventCounts(10, ['user_id' => $this->testUser->id])
+            ->create(['user_id' => $this->testUser->id]);
 
         $response = $this->get(route('event-counts-trended.index'));
 
         $response->assertOk();
-
-        // TODO: perform additional assertions
+        $this->assertResponseJson($response, 'trended-event-count.json');
     }
 
     /**
      * @test
+     * @covers ::show
      */
-    public function show_returns_an_ok_response()
+    public function it_lists_trended_event_counts_for_a_monitor()
     {
-        $event = \App\Models\MonitorEvent::factory([
-            'user_id' => $this->testUser->id
-        ])->create();
-        $response = $this->get(route('event-counts-trended.show', ['event_counts_trended' => $event->monitor_id]));
+        $monitor = Monitor::factory()
+            ->hasUptimeEventCounts(10, ['user_id' => $this->testUser->id])
+            ->create(['user_id' => $this->testUser->id]);
+
+        $response = $this->get(route('event-counts-trended.show', $monitor));
+
+        $this->assertResponseJson($response, 'trended-event-count.json');
         $response->assertOk();
     }
-
-    // test cases...
 }

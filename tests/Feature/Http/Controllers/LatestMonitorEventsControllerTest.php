@@ -2,13 +2,13 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Models\Monitor;
+use App\Models\MonitorEvent;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\AuthenticatedTestCase;
-use Tests\TestCase;
 
 /**
- * @see \App\Http\Controllers\LatestMonitorEventsController
+ * @coversDefaultClass  \App\Http\Controllers\LatestMonitorEventsController
  */
 class LatestMonitorEventsControllerTest extends AuthenticatedTestCase
 {
@@ -16,31 +16,29 @@ class LatestMonitorEventsControllerTest extends AuthenticatedTestCase
 
     /**
      * @test
+     * @covers ::index
      */
-    public function index_returns_an_ok_response()
+    public function it_lists_events()
     {
+        Monitor::factory()->hasMonitorEvents(10)->create(['user_id' => $this->testUser->id]);
 
         $response = $this->get(route('latest-monitor-events.index'));
 
         $response->assertOk();
-
-        // TODO: perform additional assertions
+        $this->assertResponseCollectionJson($response, 'event.json');
     }
 
     /**
      * @test
+     * @covers ::show
      */
-    public function show_returns_an_ok_response()
+    public function it_lists_events_for_a_monitor()
     {
+        $monitor = Monitor::factory()->hasMonitorEvents(10)->create(['user_id' => $this->testUser->id]);;
 
-        $event = \App\Models\MonitorEvent::factory()->create();
-
-        $response = $this->get(route('latest-monitor-events.show', ['latest_monitor_event' => $event->monitor_id]));
+        $response = $this->get(route('latest-monitor-events.show', $monitor));
 
         $response->assertOk();
-
-        // TODO: perform additional assertions
+        $this->assertResponseCollectionJson($response, 'event.json');
     }
-
-    // test cases...
 }
