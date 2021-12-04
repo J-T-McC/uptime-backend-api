@@ -5,7 +5,7 @@ on:
     types: [opened, synchronize, reopened]
 
 jobs:
-  phpcs:
+  phpstan:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
