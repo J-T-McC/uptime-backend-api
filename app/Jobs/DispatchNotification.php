@@ -3,38 +3,24 @@
 namespace App\Jobs;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Notifications\AnonymousNotifiable;
+use Illuminate\Notifications\Notification;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Spatie\UptimeMonitor\Notifications\Notifiable;
 
 class DispatchNotification implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    private $notifiable;
-    private $notification;
-
-    /**
-     * Create a new job instance.
-     * @param $notifiable
-     * @param $notification
-     * @return void
-     */
-
-    public function __construct($notifiable, $notification)
+    public function __construct(private Notifiable|AnonymousNotifiable $notifiable, private Notification $notification)
     {
-        $this->notifiable = $notifiable;
-        $this->notification = $notification;
+
     }
 
-    /**
-     * Execute the job.
-     *
-     * @return void
-     */
-    public function handle()
+    public function handle(): void
     {
         $this->notifiable->notify($this->notification);
     }

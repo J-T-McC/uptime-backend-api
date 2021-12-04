@@ -28,7 +28,7 @@ class MonitorChannelControllerTest extends AuthenticatedTestCase
             "id[" . Channel::factory()->create()->id . "]" => true,
         ];
 
-        $response = $this->put(route('monitors-channels.update', $monitor), $body);
+        $response = $this->putJson(route('monitors-channels.update', $monitor), $body);
 
         $response->assertNoContent();
     }

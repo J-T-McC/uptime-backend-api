@@ -14,6 +14,11 @@ class UpdateMonitorRequest extends FormRequest
      */
     public function rules(): array
     {
+        /**
+         * @var object|null
+         */
+        $monitor = $this->route('monitor');
+
         return [
             'url' => [
                 'required',
@@ -22,7 +27,7 @@ class UpdateMonitorRequest extends FormRequest
                 Rule::unique('monitors')
                     ->where('user_id', $this->user()->id)
                     ->where('url', $this->input('url'))
-                    ->whereNot('id', $this->route('monitor')->id),
+                    ->whereNot('id', $monitor?->id),
                 'active_url'
             ],
             'certificate_check_enabled' => 'boolean',

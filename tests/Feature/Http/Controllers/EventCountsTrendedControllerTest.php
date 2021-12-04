@@ -3,7 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Monitor;
-use App\Models\MonitorEvent;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\AuthenticatedTestCase;
 
@@ -25,7 +24,7 @@ class EventCountsTrendedControllerTest extends AuthenticatedTestCase
             ->hasUptimeEventCounts(10, ['user_id' => $this->testUser->id])
             ->create(['user_id' => $this->testUser->id]);
 
-        $response = $this->get(route('event-counts-trended.index'));
+        $response = $this->getJson(route('event-counts-trended.index'));
 
         $response->assertOk();
         $this->assertResponseJson($response, 'trended-event-count.json');
@@ -41,7 +40,7 @@ class EventCountsTrendedControllerTest extends AuthenticatedTestCase
             ->hasUptimeEventCounts(10, ['user_id' => $this->testUser->id])
             ->create(['user_id' => $this->testUser->id]);
 
-        $response = $this->get(route('event-counts-trended.show', $monitor));
+        $response = $this->getJson(route('event-counts-trended.show', $monitor));
 
         $this->assertResponseJson($response, 'trended-event-count.json');
         $response->assertOk();

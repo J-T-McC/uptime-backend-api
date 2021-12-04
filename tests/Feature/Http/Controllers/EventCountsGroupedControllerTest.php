@@ -3,7 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Monitor;
-use App\Models\MonitorEvent;
 use App\Models\MonitorUptimeEventCount;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\AuthenticatedTestCase;
@@ -23,7 +22,7 @@ class EventCountsGroupedControllerTest extends AuthenticatedTestCase
     {
         MonitorUptimeEventCount::factory()->count(10)->create(['user_id' => $this->testUser->id]);
 
-        $response = $this->get(route('event-counts-grouped.index'));
+        $response = $this->getJson(route('event-counts-grouped.index'));
 
         $response->assertOk();
         $this->assertResponseJson($response, 'event-count.json');
@@ -39,7 +38,7 @@ class EventCountsGroupedControllerTest extends AuthenticatedTestCase
             ->hasUptimeEventCounts(10, ['user_id' => $this->testUser->id])
             ->create(['user_id' => $this->testUser->id]);
 
-        $response = $this->get(route('event-counts-grouped.show', $monitor));
+        $response = $this->getJson(route('event-counts-grouped.show', $monitor));
 
         $response->assertOk();
         $this->assertResponseJson($response, 'event-count.json');

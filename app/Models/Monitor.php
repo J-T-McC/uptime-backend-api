@@ -3,11 +3,7 @@
 namespace App\Models;
 
 use App\Events\IncrementUptimeCount;
-use App\Models\Enums\Category;
-use App\Models\Enums\CertificateStatus;
-use App\Models\Enums\UptimeStatus;
 use App\Models\Traits\UsesOwnerScope;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;

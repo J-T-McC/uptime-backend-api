@@ -15,8 +15,11 @@ class UpdateChannelRequest extends FormRequest
      */
     public function rules(): array
     {
+        /**
+         * @var object|null $channel
+         */
+        $channel = $this->route('channel');
         $type = $this->input('type');
-
         $endpointRules = config('uptime-monitor.notifications.service-endpoint-rules.' . $type, '');
 
         return [
@@ -28,7 +31,7 @@ class UpdateChannelRequest extends FormRequest
                     ->where('user_id', $this->user()->id)
                     ->where('type', $type)
                     ->where('endpoint', $this->input('endpoint'))
-                    ->whereNot('id', $this->route('channel')->id)
+                    ->whereNot('id', $channel?->id)
             ],
             'endpoint' => 'required|string' . $endpointRules,
             'description' => 'string|nullable',

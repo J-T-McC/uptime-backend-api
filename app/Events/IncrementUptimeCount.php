@@ -7,9 +7,7 @@ use Spatie\UptimeMonitor\Models\Monitor;
 
 class IncrementUptimeCount implements ShouldQueue
 {
-
-    /** @var \App\Models\Monitor */
-    public $monitor;
+    public Monitor $monitor;
 
     /**
      * Create a new event instance.
@@ -20,6 +18,4 @@ class IncrementUptimeCount implements ShouldQueue
     {
         $this->monitor = $monitor;
     }
-
-
 }
