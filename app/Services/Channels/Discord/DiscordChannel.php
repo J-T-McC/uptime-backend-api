@@ -2,17 +2,32 @@
 
 namespace App\Services\Channels\Discord;
 
+use App\Models\User;
+use App\Services\Channels\Exceptions\InvalidChanelException;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
+use Illuminate\Notifications\AnonymousNotifiable;
 use Illuminate\Notifications\Notification;
 
 class DiscordChannel
 {
-    public function send($notifiable, Notification $notification)
+    /**
+     * @param User|AnonymousNotifiable $notifiable
+     * @param Notification $notification
+     * @throws InvalidChanelException
+     * @throws GuzzleException
+     */
+    public function send(User|AnonymousNotifiable $notifiable, Notification $notification)
     {
         if (!$route = $notifiable->routeNotificationFor('discord')) {
             return;
         }
+
+        if (!method_exists($notification, 'toDiscord')) {
+            throw new InvalidChanelException();
+        }
+
         (new Client())->post($route, [
             RequestOptions::JSON => $notification->toDiscord()->toArray(),
         ]);

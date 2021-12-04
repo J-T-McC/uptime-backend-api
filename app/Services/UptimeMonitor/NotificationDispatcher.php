@@ -7,6 +7,7 @@ use App\Models\Monitor;
 use App\Models\Channel;
 use Illuminate\Notifications\AnonymousNotifiable;
 use App\Exceptions\UndefinedPropertyException;
+use Illuminate\Notifications\Notification;
 
 /**
  * @property-read Monitor $monitor
@@ -14,39 +15,33 @@ use App\Exceptions\UndefinedPropertyException;
  */
 class NotificationDispatcher
 {
-
-    private $notification;
-
-    public function __construct($notification)
+    public function __construct(private Notification $notification)
     {
-        $this->notification = $notification;
         $this->dispatchNotifications();
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @return mixed
      * @throws UndefinedPropertyException
      */
-    public function __get($name)
+    public function __get(string $name)
     {
-       switch($name) {
-           case 'monitor':
-               return $this->notification->event->monitor;
-           case 'channels':
-               return $this->monitor->channels;
-           default:
-               throw new UndefinedPropertyException();
-       }
+        return match ($name) {
+            /* @phpstan-ignore-next-line */
+            'monitor' => $this->notification->event->monitor,
+            'channels' => $this->monitor->channels,
+            default => throw new UndefinedPropertyException(),
+        };
     }
 
-    private function dispatchNotifications() {
+    private function dispatchNotifications()
+    {
         //Dispatch independently to accommodate multiples of the same channel
-        $this->channels->each(function($channel)  {
+        $this->channels->each(function ($channel) {
             $notifiable = new AnonymousNotifiable();
             $notifiable->route($channel->type, $channel->endpoint);
             DispatchNotification::dispatch($notifiable, $this->notification);
         });
     }
-
 }

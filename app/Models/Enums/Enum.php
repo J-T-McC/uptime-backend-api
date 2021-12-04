@@ -13,7 +13,7 @@ class Enum
     /**
      * @throws ReflectionException
      */
-    public static function getConstants()
+    public static function getConstants(): array
     {
         if (is_null(self::$constCacheArray)) {
             self::$constCacheArray = [];
@@ -31,8 +31,10 @@ class Enum
     /**
      * @throws ReflectionException
      */
-    public static function getNameFromValue(int $value)
+    public static function getNameFromValue(int $value): ?string
     {
-        return array_search($value, self::getConstants(), true) ?? null;
+        $name = array_search($value, self::getConstants(), true);
+
+        return !empty($name) ? $name : null;
     }
 }

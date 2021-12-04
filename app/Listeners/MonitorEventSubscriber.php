@@ -16,8 +16,6 @@ use Spatie\UptimeMonitor\Events\CertificateExpiresSoon;
 
 class MonitorEventSubscriber
 {
-
-
     /**
      * @param UptimeCheckRecovered $event
      * @return void
@@ -25,10 +23,11 @@ class MonitorEventSubscriber
     public function handleUptimeEventRecovered(UptimeCheckRecovered $event)
     {
         $event->monitor->uptime_status = 'recovered';
+        /* @phpstan-ignore-next-line */
         $event->monitor->monitorEvents()->create([
             'category' => Category::UPTIME,
             'status' => UptimeStatus::getStatusFromName($event->monitor->uptime_status),
-            'error' =>  "Recovered after {$event->downtimePeriod->duration()}",
+            'error' => "Recovered after {$event->downtimePeriod->duration()}",
             'user_id' => $event->monitor->user_id,
         ]);
         $this->dispatchIncrementUptimeCountEvent($event);
@@ -41,6 +40,7 @@ class MonitorEventSubscriber
      */
     public function handleUptimeEventFailed(UptimeCheckFailed $event)
     {
+        /* @phpstan-ignore-next-line */
         $event->monitor->monitorEvents()->create([
             'category' => Category::UPTIME,
             'status' => UptimeStatus::getStatusFromName($event->monitor->uptime_status),
@@ -59,12 +59,11 @@ class MonitorEventSubscriber
      */
     public function handleCertificateEvent($event)
     {
-
         $status = CertificateStatus::getStatusFromName($event->monitor->certificate_status);
 
         $error = $status === CertificateStatus::VALID ?
             "Certificate expires soon: {$event->monitor->certificate_expiration_date}" :
-            $event->monitor->certificate_check_failure_reason ?? $event->monitor->uptime_check_failure_reason ?? null;
+            $event->monitor->certificate_check_failure_reason ?? $event->monitor->uptime_check_failure_reason;
 
         $event->monitor->monitorEvents()->create([
             'category' => Category::CERTIFICATE,
@@ -74,7 +73,8 @@ class MonitorEventSubscriber
         ]);
     }
 
-    public function dispatchIncrementUptimeCountEvent($event) {
+    public function dispatchIncrementUptimeCountEvent($event)
+    {
         event(new IncrementUptimeCount($event->monitor));
     }
 

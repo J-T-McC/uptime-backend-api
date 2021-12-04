@@ -79,7 +79,7 @@ class ChannelControllerTest extends AuthenticatedTestCase
     {
         $channel = Channel::factory()->create();
 
-        $response = $this->put(route('channels.update', $channel), [
+        $response = $this->putJson(route('channels.update', $channel), [
             'type' => 'mail',
             'endpoint' => $this->faker->safeEmail,
             'description' => 'Test Update',

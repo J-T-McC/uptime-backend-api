@@ -10,36 +10,22 @@ class DiscordMessage
     const COLOR_WARNING = 'FD6A02';
     const COLOR_ERROR = 'ED2939';
 
-    /** @var string */
-    protected $title;
+    protected ?string $title = null;
+    protected ?string $description = null;
+    protected ?string $timestamp = null;
+    protected ?string $footer = null;
+    protected ?string $color = null;
 
-    /** @var string */
-    protected $description;
-
-    /** @var string */
-    protected $timestamp;
-
-    /** @var string */
-    protected $footer;
-
-    /** @var string */
-    protected $color;
-
-    public function title($title)
+    public function title(string $title): self
     {
         $this->title = $title;
 
         return $this;
     }
 
-    /**
-     * @param array|string $descriptionLines
-     *
-     * @return \App\Services\Channels\Discord\DiscordMessage
-     */
-    public function description($descriptionLines): self
+    public function description(array|string $descriptionLines): self
     {
-        if (! is_array($descriptionLines)) {
+        if (!is_array($descriptionLines)) {
             $descriptionLines = [$descriptionLines];
         }
 
