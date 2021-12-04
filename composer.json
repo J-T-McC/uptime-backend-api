@@ -20,6 +20,7 @@
         "spatie/laravel-uptime-monitor": "^4.0"
     },
     "require-dev": {
+        "ext-json": "*",
         "brianium/paratest": "^6.3",
         "estahn/phpunit-json-assertions": "^4.0",
         "facade/ignition": "^2.5",
@@ -28,8 +29,8 @@
         "laravel-shift/factory-generator": "dev-master",
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^5.0",
-        "phpunit/phpunit": "^9.3.3",
-        "ext-json": "*"
+        "nunomaduro/larastan": "^1.0",
+        "phpunit/phpunit": "^9.3.3"
     },
     "config": {
         "optimize-autoloader": true,
