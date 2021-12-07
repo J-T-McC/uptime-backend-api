@@ -3,7 +3,6 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-
 use Spatie\UptimeMonitor\Notifications\Notifications\CertificateExpiresSoon as SpatieCertificateExpiresSoon;
 
 class CertificateExpiresSoon extends SpatieCertificateExpiresSoon
@@ -23,7 +22,7 @@ class CertificateExpiresSoon extends SpatieCertificateExpiresSoon
     /**
      * Get the notification's delivery channels.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
      * @return array
      */
     public function via($notifiable)
@@ -46,7 +45,7 @@ class CertificateExpiresSoon extends SpatieCertificateExpiresSoon
     /**
      * Get the array representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
      * @return array
      */
     public function toArray($notifiable)

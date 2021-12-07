@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Models\Enums;
 
 use ReflectionClass;

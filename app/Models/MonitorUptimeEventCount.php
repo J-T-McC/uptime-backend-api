@@ -9,7 +9,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class MonitorUptimeEventCount extends Model
 {
-    use HasFactory, UsesOwnerScope;
+    use HasFactory;
+    use UsesOwnerScope;
 
     protected $fillable = ['monitor_id', 'user_id', 'filter_date'];
 

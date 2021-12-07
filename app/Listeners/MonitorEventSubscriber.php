@@ -6,11 +6,9 @@ use App\Events\IncrementUptimeCount;
 use App\Models\Enums\Category;
 use App\Models\Enums\CertificateStatus;
 use App\Models\Enums\UptimeStatus;
-
 use Spatie\UptimeMonitor\Events\UptimeCheckFailed;
 use Spatie\UptimeMonitor\Events\UptimeCheckRecovered;
 use Spatie\UptimeMonitor\Events\UptimeCheckSucceeded;
-
 use Spatie\UptimeMonitor\Events\CertificateCheckFailed;
 use Spatie\UptimeMonitor\Events\CertificateExpiresSoon;
 
@@ -90,7 +88,8 @@ class MonitorEventSubscriber
             [self::class, 'handleUptimeEventRecovered']
         );
 
-        $events->listen([UptimeCheckSucceeded::class],
+        $events->listen(
+            [UptimeCheckSucceeded::class],
             [self::class, 'dispatchIncrementUptimeCountEvent']
         );
 
