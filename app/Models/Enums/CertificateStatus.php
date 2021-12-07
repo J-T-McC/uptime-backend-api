@@ -2,14 +2,14 @@
 
 namespace App\Models\Enums;
 
-class CertificateStatus extends Enum
+enum CertificateStatus: int
 {
-    const UNKNOWN = 0;
-    const VALID = 1;
-    const INVALID = 2;
-    const EXPIRED = 3;
+    case UNKNOWN = 0;
+    case VALID = 1;
+    case INVALID = 2;
+    case EXPIRED = 3;
 
-    public static function getStatusFromName(string $name): int
+    public static function getStatusFromName(string $name): self
     {
         return [
                 'valid' => self::VALID,

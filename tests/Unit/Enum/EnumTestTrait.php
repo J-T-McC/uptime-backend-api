@@ -4,28 +4,21 @@ namespace Tests\Unit\Enum;
 
 trait EnumTestTrait
 {
-
     /**
      * @test
      */
     public function property_names_and_values_have_not_changed()
     {
+        // Collect
         $class = self::model;
-        $enum = new $class();
-        $this->assertTrue(empty(array_diff_assoc(static::expected, $enum->getConstants())));
-    }
+        $toMatch = [];
+        foreach($class::cases() as $case) {
+            $toMatch[$case->name] = $case->value;
+        }
 
-    /**
-     * @test
-     */
-    public function can_get_property_from_value()
-    {
-        $class = self::model;
-        $enum = new $class();
-        $props = $enum->getConstants();
-        $category = array_keys($props)[0];
-        $value = array_values($props)[0];
-        $this->assertTrue($enum->getNameFromValue($value) === $category);
+        // Assert
+        foreach(static::expected as $name => $value) {
+            $this->assertTrue(empty(array_diff_assoc(static::expected, $toMatch)));
+        }
     }
-
 }

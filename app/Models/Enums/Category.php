@@ -2,8 +2,8 @@
 
 namespace App\Models\Enums;
 
-class Category extends Enum
+enum Category:int
 {
-    const UPTIME = 1;
-    const CERTIFICATE = 2;
+    case UPTIME = 1;
+    case CERTIFICATE = 2;
 }
