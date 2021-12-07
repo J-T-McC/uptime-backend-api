@@ -33,5 +33,4 @@ class EventServiceProvider extends ServiceProvider
     protected $subscribe = [
         MonitorEventSubscriber::class,
     ];
-
 }

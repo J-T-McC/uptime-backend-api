@@ -3,7 +3,6 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-
 use Spatie\UptimeMonitor\Notifications\Notifications\UptimeCheckRecovered as SpatieUptimeCheckRecovered;
 
 class UptimeCheckRecovered extends SpatieUptimeCheckRecovered
@@ -23,7 +22,7 @@ class UptimeCheckRecovered extends SpatieUptimeCheckRecovered
     /**
      * Get the notification's delivery channels.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
      * @return array
      */
     public function via($notifiable)
@@ -47,7 +46,7 @@ class UptimeCheckRecovered extends SpatieUptimeCheckRecovered
     /**
      * Get the array representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
      * @return array
      */
     public function toArray($notifiable)

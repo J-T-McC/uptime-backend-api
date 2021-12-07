@@ -10,7 +10,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Channel extends Model
 {
-    use HasFactory, UsesOwnerScope;
+    use HasFactory;
+    use UsesOwnerScope;
 
     protected $fillable = [
         'endpoint',

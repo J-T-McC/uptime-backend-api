@@ -13,7 +13,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class MonitorEvent extends Model
 {
-    use HasFactory, UsesOwnerScope;
+    use HasFactory;
+    use UsesOwnerScope;
 
     protected $fillable = [
         'category',

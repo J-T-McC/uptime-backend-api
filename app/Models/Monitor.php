@@ -12,7 +12,8 @@ use Spatie\UptimeMonitor\Models\Monitor as SpatieMonitor;
 
 class Monitor extends SpatieMonitor
 {
-    use HasFactory, UsesOwnerScope;
+    use HasFactory;
+    use UsesOwnerScope;
 
     protected $fillable = [
         'url',

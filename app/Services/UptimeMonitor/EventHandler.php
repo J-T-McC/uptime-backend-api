@@ -7,7 +7,6 @@ use Spatie\UptimeMonitor\Notifications\EventHandler as SpatieEventHandler;
 
 class EventHandler extends SpatieEventHandler
 {
-
     /**
      * Override default spatie notification callback so we can dynamically generate notifications
      * @param Dispatcher $events
@@ -26,5 +25,4 @@ class EventHandler extends SpatieEventHandler
             }
         });
     }
-
 }

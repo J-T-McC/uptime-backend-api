@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Services\Channels\Exceptions;
 
 use Exception;
