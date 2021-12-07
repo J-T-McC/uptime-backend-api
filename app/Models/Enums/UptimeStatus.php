@@ -2,14 +2,14 @@
 
 namespace App\Models\Enums;
 
-class UptimeStatus extends Enum
+enum UptimeStatus: int
 {
-    const UNKNOWN = 0;
-    const ONLINE = 1;
-    const RECOVERED = 2;
-    const OFFLINE = 3;
+    case UNKNOWN = 0;
+    case ONLINE = 1;
+    case RECOVERED = 2;
+    case OFFLINE = 3;
 
-    public static function getStatusFromName(string $name)
+    public static function getStatusFromName(string $name): self
     {
         return [
                 'up' => self::ONLINE,

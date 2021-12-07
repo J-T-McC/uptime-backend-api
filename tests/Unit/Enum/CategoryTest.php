@@ -8,7 +8,6 @@ use App\Models\Enums\Category;
 
 class CategoryTest extends TestCase
 {
-
     use EnumTestTrait;
 
     const expected = [
@@ -17,5 +16,4 @@ class CategoryTest extends TestCase
     ];
 
     const model = Category::class;
-
 }

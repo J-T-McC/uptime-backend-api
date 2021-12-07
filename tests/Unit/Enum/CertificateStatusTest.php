@@ -8,7 +8,6 @@ use App\Models\Enums\CertificateStatus;
 
 class CertificateStatusTest extends TestCase
 {
-
     use EnumTestTrait;
 
     const expected = [
@@ -19,5 +18,4 @@ class CertificateStatusTest extends TestCase
     ];
 
     const model = CertificateStatus::class;
-
 }

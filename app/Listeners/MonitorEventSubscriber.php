@@ -24,10 +24,11 @@ class MonitorEventSubscriber
         /* @phpstan-ignore-next-line */
         $event->monitor->monitorEvents()->create([
             'category' => Category::UPTIME,
-            'status' => UptimeStatus::getStatusFromName($event->monitor->uptime_status),
+            'status' => UptimeStatus::getStatusFromName($event->monitor->uptime_status)->value,
             'error' => "Recovered after {$event->downtimePeriod->duration()}",
             'user_id' => $event->monitor->user_id,
         ]);
+
         $this->dispatchIncrementUptimeCountEvent($event);
     }
 
@@ -41,7 +42,7 @@ class MonitorEventSubscriber
         /* @phpstan-ignore-next-line */
         $event->monitor->monitorEvents()->create([
             'category' => Category::UPTIME,
-            'status' => UptimeStatus::getStatusFromName($event->monitor->uptime_status),
+            'status' => UptimeStatus::getStatusFromName($event->monitor->uptime_status)->value,
             'error' => $event->monitor->uptime_check_failure_reason ?? null,
             'user_id' => $event->monitor->user_id,
         ]);
@@ -57,7 +58,7 @@ class MonitorEventSubscriber
      */
     public function handleCertificateEvent($event)
     {
-        $status = CertificateStatus::getStatusFromName($event->monitor->certificate_status);
+        $status = CertificateStatus::getStatusFromName($event->monitor->certificate_status)->value;
 
         $error = $status === CertificateStatus::VALID ?
             "Certificate expires soon: {$event->monitor->certificate_expiration_date}" :
@@ -65,7 +66,7 @@ class MonitorEventSubscriber
 
         $event->monitor->monitorEvents()->create([
             'category' => Category::CERTIFICATE,
-            'status' => CertificateStatus::getStatusFromName($event->monitor->certificate_status),
+            'status' => CertificateStatus::getStatusFromName($event->monitor->certificate_status)->value,
             'error' => $error,
             'user_id' => $event->monitor->user_id
         ]);
