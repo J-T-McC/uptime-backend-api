@@ -1,13 +1,12 @@
 <?php
 
-namespace Tests\Integration\Listeners;
+namespace Tests\Feature\Listeners;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Spatie\UptimeMonitor\Helpers\ConsoleOutput;
-use Spatie\UptimeMonitor\MonitorCollection;
 use App\Models\MonitorUptimeEventCount;
-use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
+use Spatie\UptimeMonitor\MonitorCollection;
+use Tests\TestCase;
 
 /**
  * @see \App\Listeners\IncrementUptimeCountListener

@@ -1,23 +1,19 @@
 <?php
 
-namespace Tests\Integration\Notification;
+namespace Tests\Feature\Notification;
 
+use App\Models\Channel;
+use App\Models\Monitor;
 use App\Notifications\CertificateCheckFailed;
-use App\Notifications\CertificateCheckSucceeded;
 use App\Notifications\CertificateExpiresSoon;
 use App\Notifications\UptimeCheckFailed;
 use App\Notifications\UptimeCheckRecovered;
-use App\Notifications\UptimeCheckSucceeded;
 use App\Services\UptimeMonitor\NotificationDispatcher;
 use Database\Factories\ChannelFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-
 use Illuminate\Notifications\AnonymousNotifiable;
-use Illuminate\Support\Facades\Notification;
-
 use Illuminate\Support\Facades\Config;
-
+use Illuminate\Support\Facades\Notification;
 use Spatie\UptimeMonitor\MonitorCollection;
 use Tests\TestCase;
 
@@ -157,9 +153,9 @@ class NotificationDispatcherTest extends TestCase
 
             Notification::fake();
 
-            $monitor = \App\Models\Monitor::factory()->create();
+            $monitor = Monitor::factory()->create();
 
-            $channel = \App\Models\Channel::factory([
+            $channel = Channel::factory([
                 'type' => $type,
                 'endpoint' => $endpoint
             ])->create();
