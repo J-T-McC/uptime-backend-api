@@ -26,7 +26,7 @@ class ChannelControllerTest extends AuthenticatedTestCase
         $response = $this->deleteJson(route('channels.destroy', $channel));
 
         $response->assertNoContent();
-        $this->assertDeleted($channel);
+        $this->assertModelMissing($channel);
     }
 
     /**

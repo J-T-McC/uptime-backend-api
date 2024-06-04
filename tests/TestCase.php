@@ -15,7 +15,7 @@ abstract class TestCase extends BaseTestCase
     use CreatesApplication, AdditionalAssertions;
 
     const BAD_SSL = 'https://expired.badssl.com';
-    const VALID_SSL = 'https://google.com';
+    const VALID_SSL = 'https://example.com';
     const UPTIME_FAIL = 'https://test-response.tysonmccarney.com/500';
     const UPTIME_SUCCEED = 'https://test-response.tysonmccarney.com/200';
     const SCHEMA_ROOT = __DIR__ . '/Schemas/';

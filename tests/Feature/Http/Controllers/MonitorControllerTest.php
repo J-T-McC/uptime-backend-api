@@ -25,7 +25,7 @@ class MonitorControllerTest extends AuthenticatedTestCase
         $response = $this->deleteJson(route('monitors.destroy', $monitor));
 
         $response->assertNoContent();
-        $this->assertDeleted($monitor);
+        $this->assertModelMissing($monitor);
     }
 
     /**
