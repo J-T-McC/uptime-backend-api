@@ -12,7 +12,7 @@ use PHPUnit\Framework\ExpectationFailedException;
 
 abstract class TestCase extends BaseTestCase
 {
-    use CreatesApplication, AdditionalAssertions;
+    use CreatesApplication, AdditionalAssertions, FasterRefreshDatabase;
 
     const BAD_SSL = 'https://expired.badssl.com';
     const VALID_SSL = 'https://example.com';
