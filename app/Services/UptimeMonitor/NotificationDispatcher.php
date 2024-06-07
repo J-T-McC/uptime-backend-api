@@ -5,7 +5,7 @@ namespace App\Services\UptimeMonitor;
 use App\Jobs\DispatchNotification;
 use App\Models\Monitor;
 use App\Models\Channel;
-use Illuminate\Notifications\AnonymousNotifiable;
+use App\Notifications\AnonymousNotifiable;
 use App\Exceptions\UndefinedPropertyException;
 use Illuminate\Notifications\Notification;
 
@@ -37,7 +37,7 @@ class NotificationDispatcher
 
     private function dispatchNotifications()
     {
-        //Dispatch independently to accommodate multiples of the same channel
+        // Dispatch independently to accommodate multiples of the same channel
         $this->channels->each(function ($channel) {
             $notifiable = new AnonymousNotifiable();
             $notifiable->route($channel->type, $channel->endpoint);

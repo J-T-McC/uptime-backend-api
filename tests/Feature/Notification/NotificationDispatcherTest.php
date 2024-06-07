@@ -4,6 +4,7 @@ namespace Tests\Feature\Notification;
 
 use App\Models\Channel;
 use App\Models\Monitor;
+use App\Notifications\AnonymousNotifiable;
 use App\Notifications\CertificateCheckFailed;
 use App\Notifications\CertificateExpiresSoon;
 use App\Notifications\UptimeCheckFailed;
@@ -11,7 +12,6 @@ use App\Notifications\UptimeCheckRecovered;
 use App\Services\UptimeMonitor\NotificationDispatcher;
 use Database\Factories\ChannelFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Notifications\AnonymousNotifiable;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Notification;
 use Spatie\UptimeMonitor\MonitorCollection;
