@@ -13,8 +13,12 @@ use App\Services\UptimeMonitor\NotificationDispatcher;
 use Database\Factories\ChannelFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Notification;
-use Spatie\UptimeMonitor\MonitorCollection;
+use Spatie\SslCertificate\SslCertificate;
+use Spatie\UptimeMonitor\Events\CertificateCheckSucceeded;
+use Spatie\UptimeMonitor\Events\UptimeCheckSucceeded;
+use Spatie\UptimeMonitor\Helpers\Period;
 use Tests\TestCase;
 
 /**
@@ -25,7 +29,7 @@ class NotificationDispatcherTest extends TestCase
 
     use RefreshDatabase;
 
-    private $channelTypes;
+    private array $channelTypes;
 
     public function setUp(): void
     {
@@ -58,9 +62,15 @@ class NotificationDispatcherTest extends TestCase
         Config::set('uptime-monitor.certificate_check.fire_expiring_soon_event_if_certificate_expires_within_days', 730);
 
         $this->checkAllChannelsForNotificationEvent(function($monitor, $type, $endpoint) {
-            //override our faker url with one we know has a certificate installed
-            $monitor->url = static::VALID_SSL;
-            $monitor->checkCertificate();
+            $monitor->certificate_status = 'valid';
+
+            Event::dispatch(
+                new \Spatie\UptimeMonitor\Events\CertificateExpiresSoon(
+                    $monitor,
+                    new SslCertificate([])
+                )
+            );
+
             Notification::assertSentTo(
                 [(new AnonymousNotifiable())],
                 CertificateExpiresSoon::class,
@@ -75,10 +85,16 @@ class NotificationDispatcherTest extends TestCase
      */
     public function does_not_notify_any_channel_types_on_certificate_valid_event()
     {
-        $this->checkAllChannelsForNotificationEvent(function($monitor, $type, $endpoint) {
-            //override our faker url with one we know has a certificate installed
-            $monitor->url = static::VALID_SSL;
-            $monitor->checkCertificate();
+        $this->checkAllChannelsForNotificationEvent(function($monitor) {
+            $monitor->certificate_status = 'valid';
+
+            Event::dispatch(
+                new CertificateCheckSucceeded(
+                    $monitor,
+                    new SslCertificate([])
+                )
+            );
+
             Notification::assertNothingSent();
         });
     }
@@ -89,10 +105,15 @@ class NotificationDispatcherTest extends TestCase
     public function notifies_all_channel_types_on_uptime_check_failed_event()
     {
         $this->checkAllChannelsForNotificationEvent(function($monitor, $type, $endpoint) {
-            //override our faker url with one we know will fail
-            $monitor->url = static::UPTIME_FAIL;
-            $collection = MonitorCollection::make([$monitor]);
-            $collection->checkUptime();
+            $monitor->uptime_status = 'down';
+
+            Event::dispatch(
+                new \Spatie\UptimeMonitor\Events\UptimeCheckFailed(
+                    $monitor,
+                    new Period(now()->subMinutes(5), now())
+                )
+            );
+
             Notification::assertSentTo(
                 [(new AnonymousNotifiable())],
                 UptimeCheckFailed::class,
@@ -107,15 +128,17 @@ class NotificationDispatcherTest extends TestCase
      */
     public function does_not_notify_any_channel_types_on_uptime_check_succeeded_event()
     {
-        $this->checkAllChannelsForNotificationEvent(function($monitor, $type, $endpoint) {
+        $this->checkAllChannelsForNotificationEvent(function($monitor) {
             //override our faker url with one we know will succeed
-            $monitor->url = static::UPTIME_SUCCEED;
-            $collection = MonitorCollection::make([$monitor]);
-            $collection->checkUptime();
+            $monitor->uptime_status = 'up';
+
+            Event::dispatch(
+                new UptimeCheckSucceeded($monitor)
+            );
+
             Notification::assertNothingSent();
         });
     }
-
 
     /**
      * @test
@@ -126,14 +149,12 @@ class NotificationDispatcherTest extends TestCase
             $monitor->uptimeRequestFailed('(┛ಠ_ಠ)┛彡┻━┻');
             $monitor->uptimeCheckSucceeded('┬─┬ノ( º _ ºノ)');
 
-            //override our faker url with one we know will succeed
-            $monitor->url = static::UPTIME_FAIL;
-            $collection = MonitorCollection::make([$monitor]);
-            $collection->checkUptime();
-
-            $monitor->url = static::UPTIME_SUCCEED;
-            $collection = MonitorCollection::make([$monitor]);
-            $collection->checkUptime();
+            Event::dispatch(
+                new \Spatie\UptimeMonitor\Events\UptimeCheckRecovered(
+                    $monitor,
+                    new Period(now()->subMinutes(5), now())
+                )
+            );
 
             Notification::assertSentTo(
                 [(new AnonymousNotifiable())],
@@ -142,7 +163,6 @@ class NotificationDispatcherTest extends TestCase
             );
         });
     }
-
 
     /**
      * Generate a monitors with notification channels to test
