@@ -4,7 +4,6 @@ namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Monitor;
 use App\Models\MonitorUptimeEventCount;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\AuthenticatedTestCase;
 
 /**
@@ -12,8 +11,6 @@ use Tests\AuthenticatedTestCase;
  */
 class EventCountsGroupedControllerTest extends AuthenticatedTestCase
 {
-    use RefreshDatabase;
-
     /**
      * @test
      * @covers ::index

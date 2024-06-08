@@ -3,7 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Monitor;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\AuthenticatedTestCase;
 
 /**
@@ -11,8 +10,6 @@ use Tests\AuthenticatedTestCase;
  */
 class EventCountsTrendedControllerTest extends AuthenticatedTestCase
 {
-    use RefreshDatabase;
-
     /**
      * @test
      * @covers ::index

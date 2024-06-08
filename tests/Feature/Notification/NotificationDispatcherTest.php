@@ -11,7 +11,6 @@ use App\Notifications\UptimeCheckFailed;
 use App\Notifications\UptimeCheckRecovered;
 use App\Services\UptimeMonitor\NotificationDispatcher;
 use Database\Factories\ChannelFactory;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Notification;
@@ -26,9 +25,6 @@ use Tests\TestCase;
  */
 class NotificationDispatcherTest extends TestCase
 {
-
-    use RefreshDatabase;
-
     private array $channelTypes;
 
     public function setUp(): void
@@ -44,8 +40,15 @@ class NotificationDispatcherTest extends TestCase
     public function notifies_all_channel_types_on_certificate_check_failed_event()
     {
         $this->checkAllChannelsForNotificationEvent(function($monitor, $type, $endpoint) {
-            $monitor->url = static::BAD_SSL;
-            $monitor->checkCertificate();
+            $monitor->certificate_status = 'invalid';
+
+            Event::dispatch(
+                new \Spatie\UptimeMonitor\Events\CertificateCheckFailed(
+                    $monitor,
+                    new SslCertificate([])
+                )
+            );
+
             Notification::assertSentTo(
                 [(new AnonymousNotifiable())],
                 CertificateCheckFailed::class,

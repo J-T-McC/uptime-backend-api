@@ -3,14 +3,10 @@
 namespace Tests\Feature\Http\Requests;
 
 use App\Models\Channel;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\AuthenticatedTestCase;
 
 class StoreChannelRequestTest extends AuthenticatedTestCase
 {
-    use RefreshDatabase, WithFaker;
-
     /**
      * @test
      * @covers \App\Http\Requests\StoreChannelRequest::rules

@@ -3,13 +3,10 @@
 namespace Tests\Feature\Http\Requests;
 
 use App\Models\Channel;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\AuthenticatedTestCase;
 
 class UpdateChannelRequestTest extends AuthenticatedTestCase
 {
-    use RefreshDatabase;
-
     /**
      * @test
      * @covers \App\Http\Requests\UpdateChannelRequest::rules

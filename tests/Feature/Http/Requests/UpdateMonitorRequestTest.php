@@ -3,14 +3,10 @@
 namespace Tests\Feature\Http\Requests;
 
 use App\Models\Monitor;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\AuthenticatedTestCase;
 
 class UpdateMonitorRequestTest extends AuthenticatedTestCase
 {
-    use RefreshDatabase, WithFaker;
-
     /**
      * @test
      * @covers \App\Http\Requests\StoreMonitorRequest::rules

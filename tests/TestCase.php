@@ -14,10 +14,6 @@ abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication, AdditionalAssertions, FasterRefreshDatabase;
 
-    const BAD_SSL = 'https://expired.badssl.com';
-    const VALID_SSL = 'https://example.com';
-    const UPTIME_FAIL = 'https://test-response.tysonmccarney.com/500';
-    const UPTIME_SUCCEED = 'https://test-response.tysonmccarney.com/200';
     const SCHEMA_ROOT = __DIR__ . '/Schemas/';
 
     /**
@@ -28,8 +24,12 @@ abstract class TestCase extends BaseTestCase
      * @param string|array $responseKey
      * @param string $method
      */
-    protected function assertRequestRules(string $route, array $requestBody, string|array $responseKey, string $method = 'postJson'): void
-    {
+    protected function assertRequestRules(
+        string $route,
+        array $requestBody,
+        string|array $responseKey,
+        string $method = 'postJson'
+    ): void {
         /**
          * @var TestResponse $response
          */
@@ -38,11 +38,11 @@ abstract class TestCase extends BaseTestCase
         try {
             $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
             $response->assertJsonValidationErrors($responseKey);
-        } catch (ExpectationFailedException | AssertionFailedError $e) {
+        } catch (ExpectationFailedException|AssertionFailedError $e) {
             $message = $e->getMessage();
             $location = collect($e->getTrace())
-                    ->where('function', 'assertFormValidationRule')
-                    ->first() ?? [];
+                ->where('function', 'assertFormValidationRule')
+                ->first() ?? [];
 
             $file = $location['file'] ?? '';
             $line = $location['line'] ?? '';
