@@ -8,7 +8,6 @@ use Carbon\Carbon;
 
 class IncrementUptimeCountListener
 {
-
     private $validColumns = [
         'up',
         'down',
@@ -29,6 +28,7 @@ class IncrementUptimeCountListener
                 'user_id' => $event->monitor->user_id,
                 'filter_date' => Carbon::now('UTC')->format('Y-m-d')
             ]);
+
             $monitorCounts->increment($event->monitor->uptime_status);
         }
     }

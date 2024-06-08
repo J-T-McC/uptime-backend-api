@@ -14,11 +14,7 @@ use Spatie\UptimeMonitor\Events\CertificateExpiresSoon;
 
 class MonitorEventSubscriber
 {
-    /**
-     * @param UptimeCheckRecovered $event
-     * @return void
-     */
-    public function handleUptimeEventRecovered(UptimeCheckRecovered $event)
+    public function handleUptimeEventRecovered(UptimeCheckRecovered $event): void
     {
         $event->monitor->uptime_status = 'recovered';
         /* @phpstan-ignore-next-line */
@@ -32,12 +28,7 @@ class MonitorEventSubscriber
         $this->dispatchIncrementUptimeCountEvent($event);
     }
 
-
-    /**
-     * @param UptimeCheckFailed $event
-     * @return void
-     */
-    public function handleUptimeEventFailed(UptimeCheckFailed $event)
+    public function handleUptimeEventFailed(UptimeCheckFailed $event): void
     {
         /* @phpstan-ignore-next-line */
         $event->monitor->monitorEvents()->create([
@@ -50,13 +41,7 @@ class MonitorEventSubscriber
         $this->dispatchIncrementUptimeCountEvent($event);
     }
 
-    /**
-     * Handle Certificate Events
-     *
-     * @param object $event
-     * @return void
-     */
-    public function handleCertificateEvent($event)
+    public function handleCertificateEvent(CertificateCheckFailed|CertificateExpiresSoon $event): void
     {
         $status = CertificateStatus::getStatusFromName($event->monitor->certificate_status)->value;
 
@@ -72,34 +57,13 @@ class MonitorEventSubscriber
         ]);
     }
 
-    public function dispatchIncrementUptimeCountEvent($event)
+    private function dispatchIncrementUptimeCountEvent(UptimeCheckSucceeded|UptimeCheckFailed|UptimeCheckRecovered $event): void
     {
         event(new IncrementUptimeCount($event->monitor));
     }
 
-    public function subscribe($events)
+    public function handleUptimeCheckSucceeded(UptimeCheckSucceeded $event): void
     {
-        $events->listen(
-            [UptimeCheckFailed::class],
-            [self::class, 'handleUptimeEventFailed']
-        );
-
-        $events->listen(
-            [UptimeCheckRecovered::class],
-            [self::class, 'handleUptimeEventRecovered']
-        );
-
-        $events->listen(
-            [UptimeCheckSucceeded::class],
-            [self::class, 'dispatchIncrementUptimeCountEvent']
-        );
-
-        $events->listen(
-            [
-                CertificateCheckFailed::class,
-                CertificateExpiresSoon::class,
-            ],
-            [self::class, 'handleCertificateEvent']
-        );
+        $this->dispatchIncrementUptimeCountEvent($event);
     }
 }

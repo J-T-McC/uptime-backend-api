@@ -149,7 +149,7 @@ class NotificationDispatcherTest extends TestCase
     public function notifies_all_channel_types_on_uptime_check_recovered_event()
     {
         $this->checkAllChannelsForNotificationEvent(function($monitor,  $type, $endpoint) {
-            $monitor->uptimeRequestFailed('(┛ಠ_ಠ)┛彡┻━┻');
+            $monitor->uptimeCheckFailed('(┛ಠ_ಠ)┛彡┻━┻');
             $monitor->uptimeCheckSucceeded('┬─┬ノ( º _ ºノ)');
 
             Event::dispatch(

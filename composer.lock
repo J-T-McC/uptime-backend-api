@@ -3589,16 +3589,16 @@
         },
         {
             "name": "spatie/ssl-certificate",
-            "version": "2.6.5",
+            "version": "2.6.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/ssl-certificate.git",
-                "reference": "6a5e3788f5f26a62fd18450305d4ec0d9b8b7b91"
+                "reference": "91e67730fdd04bda87d9f5562d378314a860436d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/ssl-certificate/zipball/6a5e3788f5f26a62fd18450305d4ec0d9b8b7b91",
-                "reference": "6a5e3788f5f26a62fd18450305d4ec0d9b8b7b91",
+                "url": "https://api.github.com/repos/spatie/ssl-certificate/zipball/91e67730fdd04bda87d9f5562d378314a860436d",
+                "reference": "91e67730fdd04bda87d9f5562d378314a860436d",
                 "shasum": ""
             },
             "require": {
@@ -3641,7 +3641,7 @@
                 "ssl-certificate"
             ],
             "support": {
-                "source": "https://github.com/spatie/ssl-certificate/tree/2.6.5"
+                "source": "https://github.com/spatie/ssl-certificate/tree/2.6.6"
             },
             "funding": [
                 {
@@ -3653,7 +3653,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2024-03-25T04:14:50+00:00"
+            "time": "2024-06-07T11:12:52+00:00"
         },
         {
             "name": "spatie/url",

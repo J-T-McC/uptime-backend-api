@@ -17,17 +17,15 @@ class IncrementUptimeCountListenerTest extends TestCase
     public function increments_uptime_status_failed()
     {
         $monitor = Monitor::factory()->create();
-
         $this->assertTrue(empty(MonitorUptimeEventCount::where('monitor_id', $monitor->id)->first()));
 
-        $monitor->uptimeRequestFailed('(┛ಠ_ಠ)┛彡┻━┻');
+        $monitor->uptimeCheckFailed('(┛ಠ_ಠ)┛彡┻━┻');
 
-        $this->assertTrue(MonitorUptimeEventCount::where('monitor_id', $monitor->id)->first()->down === 1);
+        $this->assertSame(1, MonitorUptimeEventCount::where('monitor_id', $monitor->id)->first()->down);
 
-        $monitor->uptimeRequestFailed('(┛ಠ_ಠ)┛彡┻━┻');
+        $monitor->uptimeCheckFailed('(┛ಠ_ಠ)┛彡┻━┻');
 
-        $this->assertTrue(MonitorUptimeEventCount::where('monitor_id', $monitor->id)->first()->down === 2);
-
+        $this->assertSame(2, MonitorUptimeEventCount::where('monitor_id', $monitor->id)->first()->down);
     }
 
     /**
@@ -41,11 +39,11 @@ class IncrementUptimeCountListenerTest extends TestCase
 
         $monitor->uptimeCheckSucceeded();
 
-        $this->assertTrue(MonitorUptimeEventCount::where('monitor_id', $monitor->id)->first()->up === 1);
+        $this->assertSame(1, MonitorUptimeEventCount::where('monitor_id', $monitor->id)->first()->up);
 
         $monitor->uptimeCheckSucceeded();
 
-        $this->assertTrue(MonitorUptimeEventCount::where('monitor_id', $monitor->id)->first()->up === 2);
+        $this->assertSame(2, MonitorUptimeEventCount::where('monitor_id', $monitor->id)->first()->up);
     }
 
     /**
@@ -58,14 +56,14 @@ class IncrementUptimeCountListenerTest extends TestCase
         // no count record for this monitor
         $this->assertTrue(empty(MonitorUptimeEventCount::where('monitor_id', $monitor->id)->first()));
 
-        $monitor->uptimeRequestFailed('(┛ಠ_ಠ)┛彡┻━┻');
+        $monitor->uptimeCheckFailed('(┛ಠ_ಠ)┛彡┻━┻');
         $monitor->uptimeCheckSucceeded('┬─┬ノ( º _ ºノ)');
 
-        $this->assertTrue(MonitorUptimeEventCount::where('monitor_id', $monitor->id)->first()->recovered === 1);
+        $this->assertSame(1, MonitorUptimeEventCount::where('monitor_id', $monitor->id)->first()->recovered);
 
-        $monitor->uptimeRequestFailed('(┛ಠ_ಠ)┛彡┻━┻');
+        $monitor->uptimeCheckFailed('(┛ಠ_ಠ)┛彡┻━┻');
         $monitor->uptimeCheckSucceeded('┬─┬ノ( º _ ºノ)');
 
-        $this->assertTrue(MonitorUptimeEventCount::where('monitor_id', $monitor->id)->first()->recovered === 2);
+        $this->assertSame(2, MonitorUptimeEventCount::where('monitor_id', $monitor->id)->first()->recovered);
     }
 }
