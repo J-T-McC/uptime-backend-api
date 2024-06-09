@@ -24,10 +24,16 @@ class Channel extends Model
         'description',
     ];
 
+    /**
+     * @var array<string, string>
+     */
     protected $casts = [
         'verified' => 'boolean',
     ];
 
+    /**
+     * @var array<string, mixed>
+     */
     protected $attributes = [
         'verified' => false,
     ];

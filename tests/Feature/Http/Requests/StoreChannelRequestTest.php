@@ -22,7 +22,7 @@ class StoreChannelRequestTest extends AuthenticatedTestCase
         // value restricted
         $this->assertRequestRules($route, ['type' => 'invalid-type'], 'type');
         // unique for user
-        $duplicateChannel = Channel::factory()->create(['user_id' => $this->testUser->id]);
+        $duplicateChannel = Channel::factory()->createQuietly(['user_id' => $this->testUser->id]);
         $this->assertRequestRules($route, $duplicateChannel->toArray(), 'type');
         foreach (array_keys(config('uptime-monitor.notifications.service-endpoint-rules')) as $type) {
             $this->assertRequestRules($route, ['type' => $type, 'endpoint' => 'invalid-endpoint'], 'endpoint');

@@ -176,12 +176,12 @@ class NotificationDispatcherTest extends TestCase
 
             Notification::fake();
 
-            $monitor = Monitor::factory()->create();
+            $monitor = Monitor::factory()->createQuietly();
 
             $channel = Channel::factory([
                 'type' => $type,
                 'endpoint' => $endpoint
-            ])->create();
+            ])->createQuietly();
 
             Notification::assertNothingSent();
 

@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Actions\CreateSignedVerifyChannelUrl;
 use App\Models\Channel;
 use App\Services\Channels\Discord\DiscordMessage;
 use Illuminate\Bus\Queueable;
@@ -10,8 +11,6 @@ use Illuminate\Notifications\Messages\SlackAttachment;
 use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Facades\URL;
 
 class VerifyChannel extends Notification
 {
@@ -79,13 +78,7 @@ class VerifyChannel extends Notification
 
     public function getVerifyUrl(): string
     {
-        $url = URL::temporarySignedRoute(
-            name: 'verification.channel',
-            expiration: Carbon::now()->addMinutes(60),
-            parameters: [
-                'channel' => Crypt::encrypt($this->channel->id),
-            ]
-        );
+        $url = (new CreateSignedVerifyChannelUrl())->handle($this->channel);
 
         return str_replace(config('app.url'), config('app.spa_url'), $url);
     }

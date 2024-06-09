@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
 /**
- * @see VerifyChannelListener
+ * @coversDefaultClass  \App\Listeners\VerifyChannelListener
  */
 class VerifyChannelListenerTest extends TestCase
 {
@@ -31,12 +31,13 @@ class VerifyChannelListenerTest extends TestCase
      * ["mail"]
      * ["slack"]
      * ["discord"]
+     * @covers ::handle
      */
     public function it_dispatches_notification_to_expected_channel(string $channelType): void
     {
         // Collect
         Notification::fake();
-        $channel = Channel::factory()->create([
+        $channel = Channel::factory()->createQuietly([
             'verified' => false,
             'type' => $channelType,
         ]);
