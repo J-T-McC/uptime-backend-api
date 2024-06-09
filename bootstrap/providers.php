@@ -1,5 +1,11 @@
 <?php
 
+use App\Providers\AppServiceProvider;
+use App\Providers\FortifyServiceProvider;
+use App\Services\UptimeMonitor\UptimeMonitorServiceProvider;
+
 return [
-    App\Providers\AppServiceProvider::class,
+    AppServiceProvider::class,
+    FortifyServiceProvider::class,
+    UptimeMonitorServiceProvider::class,
 ];
