@@ -2,20 +2,23 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Channel;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\In;
+use Illuminate\Validation\Rules\Unique;
 
 class UpdateChannelRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, string>
+     * @return array<string, array<int,In|Unique|string>|string>
      */
     public function rules(): array
     {
         /**
-         * @var object|null $channel
+         * @var Channel $channel
          */
         $channel = $this->route('channel');
         $type = $this->input('type');
@@ -30,7 +33,7 @@ class UpdateChannelRequest extends FormRequest
                     ->where('user_id', $this->user()->id)
                     ->where('type', $type)
                     ->where('endpoint', $this->input('endpoint'))
-                    ->whereNot('id', $channel?->id)
+                    ->whereNot('id', (string)$channel->id)
             ],
             'endpoint' => 'required|string' . $endpointRules,
             'description' => 'string|nullable',

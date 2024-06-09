@@ -20,6 +20,7 @@ class UptimeMonitorServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        /** @phpstan-ignore-next-line  */
         $this->app['events']->subscribe(EventHandler::class);
 
         $this->app->bind('command.monitor:check-uptime', CheckUptime::class);
