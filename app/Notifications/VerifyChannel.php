@@ -47,7 +47,7 @@ class VerifyChannel extends Notification
 
     public function toDiscord(): DiscordMessage
     {
-        return (new  DiscordMessage())
+        return (new DiscordMessage())
             ->success()
             ->title(static::TITLE_TEXT)
             ->description([

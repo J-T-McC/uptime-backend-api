@@ -15,9 +15,11 @@ class VerifyChannelListener
     public function handle(ChannelCreated $event): void
     {
         $channel = $event->channel;
+        $notification = new VerifyChannel($channel);
+
         $notifiable = new AnonymousNotifiable();
         $notifiable->route($channel->type, $channel->endpoint);
-        $notification = new VerifyChannel($channel);
+
         DispatchNotification::dispatch($notifiable, $notification);
     }
 }

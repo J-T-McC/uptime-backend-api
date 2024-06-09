@@ -28,6 +28,10 @@ class Channel extends Model
         'verified' => 'boolean',
     ];
 
+    protected $attributes = [
+        'verified' => false,
+    ];
+
     /**
      * @var array<string, string>
      */
