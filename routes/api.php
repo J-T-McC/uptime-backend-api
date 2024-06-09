@@ -6,6 +6,7 @@ use App\Http\Controllers\EventCountsTrendedController;
 use App\Http\Controllers\LatestMonitorEventsController;
 use App\Http\Controllers\MonitorChannelController;
 use App\Http\Controllers\MonitorController;
+use App\Http\Controllers\VerifyChannelController;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Route;
 
@@ -16,7 +17,6 @@ Route::get('/home', function () {
 });
 
 Route::middleware(['auth:sanctum'])->group(function () {
-
     Route::get('/authenticated', function () {
         return new UserResource(auth()->user());
     });
@@ -33,5 +33,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
         Route::get('/latest-monitor-events', [LatestMonitorEventsController::class, 'index'])->name('latest-monitor-events.index');
         Route::get('/latest-monitor-events/{monitor}', [LatestMonitorEventsController::class, 'show'])->name('latest-monitor-events.show');
+
+        Route::get('/channel/verify/{channel}', [VerifyChannelController::class, '__invoke'])->name('verification.channel');
     });
 });
