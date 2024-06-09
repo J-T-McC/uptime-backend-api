@@ -12,7 +12,7 @@ use PHPUnit\Framework\ExpectationFailedException;
 
 abstract class TestCase extends BaseTestCase
 {
-    use CreatesApplication, AdditionalAssertions, FasterRefreshDatabase;
+    use AdditionalAssertions, FasterRefreshDatabase;
 
     const SCHEMA_ROOT = __DIR__ . '/Schemas/';
 
