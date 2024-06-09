@@ -6,10 +6,15 @@ use App\Models\Monitor;
 use App\Models\MonitorUptimeEventCount;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 class UptimeEventData
 {
+    /**
+     * @var Builder<MonitorUptimeEventCount>
+     */
     protected Builder $query;
 
     public function __construct(?Monitor $monitor = null)
@@ -17,7 +22,12 @@ class UptimeEventData
         $this->query = MonitorUptimeEventCount::query()->monitorFilter($monitor);
     }
 
-    public function trended()
+    /**
+     * Get the uptime percentage for the last 30 days.
+     *
+     * @return Collection<int, covariant Model>
+     */
+    public function trended(): Collection
     {
         return $this->query
             ->select(
@@ -34,7 +44,12 @@ class UptimeEventData
             ->get();
     }
 
-    public function past90Days()
+    /**
+     * Get the uptime percentage for the last 90 days.
+     *
+     * @return Collection<int, covariant Model>
+     */
+    public function past90Days(): Collection
     {
         $min = Carbon::now('UTC')->subDays(90)->format('Y-m-d');
 

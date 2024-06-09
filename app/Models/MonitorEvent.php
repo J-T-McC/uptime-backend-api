@@ -23,31 +23,54 @@ class MonitorEvent extends Model
         'user_id'
     ];
 
+    /**
+     * @return BelongsTo<Monitor, self>
+     */
     public function monitor(): BelongsTo
     {
         return $this->belongsTo(Monitor::class);
     }
 
+    /**
+     * @return BelongsTo<User, self>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * @param Builder<self> $query
+     * @param Monitor|null $monitor
+     * @return Builder<self>
+     */
     public function scopeMonitorFilter(Builder $query, ?Monitor $monitor = null): Builder
     {
         return $monitor ? $query->where('monitor_id', $monitor->id) : $query;
     }
 
+    /**
+     * @param Builder<self> $query
+     * @return Builder<self>
+     */
     public function scopeUptime(Builder $query): Builder
     {
         return $query->where('category', Category::UPTIME);
     }
 
+    /**
+     * @param Builder<self> $query
+     * @return Builder<self>
+     */
     public function scopeCertificate(Builder $query): Builder
     {
         return $query->where('category', Category::CERTIFICATE);
     }
 
+    /**
+     * @param Builder<self> $query
+     * @return Builder<self>
+     */
     public function scopeApplyStatusRequirements(Builder $query): Builder
     {
         return $query->where(function (Builder $query) {

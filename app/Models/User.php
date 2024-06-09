@@ -23,7 +23,7 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * The attributes that are mass assignable.
      *
-     * @var string[]
+     * @var array<int, string>
      */
     protected $fillable = [
         'name',
@@ -32,9 +32,9 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
-     * The attributes that should be hidden.
+     * The attributes that should be hidden for serialization.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $hidden = [
         'password',
@@ -54,22 +54,33 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
 
-
+    /**
+     * @return HasMany<Monitor>
+     */
     public function monitors(): HasMany
     {
         return $this->hasMany(Monitor::class);
     }
 
+    /**
+     * @return HasMany<MonitorEvent>
+     */
     public function monitorEvents(): HasMany
     {
         return $this->hasMany(MonitorEvent::class);
     }
 
+    /**
+     * @return HasMany<MonitorUptimeEventCount>
+     */
     public function uptimeEventCounts(): HasMany
     {
         return $this->hasMany(MonitorUptimeEventCount::class);
     }
 
+    /**
+     * @return HasMany<Channel>
+     */
     public function channels(): HasMany
     {
         return $this->hasMany(Channel::class);

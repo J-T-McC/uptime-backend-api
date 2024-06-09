@@ -11,9 +11,9 @@ class ChannelResource extends JsonResource
      * Transform the resource collection into an array.
      *
      * @param Request $request
-     * @return array
+     * @return array<string, mixed>
      */
-    public function toArray($request): array
+    public function toArray(Request $request): array
     {
         return [
             'id' => $this->id,

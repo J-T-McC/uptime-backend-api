@@ -8,7 +8,7 @@ use Carbon\Carbon;
 
 class IncrementUptimeCountListener
 {
-    private $validColumns = [
+    private const VALID_COLUMNS = [
         'up',
         'down',
         'recovered'
@@ -22,7 +22,7 @@ class IncrementUptimeCountListener
      */
     public function handle(IncrementUptimeCount $event)
     {
-        if (in_array($event->monitor->uptime_status, $this->validColumns)) {
+        if (in_array($event->monitor->uptime_status, self::VALID_COLUMNS)) {
             $monitorCounts = MonitorUptimeEventCount::firstOrCreate([
                 'monitor_id' => $event->monitor->id,
                 'user_id' => $event->monitor->user_id,

@@ -45,10 +45,11 @@ class MonitorEventSubscriber
     {
         $status = CertificateStatus::getStatusFromName($event->monitor->certificate_status)->value;
 
-        $error = $status === CertificateStatus::VALID ?
+        $error = $status === CertificateStatus::VALID->value ?
             "Certificate expires soon: {$event->monitor->certificate_expiration_date}" :
             $event->monitor->certificate_check_failure_reason ?? $event->monitor->uptime_check_failure_reason;
 
+        /* @phpstan-ignore-next-line */
         $event->monitor->monitorEvents()->create([
             'category' => Category::CERTIFICATE,
             'status' => CertificateStatus::getStatusFromName($event->monitor->certificate_status)->value,

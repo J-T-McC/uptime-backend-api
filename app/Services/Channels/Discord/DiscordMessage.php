@@ -23,6 +23,10 @@ class DiscordMessage
         return $this;
     }
 
+    /**
+     * @param array<int, string>|string $descriptionLines
+     * @return $this
+     */
     public function description(array|string $descriptionLines): self
     {
         if (!is_array($descriptionLines)) {
@@ -69,6 +73,9 @@ class DiscordMessage
         return $this;
     }
 
+    /**
+     * @return array<string, array<int, mixed>>
+     */
     public function toArray(): array
     {
         return [

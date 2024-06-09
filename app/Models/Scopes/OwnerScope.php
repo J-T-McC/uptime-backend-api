@@ -11,11 +11,11 @@ class OwnerScope implements Scope
     /**
      * Apply the scope to a given Eloquent query builder.
      *
-     * @param Builder $builder
+     * @param Builder<Model> $builder
      * @param Model $model
      * @return void
      */
-    public function apply(Builder $builder, Model $model)
+    public function apply(Builder $builder, Model $model): void
     {
         $builder->where('user_id', auth()->user()->id);
     }

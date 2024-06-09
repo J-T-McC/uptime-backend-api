@@ -20,11 +20,17 @@ class Channel extends Model
         'description',
     ];
 
+    /**
+     * @return BelongsTo<User, self>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * @return BelongsToMany<Monitor>
+     */
     public function monitors(): BelongsToMany
     {
         return $this->belongsToMany(Monitor::class);

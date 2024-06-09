@@ -2,6 +2,8 @@
 
 namespace App\Notifications;
 
+use App\Services\Channels\Discord\DiscordMessage;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Spatie\UptimeMonitor\Notifications\Notifications\UptimeCheckFailed as SpatieUptimeCheckFailed;
 
@@ -10,49 +12,25 @@ class UptimeCheckFailed extends SpatieUptimeCheckFailed
     use Queueable;
 
     /**
-     * Create a new notification instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
-
-    /**
      * Get the notification's delivery channels.
      *
      * @param mixed $notifiable
-     * @return array
+     * @return array<int, string>
      */
-    public function via($notifiable)
+    public function via($notifiable): array
     {
         return config('uptime-monitor.notifications.integrated-services');
     }
 
-    public function toDiscord()
+    public function toDiscord(): DiscordMessage
     {
-        return (new  \App\Services\Channels\Discord\DiscordMessage())
+        return (new  DiscordMessage())
             ->error()
             ->title($this->getMessageText())
             ->description([
                 $this->getMonitor()->uptime_check_failure_reason
             ])
             ->footer($this->getLocationDescription())
-            ->timestamp(\Carbon\Carbon::now());
-    }
-
-
-    /**
-     * Get the array representation of the notification.
-     *
-     * @param mixed $notifiable
-     * @return array
-     */
-    public function toArray($notifiable)
-    {
-        return [
-            //
-        ];
+            ->timestamp(Carbon::now());
     }
 }

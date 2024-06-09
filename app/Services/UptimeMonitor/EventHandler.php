@@ -11,7 +11,7 @@ class EventHandler extends SpatieEventHandler
      * Override default spatie notification callback so we can dynamically generate notifications
      * @param Dispatcher $events
      */
-    public function subscribe(Dispatcher $events)
+    public function subscribe(Dispatcher $events): void
     {
         $events->listen($this->allEventClasses(), function ($event) {
             $notification = $this->determineNotification($event);
