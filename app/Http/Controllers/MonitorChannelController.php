@@ -25,7 +25,7 @@ class MonitorChannelController extends Controller
         }
 
         $monitor->channels()->sync(
-            auth()->user()->channels()->whereIn('id', $channelsToAttach)->get()
+            $request->user()?->channels()->whereIn('id', $channelsToAttach)->get() ?? []
         );
 
         return response()->noContent();

@@ -28,9 +28,9 @@ class CertificateCheckFailed extends SpatieCertificateCheckFailed
             ->error()
             ->title($this->getMessageText())
             ->description([
-                $this->getMonitor()->certificate_check_failure_reason
+                $this->getMonitor()->certificate_check_failure_reason ?? 'No reason provided',
             ])
-            ->footer($this->getMonitor()->certificate_issuer)
+            ->footer($this->getMonitor()->certificate_issuer ?? '')
             ->timestamp(Carbon::now());
     }
 }

@@ -30,7 +30,7 @@ class CertificateCheckSucceeded extends SpatieCertificateCheckSucceeded
             ->description([
                 "Expires {$this->getMonitor()->formattedCertificateExpirationDate('forHumans')}"
             ])
-            ->footer($this->getMonitor()->certificate_issuer)
+            ->footer($this->getMonitor()->certificate_issuer ?? '')
             ->timestamp(Carbon::now());
     }
 }

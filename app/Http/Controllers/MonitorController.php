@@ -32,7 +32,7 @@ class MonitorController extends Controller
     public function store(StoreMonitorRequest $request): MonitorResource
     {
         return MonitorResource::make(
-            auth()->user()->monitors()->create(
+            $request->user()?->monitors()->create(
                 $request->validated()
             )
         );

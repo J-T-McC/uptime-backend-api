@@ -30,7 +30,7 @@ class UpdateChannelRequest extends FormRequest
                 'string',
                 Rule::in(array_keys(config('uptime-monitor.notifications.service-endpoint-rules'))),
                 Rule::unique('channels')
-                    ->where('user_id', $this->user()->id)
+                    ->where('user_id', $this->user()?->id)
                     ->where('type', $type)
                     ->where('endpoint', $this->input('endpoint'))
                     ->whereNot('id', (string)$channel->id)

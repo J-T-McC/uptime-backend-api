@@ -32,7 +32,7 @@ class ChannelController extends Controller
     public function store(StoreChannelRequest $request): ChannelResource
     {
         return ChannelResource::make(
-            auth()->user()->channels()->create(
+            $request->user()?->channels()->create(
                 $request->validated()
             )
         );

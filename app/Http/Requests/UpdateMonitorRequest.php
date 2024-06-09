@@ -25,7 +25,7 @@ class UpdateMonitorRequest extends FormRequest
                 'string',
                 'url',
                 Rule::unique('monitors')
-                    ->where('user_id', $this->user()->id)
+                    ->where('user_id', $this->user()?->id)
                     ->where('url', $this->input('url'))
                     ->whereNot('id', (string)$monitor->id),
                 'active_url'

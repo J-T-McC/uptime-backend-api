@@ -28,7 +28,7 @@ class UptimeCheckFailed extends SpatieUptimeCheckFailed
             ->error()
             ->title($this->getMessageText())
             ->description([
-                $this->getMonitor()->uptime_check_failure_reason
+                $this->getMonitor()->uptime_check_failure_reason ?? 'No reason provided',
             ])
             ->footer($this->getLocationDescription())
             ->timestamp(Carbon::now());

@@ -84,7 +84,7 @@ class DiscordMessage
                     'title' => $this->title,
                     'type' => 'rich',
                     'description' => $this->description,
-                    'color' => hexdec($this->color),
+                    'color' => hexdec($this->color ?? ''),
                     'footer' => [
                         'text' => $this->footer ?? '',
                     ],
