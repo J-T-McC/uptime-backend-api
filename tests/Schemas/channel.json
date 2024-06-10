@@ -11,11 +11,15 @@
         },
         "type": {
             "type": "string"
+        },
+        "verified": {
+            "type": "boolean"
         }
     },
     "required": [
         "id",
         "description",
-        "type"
+        "type",
+        "verified"
     ]
 }
