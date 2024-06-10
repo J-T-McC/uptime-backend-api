@@ -34,6 +34,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/latest-monitor-events', [LatestMonitorEventsController::class, 'index'])->name('latest-monitor-events.index');
         Route::get('/latest-monitor-events/{monitor}', [LatestMonitorEventsController::class, 'show'])->name('latest-monitor-events.show');
 
-        Route::get('/channel/verify/{channel}', [VerifyChannelController::class, '__invoke'])->name('verification.channel');
+        Route::get('/channel/verify/{channel}/{endpoint}', [VerifyChannelController::class, '__invoke'])->name('verification.channel');
     });
 });
