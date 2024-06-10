@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "65973bbd0648d774910fb093ff33ed3c",
+    "content-hash": "f3d48702cfd7307dd34dad7bf54147a3",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -3578,16 +3578,16 @@
         },
         {
             "name": "spatie/laravel-uptime-monitor",
-            "version": "dev-laravel-11-support",
+            "version": "4.3.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/J-T-McC/laravel-uptime-monitor.git",
-                "reference": "8a858dd756ea3b29a4303a3e4bf8fec89f52383e"
+                "url": "https://github.com/spatie/laravel-uptime-monitor.git",
+                "reference": "29eaf722c22075b5f6d2da0e92435ebfc3d688d5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/J-T-McC/laravel-uptime-monitor/zipball/8a858dd756ea3b29a4303a3e4bf8fec89f52383e",
-                "reference": "8a858dd756ea3b29a4303a3e4bf8fec89f52383e",
+                "url": "https://api.github.com/repos/spatie/laravel-uptime-monitor/zipball/29eaf722c22075b5f6d2da0e92435ebfc3d688d5",
+                "reference": "29eaf722c22075b5f6d2da0e92435ebfc3d688d5",
                 "shasum": ""
             },
             "require": {
@@ -3629,16 +3629,7 @@
                     "Spatie\\UptimeMonitor\\Database\\Factories\\": "database/factories"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Spatie\\UptimeMonitor\\Test\\": "tests"
-                }
-            },
-            "scripts": {
-                "test": [
-                    "vendor/bin/phpunit"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -3657,19 +3648,19 @@
                 "spatie"
             ],
             "support": {
-                "source": "https://github.com/J-T-McC/laravel-uptime-monitor/tree/laravel-11-support"
+                "source": "https://github.com/spatie/laravel-uptime-monitor/tree/4.3.0"
             },
             "funding": [
                 {
-                    "type": "github",
-                    "url": "https://github.com/spatie"
+                    "url": "https://spatie.be/open-source/support-us",
+                    "type": "custom"
                 },
                 {
-                    "type": "custom",
-                    "url": "https://spatie.be/open-source/support-us"
+                    "url": "https://github.com/spatie",
+                    "type": "github"
                 }
             ],
-            "time": "2024-06-06T00:17:48+00:00"
+            "time": "2024-06-10T07:40:10+00:00"
         },
         {
             "name": "spatie/macroable",
@@ -7066,23 +7057,23 @@
         },
         {
             "name": "jasonmccreary/laravel-test-assertions",
-            "version": "v2.4.0",
+            "version": "v2.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jasonmccreary/laravel-test-assertions.git",
-                "reference": "e506c4eb57816e036b143bd1c64589e1d013337d"
+                "reference": "e60bc8c737e535e55ac85eacf61718616bf0e2d6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jasonmccreary/laravel-test-assertions/zipball/e506c4eb57816e036b143bd1c64589e1d013337d",
-                "reference": "e506c4eb57816e036b143bd1c64589e1d013337d",
+                "url": "https://api.github.com/repos/jasonmccreary/laravel-test-assertions/zipball/e60bc8c737e535e55ac85eacf61718616bf0e2d6",
+                "reference": "e60bc8c737e535e55ac85eacf61718616bf0e2d6",
                 "shasum": ""
             },
             "require": {
                 "illuminate/testing": "^10.0|^11.0",
                 "mockery/mockery": "^1.4.4",
                 "php": "^8.1",
-                "phpunit/phpunit": "^10.1"
+                "phpunit/phpunit": "^10.1|^11.0"
             },
             "type": "library",
             "extra": {
@@ -7110,9 +7101,9 @@
             "description": "A set of helpful assertions when testing Laravel applications.",
             "support": {
                 "issues": "https://github.com/jasonmccreary/laravel-test-assertions/issues",
-                "source": "https://github.com/jasonmccreary/laravel-test-assertions/tree/v2.4.0"
+                "source": "https://github.com/jasonmccreary/laravel-test-assertions/tree/v2.4.1"
             },
-            "time": "2024-02-29T19:39:03+00:00"
+            "time": "2024-06-10T14:00:38+00:00"
         },
         {
             "name": "jean85/pretty-package-versions",
@@ -9950,9 +9941,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "spatie/laravel-uptime-monitor": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

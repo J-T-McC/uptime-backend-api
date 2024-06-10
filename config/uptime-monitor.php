@@ -22,13 +22,6 @@ return [
             'discord' => '|url|active_url',
         ],
 
-        /*
-         * Channels listed here will not notify until verified set in channel record
-         */
-        'requires-verification' => [
-            'mail'
-        ],
-
         'notifications' => [
             //values are arbitrary but required for the spatie library to track the event
             \App\Notifications\UptimeCheckFailed::class => ['enabled'],

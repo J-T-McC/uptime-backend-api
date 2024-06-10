@@ -15,7 +15,7 @@
         "laravel/framework": "^11.9",
         "laravel/sanctum": "^4.0",
         "spatie/laravel-query-builder": "^6.0",
-        "spatie/laravel-uptime-monitor": "dev-laravel-11-support",
+        "spatie/laravel-uptime-monitor": "^4.3",
         "symfony/http-client": "^7.1",
         "symfony/mailgun-mailer": "^7.1"
     },
@@ -58,13 +58,6 @@
             "Tests\\": "tests/"
         }
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/J-T-McC/laravel-uptime-monitor.git",
-            "description": "Temp fork of Spatie's Laravel Uptime Monitor with Laravel 11 support."
-        }
-    ],
     "minimum-stability": "stable",
     "prefer-stable": true,
     "scripts": {
