@@ -30,7 +30,7 @@ class NotificationDispatcher
         return match ($name) {
             /* @phpstan-ignore-next-line */
             'monitor' => $this->notification->event->monitor,
-            'channels' => $this->monitor->channels,
+            'channels' => $this->monitor->verifiedChannels()->get(),
             default => throw new UndefinedPropertyException(),
         };
     }
@@ -38,7 +38,7 @@ class NotificationDispatcher
     private function dispatchNotifications(): void
     {
         // Dispatch independently to accommodate multiples of the same channel
-        $this->channels->each(function ($channel) {
+        $this->channels->each(function (Channel $channel) {
             $notifiable = new AnonymousNotifiable();
             $notifiable->route($channel->type, $channel->endpoint);
 

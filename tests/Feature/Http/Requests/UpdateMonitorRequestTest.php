@@ -13,7 +13,7 @@ class UpdateMonitorRequestTest extends AuthenticatedTestCase
      */
     public function it_validates_store_channels_request()
     {
-        $monitors = Monitor::factory()->count(2)->create(['user_id' => $this->testUser->id]);
+        $monitors = Monitor::factory()->count(2)->createQuietly(['user_id' => $this->testUser->id]);
         $route = route('monitors.update', $monitors->first());
 
         // required

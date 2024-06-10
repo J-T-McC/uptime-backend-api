@@ -16,7 +16,7 @@ class IncrementUptimeCountListenerTest extends TestCase
      */
     public function increments_uptime_status_failed()
     {
-        $monitor = Monitor::factory()->create();
+        $monitor = Monitor::factory()->createQuietly();
         $this->assertTrue(empty(MonitorUptimeEventCount::where('monitor_id', $monitor->id)->first()));
 
         $monitor->uptimeCheckFailed('(┛ಠ_ಠ)┛彡┻━┻');
@@ -33,7 +33,7 @@ class IncrementUptimeCountListenerTest extends TestCase
      */
     public function increments_uptime_status_up()
     {
-        $monitor = Monitor::factory()->create();
+        $monitor = Monitor::factory()->createQuietly();
 
         $this->assertTrue(empty(MonitorUptimeEventCount::where('monitor_id', $monitor->id)->first()));
 
@@ -51,7 +51,7 @@ class IncrementUptimeCountListenerTest extends TestCase
      */
     public function increments_uptime_status_recovered()
     {
-        $monitor = Monitor::factory()->create();
+        $monitor = Monitor::factory()->createQuietly();
 
         // no count record for this monitor
         $this->assertTrue(empty(MonitorUptimeEventCount::where('monitor_id', $monitor->id)->first()));

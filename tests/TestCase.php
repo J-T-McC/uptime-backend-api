@@ -4,6 +4,7 @@ namespace Tests;
 
 use EnricoStahn\JsonAssert\AssertClass as JsonAssert;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Testing\TestResponse;
 use JMac\Testing\Traits\AdditionalAssertions;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
@@ -15,6 +16,13 @@ abstract class TestCase extends BaseTestCase
     use AdditionalAssertions, FasterRefreshDatabase;
 
     const SCHEMA_ROOT = __DIR__ . '/Schemas/';
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        Notification::fake();
+    }
 
     /**
      * Test form validation rules for a route

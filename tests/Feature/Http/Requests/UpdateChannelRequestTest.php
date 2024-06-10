@@ -13,7 +13,7 @@ class UpdateChannelRequestTest extends AuthenticatedTestCase
      */
     public function it_validates_update_channels_request()
     {
-        $channels = Channel::factory()->count(2)->create(['user_id' => $this->testUser->id]);
+        $channels = Channel::factory()->count(2)->createQuietly(['user_id' => $this->testUser->id]);
         $route = route('channels.update', $channels->first());
 
         // required

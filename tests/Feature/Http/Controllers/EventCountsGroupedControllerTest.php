@@ -17,7 +17,7 @@ class EventCountsGroupedControllerTest extends AuthenticatedTestCase
      */
     public function it_lists_event_counts()
     {
-        MonitorUptimeEventCount::factory()->count(10)->create(
+        MonitorUptimeEventCount::factory()->count(10)->createQuietly(
             ['user_id' => $this->testUser->id, 'filter_date' => now()->subDays(10)->toDateString()]
         );
 
@@ -38,7 +38,7 @@ class EventCountsGroupedControllerTest extends AuthenticatedTestCase
                 10,
                 ['user_id' => $this->testUser->id, 'filter_date' => now()->subDays(10)->toDateString()]
             )
-            ->create([
+            ->createQuietly([
                 'user_id' => $this->testUser->id,
             ]);
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Queries\IndexMonitorsQuery;
 use App\Http\Requests\StoreMonitorRequest;
 use App\Http\Requests\UpdateMonitorRequest;
 use App\Models\Monitor;
@@ -14,12 +15,13 @@ class MonitorController extends Controller
     /**
      * List the resource.
      *
+     * @param IndexMonitorsQuery $query
      * @return AnonymousResourceCollection
      */
-    public function index(): AnonymousResourceCollection
+    public function index(IndexMonitorsQuery $query): AnonymousResourceCollection
     {
         return MonitorResource::collection(
-            Monitor::query()->orderBy('uptime_status')->latest()->get()
+            $query->get()
         );
     }
 

@@ -23,7 +23,7 @@ class MonitorResource extends JsonResource
             'uptime_status' => $this->uptime_status,
             'certificate_check_enabled' => $this->certificate_check_enabled,
             'certificate_status' => $this->certificate_status,
-            'channels' => $this->whenLoaded('channels', ChannelResource::collection($this->channels))
+            'channels' => ChannelResource::collection($this->whenLoaded('channels'))
         ];
     }
 }

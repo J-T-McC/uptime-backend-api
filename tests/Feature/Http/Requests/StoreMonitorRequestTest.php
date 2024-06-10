@@ -22,7 +22,7 @@ class StoreMonitorRequestTest extends AuthenticatedTestCase
         // value restricted
         $this->assertRequestRules($route, ['url' => 'invalid-url'], 'url');
         // unique for user
-        $duplicateMonitor = Monitor::factory()->create(['user_id' => $this->testUser->id]);
+        $duplicateMonitor = Monitor::factory()->createQuietly(['user_id' => $this->testUser->id]);
         $this->assertRequestRules($route, $duplicateMonitor->toArray(), 'url');
         // boolean
         $this->assertRequestRules($route, ['certificate_check_enabled' => PHP_INT_MAX], 'certificate_check_enabled');
