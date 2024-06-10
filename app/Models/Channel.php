@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Events\ChannelCreated;
+use App\Events\ChannelUpdated;
 use App\Models\Traits\UsesOwnerScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -43,6 +44,7 @@ class Channel extends Model
      */
     protected $dispatchesEvents = [
         'created' => ChannelCreated::class,
+        'updated' => ChannelUpdated::class,
     ];
 
     /**
