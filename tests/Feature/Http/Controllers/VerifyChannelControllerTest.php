@@ -20,6 +20,7 @@ class VerifyChannelControllerTest extends AuthenticatedTestCase
         // Collect
         $channel = Channel::factory()->createQuietly([
             'verified' => false,
+            'endpoint' => 'endpoint',
         ]);
         $url = (new CreateSignedVerifyChannelUrl())->handle($channel);
 
@@ -30,6 +31,29 @@ class VerifyChannelControllerTest extends AuthenticatedTestCase
         $response->assertNoContent();
         $channel->refresh();
         $this->assertTrue($channel->verified);
+    }
+
+    /**
+     * @test
+     * @covers ::__invoke
+     */
+    public function it_fails_verification_if_endpoint_changes()
+    {
+        // Collect
+        $channel = Channel::factory()->createQuietly([
+            'verified' => false,
+            'endpoint' => 'old-endpoint',
+        ]);
+        $url = (new CreateSignedVerifyChannelUrl())->handle($channel);
+
+        $channel->updateQuietly(['endpoint' => 'new-endpoint']);
+
+        // Act
+        $response = $this->getJson($url);
+
+        // Assert
+        $response->assertForbidden();
+        $this->assertFalse($channel->verified);
     }
 
     /**

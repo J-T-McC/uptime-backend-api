@@ -18,6 +18,7 @@ class CreateSignedVerifyChannelUrl
             expiration: Carbon::now()->addMinutes(self::EXPIRATION_MINUTES),
             parameters: [
                 'channel' => Crypt::encrypt($channel->id),
+                'endpoint' => sha1($channel->endpoint),
             ]
         );
     }
