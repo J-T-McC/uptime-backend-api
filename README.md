@@ -5,15 +5,15 @@ This is a backend API to be paired with [Uptime VueJS](https://github.com/J-T-Mc
 
 This repository implements: 
 
-* [Laravel Fortify](https://laravel.com/docs/8.x/fortify)
-* [Laravel Sanctum](https://laravel.com/docs/8.x/sanctum)
+* [Laravel Fortify](https://laravel.com/docs/11.x/fortify)
+* [Laravel Sanctum](https://laravel.com/docs/11.x/sanctum)
 * [Spatie Uptime Monitor](https://github.com/spatie/laravel-uptime-monitor)
 
 You can try it out at [https://uptime.tysonmccarney.com/](https://uptime.tysonmccarney.com/)
 
 ## Requirements
  
-* PHP ^7.4|^8.0
+* PHP ^8.2
  
 ## Installation
 

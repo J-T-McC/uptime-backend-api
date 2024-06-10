@@ -3,7 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Channel;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\AuthenticatedTestCase;
 
@@ -12,7 +11,6 @@ use Tests\AuthenticatedTestCase;
  */
 class ChannelControllerTest extends AuthenticatedTestCase
 {
-    use RefreshDatabase;
     use WithFaker;
 
     /**
@@ -21,12 +19,12 @@ class ChannelControllerTest extends AuthenticatedTestCase
      */
     public function it_deletes_channels()
     {
-        $channel = Channel::factory()->create(['user_id' => $this->testUser->id]);
+        $channel = Channel::factory()->createQuietly(['user_id' => $this->testUser->id]);
 
         $response = $this->deleteJson(route('channels.destroy', $channel));
 
         $response->assertNoContent();
-        $this->assertDeleted($channel);
+        $this->assertModelMissing($channel);
     }
 
     /**
@@ -35,7 +33,7 @@ class ChannelControllerTest extends AuthenticatedTestCase
      */
     public function it_lists_channels()
     {
-        Channel::factory()->count(10)->create(['user_id' => $this->testUser->id]);
+        Channel::factory()->count(10)->createQuietly(['user_id' => $this->testUser->id]);
 
         $response = $this->getJson(route('channels.index'));
 
@@ -49,7 +47,7 @@ class ChannelControllerTest extends AuthenticatedTestCase
      */
     public function it_shows_channels()
     {
-        $channel = Channel::factory()->create();
+        $channel = Channel::factory()->createQuietly();
 
         $response = $this->getJson(route('channels.show', $channel));
 
@@ -77,7 +75,7 @@ class ChannelControllerTest extends AuthenticatedTestCase
      */
     public function it_updates_channels()
     {
-        $channel = Channel::factory()->create();
+        $channel = Channel::factory()->createQuietly();
 
         $response = $this->putJson(route('channels.update', $channel), [
             'type' => 'mail',

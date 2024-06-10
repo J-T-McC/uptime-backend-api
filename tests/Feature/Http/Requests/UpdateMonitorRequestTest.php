@@ -3,21 +3,17 @@
 namespace Tests\Feature\Http\Requests;
 
 use App\Models\Monitor;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\AuthenticatedTestCase;
 
 class UpdateMonitorRequestTest extends AuthenticatedTestCase
 {
-    use RefreshDatabase, WithFaker;
-
     /**
      * @test
      * @covers \App\Http\Requests\StoreMonitorRequest::rules
      */
     public function it_validates_store_channels_request()
     {
-        $monitors = Monitor::factory()->count(2)->create(['user_id' => $this->testUser->id]);
+        $monitors = Monitor::factory()->count(2)->createQuietly(['user_id' => $this->testUser->id]);
         $route = route('monitors.update', $monitors->first());
 
         // required

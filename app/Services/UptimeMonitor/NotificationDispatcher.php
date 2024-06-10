@@ -5,7 +5,7 @@ namespace App\Services\UptimeMonitor;
 use App\Jobs\DispatchNotification;
 use App\Models\Monitor;
 use App\Models\Channel;
-use Illuminate\Notifications\AnonymousNotifiable;
+use App\Notifications\AnonymousNotifiable;
 use App\Exceptions\UndefinedPropertyException;
 use Illuminate\Notifications\Notification;
 
@@ -15,7 +15,7 @@ use Illuminate\Notifications\Notification;
  */
 class NotificationDispatcher
 {
-    public function __construct(private Notification $notification)
+    public function __construct(private readonly Notification $notification)
     {
         $this->dispatchNotifications();
     }
@@ -30,17 +30,18 @@ class NotificationDispatcher
         return match ($name) {
             /* @phpstan-ignore-next-line */
             'monitor' => $this->notification->event->monitor,
-            'channels' => $this->monitor->channels,
+            'channels' => $this->monitor->verifiedChannels()->get(),
             default => throw new UndefinedPropertyException(),
         };
     }
 
-    private function dispatchNotifications()
+    private function dispatchNotifications(): void
     {
-        //Dispatch independently to accommodate multiples of the same channel
-        $this->channels->each(function ($channel) {
+        // Dispatch independently to accommodate multiples of the same channel
+        $this->channels->each(function (Channel $channel) {
             $notifiable = new AnonymousNotifiable();
             $notifiable->route($channel->type, $channel->endpoint);
+
             DispatchNotification::dispatch($notifiable, $this->notification);
         });
     }

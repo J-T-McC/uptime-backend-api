@@ -4,7 +4,6 @@ namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Channel;
 use App\Models\Monitor;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\AuthenticatedTestCase;
 
 /**
@@ -12,20 +11,18 @@ use Tests\AuthenticatedTestCase;
  */
 class MonitorControllerTest extends AuthenticatedTestCase
 {
-    use RefreshDatabase;
-
     /**
      * @test
      * @covers ::destroy
      */
     public function it_deletes_monitors()
     {
-        $monitor = Monitor::factory()->create(['user_id' => $this->testUser->id]);
+        $monitor = Monitor::factory()->createQuietly(['user_id' => $this->testUser->id]);
 
         $response = $this->deleteJson(route('monitors.destroy', $monitor));
 
         $response->assertNoContent();
-        $this->assertDeleted($monitor);
+        $this->assertModelMissing($monitor);
     }
 
     /**
@@ -36,9 +33,9 @@ class MonitorControllerTest extends AuthenticatedTestCase
     {
         Monitor::factory()
             ->count(10)
-            ->create(['user_id' => $this->testUser->id])
+            ->createQuietly(['user_id' => $this->testUser->id])
             ->each(fn(Monitor $monitor) => $monitor->channels()->sync(
-                Channel::factory()->create(['user_id' => $this->testUser->id])
+                Channel::factory()->createQuietly(['user_id' => $this->testUser->id])
             ));
 
         $response = $this->getJson(route('monitors.index'));
@@ -53,7 +50,7 @@ class MonitorControllerTest extends AuthenticatedTestCase
      */
     public function it_shows_monitors()
     {
-        $monitor = Monitor::factory()->create();
+        $monitor = Monitor::factory()->createQuietly();
 
         $response = $this->getJson(route('monitors.show', $monitor));
 
@@ -80,7 +77,7 @@ class MonitorControllerTest extends AuthenticatedTestCase
      */
     public function it_updates_monitors()
     {
-        $monitor = Monitor::factory()->create();
+        $monitor = Monitor::factory()->createQuietly();
 
         $response = $this->putJson(route('monitors.update', $monitor), [
             'url' => 'http://example.com'

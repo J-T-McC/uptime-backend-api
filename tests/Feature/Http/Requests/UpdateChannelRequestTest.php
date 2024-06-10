@@ -3,20 +3,17 @@
 namespace Tests\Feature\Http\Requests;
 
 use App\Models\Channel;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\AuthenticatedTestCase;
 
 class UpdateChannelRequestTest extends AuthenticatedTestCase
 {
-    use RefreshDatabase;
-
     /**
      * @test
      * @covers \App\Http\Requests\UpdateChannelRequest::rules
      */
     public function it_validates_update_channels_request()
     {
-        $channels = Channel::factory()->count(2)->create(['user_id' => $this->testUser->id]);
+        $channels = Channel::factory()->count(2)->createQuietly(['user_id' => $this->testUser->id]);
         $route = route('channels.update', $channels->first());
 
         // required

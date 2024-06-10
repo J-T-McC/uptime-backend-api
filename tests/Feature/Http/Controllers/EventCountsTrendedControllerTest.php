@@ -3,7 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Monitor;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\AuthenticatedTestCase;
 
 /**
@@ -11,8 +10,6 @@ use Tests\AuthenticatedTestCase;
  */
 class EventCountsTrendedControllerTest extends AuthenticatedTestCase
 {
-    use RefreshDatabase;
-
     /**
      * @test
      * @covers ::index
@@ -22,7 +19,7 @@ class EventCountsTrendedControllerTest extends AuthenticatedTestCase
         Monitor::factory()
             ->count(2)
             ->hasUptimeEventCounts(10, ['user_id' => $this->testUser->id])
-            ->create(['user_id' => $this->testUser->id]);
+            ->createQuietly(['user_id' => $this->testUser->id]);
 
         $response = $this->getJson(route('event-counts-trended.index'));
 
@@ -38,7 +35,7 @@ class EventCountsTrendedControllerTest extends AuthenticatedTestCase
     {
         $monitor = Monitor::factory()
             ->hasUptimeEventCounts(10, ['user_id' => $this->testUser->id])
-            ->create(['user_id' => $this->testUser->id]);
+            ->createQuietly(['user_id' => $this->testUser->id]);
 
         $response = $this->getJson(route('event-counts-trended.show', $monitor));
 

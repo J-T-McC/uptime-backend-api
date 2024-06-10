@@ -18,7 +18,7 @@ class DiscordChannel
      * @throws InvalidChanelException
      * @throws GuzzleException
      */
-    public function send(User|AnonymousNotifiable $notifiable, Notification $notification)
+    public function send(User|AnonymousNotifiable $notifiable, Notification $notification): void
     {
         if (!$route = $notifiable->routeNotificationFor('discord')) {
             return;

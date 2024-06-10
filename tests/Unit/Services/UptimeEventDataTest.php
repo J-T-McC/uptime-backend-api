@@ -2,10 +2,7 @@
 
 namespace Tests\Unit\Services;
 
-use App\Models\Monitor;
-use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Services\UptimeEventData;
 use App\Models\MonitorUptimeEventCount;
 use Tests\TestCase;
@@ -15,8 +12,6 @@ use Tests\TestCase;
  */
 class UptimeEventDataTest extends TestCase
 {
-    use RefreshDatabase;
-
     /**
      * @test
      */
@@ -59,8 +54,6 @@ class UptimeEventDataTest extends TestCase
 
     public function seed90DayData()
     {
-        $this->refreshDatabase();
-
         for ($i = 0; $i < 100; $i++) {
             $date = Carbon::now('UTC')->subDays($i)->format('Y-m-d');
             MonitorUptimeEventCount::factory()->create([
@@ -74,8 +67,6 @@ class UptimeEventDataTest extends TestCase
 
     public function seedTrendData()
     {
-        $this->refreshDatabase();
-
         $seedData = [
             //73.6285
             '2020-01-01' => [

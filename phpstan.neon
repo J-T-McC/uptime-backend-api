@@ -1,19 +1,13 @@
 includes:
-    - ./vendor/nunomaduro/larastan/extension.neon
+    - ./vendor/larastan/larastan/extension.neon
 
 parameters:
 
     paths:
         - app
 
-    ignoreErrors:
-        # 2021-12-07: PHPStan does not support Enums yet
-        - '#^Access to undefined constant.*\\Enums\\\w+::\w+\.$#'
-        - '#^Access to an undefined property.*\\Enums\\\w+::\$value\.$#'
-        - '#^Call to an undefined static method.*\\Enums\\\w+::(from|tryFrom|cases)\(\)\.$#'
-
     # The level 9 is the highest level
-    level: 5
+    level: 8
 
     universalObjectCratesClasses:
             - Illuminate\Http\Resources\Json\JsonResource

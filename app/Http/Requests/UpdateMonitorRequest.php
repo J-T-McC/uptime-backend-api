@@ -2,21 +2,21 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Monitor;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Unique;
 
 class UpdateMonitorRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array
+     * @return array<string, array<int, Unique|string>|string>
      */
     public function rules(): array
     {
-        /**
-         * @var object|null
-         */
+        /** @var Monitor $monitor */
         $monitor = $this->route('monitor');
 
         return [
@@ -25,9 +25,9 @@ class UpdateMonitorRequest extends FormRequest
                 'string',
                 'url',
                 Rule::unique('monitors')
-                    ->where('user_id', $this->user()->id)
+                    ->where('user_id', $this->user()?->id)
                     ->where('url', $this->input('url'))
-                    ->whereNot('id', $monitor?->id),
+                    ->whereNot('id', (string)$monitor->id),
                 'active_url'
             ],
             'certificate_check_enabled' => 'boolean',

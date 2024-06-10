@@ -2,8 +2,12 @@
 
 namespace App\Providers;
 
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Auth\Notifications\ResetPassword;
@@ -28,6 +32,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Model::preventLazyLoading(! app()->isProduction());
+
         ResetPassword::createUrlUsing(function ($notifiable, $token) {
             $domain = config('app.spa_url');
             return "{$domain}/password/reset/{$token}";
@@ -46,6 +52,15 @@ class AppServiceProvider extends ServiceProvider
             //signature needs to be generated using our endpoint url
             //replacing domain with spa url so email directs to front end with a valid signature for backend
             return str_replace(config('app.url'), config('app.spa_url'), $url);
+        });
+
+        $this->registerRateLimiters();
+    }
+
+    public function registerRateLimiters(): void
+    {
+        RateLimiter::for('api', function (Request $request) {
+            return Limit::perMinute(60)->by(optional($request->user())->id ?: $request->ip());
         });
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class MonitorResource extends JsonResource
@@ -9,10 +10,10 @@ class MonitorResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @param Request $request
+     * @return array<string, mixed>
      */
-    public function toArray($request)
+    public function toArray(Request $request): array
     {
         return [
             'id' => $this->id,
@@ -22,7 +23,7 @@ class MonitorResource extends JsonResource
             'uptime_status' => $this->uptime_status,
             'certificate_check_enabled' => $this->certificate_check_enabled,
             'certificate_status' => $this->certificate_status,
-            'channels' => $this->whenLoaded('channels', ChannelResource::collection($this->channels))
+            'channels' => ChannelResource::collection($this->whenLoaded('channels'))
         ];
     }
 }

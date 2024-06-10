@@ -22,21 +22,41 @@ class Monitor extends SpatieMonitor
         'look_for_string',
     ];
 
+    /**
+     * @return BelongsTo<User, self>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * @return BelongsToMany<Channel>
+     */
     public function channels(): BelongsToMany
     {
         return $this->belongsToMany(Channel::class);
     }
 
+    /**
+     * @return BelongsToMany<Channel>
+     */
+    public function verifiedChannels(): BelongsToMany
+    {
+        return $this->channels()->where('channels.verified', true);
+    }
+
+    /**
+     * @return HasMany<MonitorEvent>
+     */
     public function monitorEvents(): HasMany
     {
         return $this->hasMany(MonitorEvent::class);
     }
 
+    /**
+     * @return HasMany<MonitorUptimeEventCount>
+     */
     public function uptimeEventCounts(): HasMany
     {
         return $this->hasMany(MonitorUptimeEventCount::class);
