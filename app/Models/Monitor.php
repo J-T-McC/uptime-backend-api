@@ -39,6 +39,14 @@ class Monitor extends SpatieMonitor
     }
 
     /**
+     * @return BelongsToMany<Channel>
+     */
+    public function verifiedChannels(): BelongsToMany
+    {
+        return $this->channels()->where('channels.verified', true);
+    }
+
+    /**
      * @return HasMany<MonitorEvent>
      */
     public function monitorEvents(): HasMany

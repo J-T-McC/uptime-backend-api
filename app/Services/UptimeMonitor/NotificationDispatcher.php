@@ -30,7 +30,7 @@ class NotificationDispatcher
         return match ($name) {
             /* @phpstan-ignore-next-line */
             'monitor' => $this->notification->event->monitor,
-            'channels' => $this->monitor->channels,
+            'channels' => $this->monitor->verifiedChannels,
             default => throw new UndefinedPropertyException(),
         };
     }

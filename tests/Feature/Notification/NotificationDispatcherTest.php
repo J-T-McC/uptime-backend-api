@@ -39,7 +39,7 @@ class NotificationDispatcherTest extends TestCase
      */
     public function notifies_all_channel_types_on_certificate_check_failed_event()
     {
-        $this->checkAllChannelsForNotificationEvent(function($monitor, $type, $endpoint) {
+        $this->checkAllChannelsForNotificationEvent(function ($monitor, $type, $endpoint) {
             $monitor->certificate_status = 'invalid';
 
             Event::dispatch(
@@ -52,7 +52,7 @@ class NotificationDispatcherTest extends TestCase
             Notification::assertSentTo(
                 [(new AnonymousNotifiable())],
                 CertificateCheckFailed::class,
-                fn ($notification, $channels, $notifiable) => $notifiable->routes[$type] === $endpoint
+                fn($notification, $channels, $notifiable) => $notifiable->routes[$type] === $endpoint
             );
         });
     }
@@ -62,9 +62,12 @@ class NotificationDispatcherTest extends TestCase
      */
     public function notifies_all_channel_types_on_certificate_expires_soon_event()
     {
-        Config::set('uptime-monitor.certificate_check.fire_expiring_soon_event_if_certificate_expires_within_days', 730);
+        Config::set(
+            'uptime-monitor.certificate_check.fire_expiring_soon_event_if_certificate_expires_within_days',
+            730
+        );
 
-        $this->checkAllChannelsForNotificationEvent(function($monitor, $type, $endpoint) {
+        $this->checkAllChannelsForNotificationEvent(function ($monitor, $type, $endpoint) {
             $monitor->certificate_status = 'valid';
 
             Event::dispatch(
@@ -77,7 +80,7 @@ class NotificationDispatcherTest extends TestCase
             Notification::assertSentTo(
                 [(new AnonymousNotifiable())],
                 CertificateExpiresSoon::class,
-                fn ($notification, $channels, $notifiable) => $notifiable->routes[$type] === $endpoint
+                fn($notification, $channels, $notifiable) => $notifiable->routes[$type] === $endpoint
             );
         });
     }
@@ -88,7 +91,7 @@ class NotificationDispatcherTest extends TestCase
      */
     public function does_not_notify_any_channel_types_on_certificate_valid_event()
     {
-        $this->checkAllChannelsForNotificationEvent(function($monitor) {
+        $this->checkAllChannelsForNotificationEvent(function ($monitor) {
             $monitor->certificate_status = 'valid';
 
             Event::dispatch(
@@ -107,7 +110,7 @@ class NotificationDispatcherTest extends TestCase
      */
     public function notifies_all_channel_types_on_uptime_check_failed_event()
     {
-        $this->checkAllChannelsForNotificationEvent(function($monitor, $type, $endpoint) {
+        $this->checkAllChannelsForNotificationEvent(function ($monitor, $type, $endpoint) {
             $monitor->uptime_status = 'down';
 
             Event::dispatch(
@@ -120,7 +123,7 @@ class NotificationDispatcherTest extends TestCase
             Notification::assertSentTo(
                 [(new AnonymousNotifiable())],
                 UptimeCheckFailed::class,
-                fn ($notification, $channels, $notifiable) => $notifiable->routes[$type] === $endpoint
+                fn($notification, $channels, $notifiable) => $notifiable->routes[$type] === $endpoint
             );
         });
     }
@@ -131,7 +134,7 @@ class NotificationDispatcherTest extends TestCase
      */
     public function does_not_notify_any_channel_types_on_uptime_check_succeeded_event()
     {
-        $this->checkAllChannelsForNotificationEvent(function($monitor) {
+        $this->checkAllChannelsForNotificationEvent(function ($monitor) {
             //override our faker url with one we know will succeed
             $monitor->uptime_status = 'up';
 
@@ -148,7 +151,7 @@ class NotificationDispatcherTest extends TestCase
      */
     public function notifies_all_channel_types_on_uptime_check_recovered_event()
     {
-        $this->checkAllChannelsForNotificationEvent(function($monitor,  $type, $endpoint) {
+        $this->checkAllChannelsForNotificationEvent(function ($monitor, $type, $endpoint) {
             $monitor->uptimeCheckFailed('(┛ಠ_ಠ)┛彡┻━┻');
             $monitor->uptimeCheckSucceeded('┬─┬ノ( º _ ºノ)');
 
@@ -162,24 +165,50 @@ class NotificationDispatcherTest extends TestCase
             Notification::assertSentTo(
                 [(new AnonymousNotifiable())],
                 UptimeCheckRecovered::class,
-                fn ($notification, $channels, $notifiable) => $notifiable->routes[$type] === $endpoint
+                fn($notification, $channels, $notifiable) => $notifiable->routes[$type] === $endpoint
             );
         });
+    }
+
+    /**
+     * @test
+     */
+    public function it_doesnt_notify_unverified_channels()
+    {
+        // Collect
+        $monitor = Monitor::factory()->createQuietly();
+        $channel = Channel::factory([
+            'type' => 'mail',
+            'verified' => false,
+            'endpoint' => 'email@example.com'
+        ])->createQuietly();
+
+        $monitor->channels()->sync([$channel->id]);
+        $event = new \Spatie\UptimeMonitor\Events\CertificateCheckFailed($monitor, new SslCertificate([]));
+        $notification = new CertificateCheckFailed();
+        $notification->setEvent($event);
+
+        // Act
+        new NotificationDispatcher($notification);
+
+        // Assert
+        Notification::assertNothingSent();
     }
 
     /**
      * Generate a monitors with notification channels to test
      * @param $cb
      */
-    public function checkAllChannelsForNotificationEvent($cb) {
+    public function checkAllChannelsForNotificationEvent($cb)
+    {
         foreach ($this->channelTypes as $type => $endpoint) {
-
             Notification::fake();
 
             $monitor = Monitor::factory()->createQuietly();
 
             $channel = Channel::factory([
                 'type' => $type,
+                'verified' => true,
                 'endpoint' => $endpoint
             ])->createQuietly();
 
@@ -190,6 +219,4 @@ class NotificationDispatcherTest extends TestCase
             $cb($monitor, $type, $endpoint);
         }
     }
-
-
 }
