@@ -2,7 +2,7 @@
 
 namespace App\Notifications;
 
-use App\Services\Channels\Discord\DiscordMessage;
+use App\Notifications\Channels\Discord\DiscordMessage;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Spatie\UptimeMonitor\Notifications\Notifications\CertificateCheckFailed as SpatieCertificateCheckFailed;

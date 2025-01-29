@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Services\Channels\Discord;
+namespace App\Notifications\Channels\Discord;
 
 use App\Models\User;
-use App\Services\Channels\Exceptions\InvalidChanelException;
+use App\Notifications\Channels\Exceptions\InvalidChanelException;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;

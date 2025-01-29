@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Channels\Discord;
+namespace App\Notifications\Channels\Discord;
 
 use Carbon\Carbon;
 

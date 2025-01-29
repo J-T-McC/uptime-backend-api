@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Channels\Exceptions;
+namespace App\Notifications\Channels\Exceptions;
 
 use Exception;
 use Throwable;

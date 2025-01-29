@@ -4,7 +4,7 @@ namespace App\Notifications;
 
 use App\Actions\CreateSignedVerifyChannelUrl;
 use App\Models\Channel;
-use App\Services\Channels\Discord\DiscordMessage;
+use App\Notifications\Channels\Discord\DiscordMessage;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Messages\SlackAttachment;

@@ -10,7 +10,7 @@ return [
         'integrated-services' => [
             'mail',
             'slack',
-            \App\Services\Channels\Discord\DiscordChannel::class,
+            \App\Notifications\Channels\Discord\DiscordChannel::class,
         ],
 
         /*
