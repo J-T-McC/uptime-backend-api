@@ -15,4 +15,3 @@ npm-debug.log
 yarn-error.log
 .phpunit.database.checksum
 rr
-.rr.yaml
