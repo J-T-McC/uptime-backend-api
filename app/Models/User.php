@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Database\Factories\UserFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -11,6 +12,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
+    /** @use HasFactory<UserFactory> */
     use HasFactory;
     use Notifiable;
     use HasApiTokens;
@@ -55,7 +57,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * @return HasMany<Monitor>
+     * @return HasMany<Monitor, $this>
      */
     public function monitors(): HasMany
     {
@@ -63,7 +65,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * @return HasMany<MonitorEvent>
+     * @return HasMany<MonitorEvent, $this>
      */
     public function monitorEvents(): HasMany
     {
@@ -71,7 +73,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * @return HasMany<MonitorUptimeEventCount>
+     * @return HasMany<MonitorUptimeEventCount, $this>
      */
     public function uptimeEventCounts(): HasMany
     {
@@ -79,7 +81,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * @return HasMany<Channel>
+     * @return HasMany<Channel, $this>
      */
     public function channels(): HasMany
     {

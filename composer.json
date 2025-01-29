@@ -13,9 +13,12 @@
         "jtmcc/atomic-deployments": "^0.4.1",
         "laravel/fortify": "^1.7",
         "laravel/framework": "^11.9",
+        "laravel/octane": "^2.4",
         "laravel/sanctum": "^4.0",
         "spatie/laravel-query-builder": "^6.0",
         "spatie/laravel-uptime-monitor": "^4.3",
+        "spiral/roadrunner-cli": "^2.6.0",
+        "spiral/roadrunner-http": "^3.3.0",
         "symfony/http-client": "^7.1",
         "symfony/mailgun-mailer": "^7.1"
     },

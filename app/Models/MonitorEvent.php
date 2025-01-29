@@ -6,6 +6,7 @@ use App\Models\Enums\Category;
 use App\Models\Enums\CertificateStatus;
 use App\Models\Enums\UptimeStatus;
 use App\Models\Traits\UsesOwnerScope;
+use Database\Factories\MonitorEventFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,6 +14,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class MonitorEvent extends Model
 {
+    /** @use HasFactory<MonitorEventFactory> */
     use HasFactory;
     use UsesOwnerScope;
 
@@ -24,7 +26,7 @@ class MonitorEvent extends Model
     ];
 
     /**
-     * @return BelongsTo<Monitor, self>
+     * @return BelongsTo<Monitor, $this>
      */
     public function monitor(): BelongsTo
     {
@@ -32,7 +34,7 @@ class MonitorEvent extends Model
     }
 
     /**
-     * @return BelongsTo<User, self>
+     * @return BelongsTo<User, $this>
      */
     public function user(): BelongsTo
     {
@@ -40,9 +42,9 @@ class MonitorEvent extends Model
     }
 
     /**
-     * @param Builder<self> $query
+     * @param Builder<$this> $query
      * @param Monitor|null $monitor
-     * @return Builder<self>
+     * @return Builder<$this>
      */
     public function scopeMonitorFilter(Builder $query, ?Monitor $monitor = null): Builder
     {
@@ -50,8 +52,8 @@ class MonitorEvent extends Model
     }
 
     /**
-     * @param Builder<self> $query
-     * @return Builder<self>
+     * @param Builder<$this> $query
+     * @return Builder<$this>
      */
     public function scopeUptime(Builder $query): Builder
     {
@@ -59,8 +61,8 @@ class MonitorEvent extends Model
     }
 
     /**
-     * @param Builder<self> $query
-     * @return Builder<self>
+     * @param Builder<$this> $query
+     * @return Builder<$this>
      */
     public function scopeCertificate(Builder $query): Builder
     {
@@ -68,8 +70,8 @@ class MonitorEvent extends Model
     }
 
     /**
-     * @param Builder<self> $query
-     * @return Builder<self>
+     * @param Builder<$this> $query
+     * @return Builder<$this>
      */
     public function scopeApplyStatusRequirements(Builder $query): Builder
     {

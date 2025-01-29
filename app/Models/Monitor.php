@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Events\IncrementUptimeCount;
 use App\Models\Traits\UsesOwnerScope;
+use Database\Factories\MonitorFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -12,6 +13,7 @@ use Spatie\UptimeMonitor\Models\Monitor as SpatieMonitor;
 
 class Monitor extends SpatieMonitor
 {
+    /** @use HasFactory<MonitorFactory> */
     use HasFactory;
     use UsesOwnerScope;
 
@@ -23,7 +25,7 @@ class Monitor extends SpatieMonitor
     ];
 
     /**
-     * @return BelongsTo<User, self>
+     * @return BelongsTo<User, $this>
      */
     public function user(): BelongsTo
     {
@@ -31,7 +33,7 @@ class Monitor extends SpatieMonitor
     }
 
     /**
-     * @return BelongsToMany<Channel>
+     * @return BelongsToMany<Channel, $this>
      */
     public function channels(): BelongsToMany
     {
@@ -39,7 +41,7 @@ class Monitor extends SpatieMonitor
     }
 
     /**
-     * @return BelongsToMany<Channel>
+     * @return BelongsToMany<Channel, $this>
      */
     public function verifiedChannels(): BelongsToMany
     {
@@ -47,7 +49,7 @@ class Monitor extends SpatieMonitor
     }
 
     /**
-     * @return HasMany<MonitorEvent>
+     * @return HasMany<MonitorEvent, $this>
      */
     public function monitorEvents(): HasMany
     {
@@ -55,7 +57,7 @@ class Monitor extends SpatieMonitor
     }
 
     /**
-     * @return HasMany<MonitorUptimeEventCount>
+     * @return HasMany<MonitorUptimeEventCount, $this>
      */
     public function uptimeEventCounts(): HasMany
     {

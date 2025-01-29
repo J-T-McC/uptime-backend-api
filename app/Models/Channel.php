@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Events\ChannelCreated;
 use App\Events\ChannelUpdated;
 use App\Models\Traits\UsesOwnerScope;
+use Database\Factories\ChannelFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -12,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Channel extends Model
 {
+    /** @use HasFactory<ChannelFactory> */
     use HasFactory;
     use UsesOwnerScope;
 
@@ -48,7 +50,7 @@ class Channel extends Model
     ];
 
     /**
-     * @return BelongsTo<User, self>
+     * @return BelongsTo<User, $this>
      */
     public function user(): BelongsTo
     {
@@ -56,7 +58,7 @@ class Channel extends Model
     }
 
     /**
-     * @return BelongsToMany<Monitor>
+     * @return BelongsToMany<Monitor, $this>
      */
     public function monitors(): BelongsToMany
     {
