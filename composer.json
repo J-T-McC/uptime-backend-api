@@ -78,8 +78,8 @@
             "@php artisan migrate --graceful --ansi"
         ],
         "lint": [
-            "./vendor/bin/phpstan",
-            "./vendor/bin/phpcs"
+            "./vendor/bin/phpcbf",
+            "./vendor/bin/phpstan"
         ]
     }
 }

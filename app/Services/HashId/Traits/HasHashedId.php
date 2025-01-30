@@ -5,7 +5,6 @@ namespace App\Services\HashId\Traits;
 use App\Services\HashId\HashId;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Model;
 
 trait HasHashedId
 {
@@ -14,6 +13,9 @@ trait HasHashedId
         return parent::resolveRouteBindingQuery($query, (new HashId())->decode($value), $field);
     }
 
+    /**
+     * @return Attribute<string, never>
+    */
     public function hashId(): Attribute
     {
         return Attribute::make(
