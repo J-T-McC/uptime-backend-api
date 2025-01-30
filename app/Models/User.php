@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\HashId\Traits\HasHashedId;
 use Database\Factories\UserFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -16,6 +17,7 @@ class User extends Authenticatable implements MustVerifyEmail
     use HasFactory;
     use Notifiable;
     use HasApiTokens;
+    use HasHashedId;
 
     public function getKey(): string
     {

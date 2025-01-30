@@ -19,6 +19,7 @@
         "spatie/laravel-uptime-monitor": "^4.3",
         "spiral/roadrunner-cli": "^2.6.0",
         "spiral/roadrunner-http": "^3.3.0",
+        "sqids/sqids": "^0.5.0",
         "symfony/http-client": "^7.1",
         "symfony/mailgun-mailer": "^7.1"
     },
@@ -77,8 +78,8 @@
             "@php artisan migrate --graceful --ansi"
         ],
         "lint": [
-            "./vendor/bin/phpstan",
-            "./vendor/bin/phpcs"
+            "./vendor/bin/phpcbf",
+            "./vendor/bin/phpstan"
         ]
     }
 }

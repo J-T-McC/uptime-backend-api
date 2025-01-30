@@ -19,7 +19,7 @@ class MonitorEventResource extends JsonResource
     public function toArray(Request $request)
     {
         return [
-            'id' => $this->id,
+            'id' => $this->hashId,
             'category' => Category::from($this->category)->name,
             'status' => $this->category === Category::CERTIFICATE ?
                 CertificateStatus::from($this->status)->name :

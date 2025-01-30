@@ -6,6 +6,7 @@ use App\Models\Enums\Category;
 use App\Models\Enums\CertificateStatus;
 use App\Models\Enums\UptimeStatus;
 use App\Models\Traits\UsesOwnerScope;
+use App\Services\HashId\Traits\HasHashedId;
 use Database\Factories\MonitorEventFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,6 +18,7 @@ class MonitorEvent extends Model
     /** @use HasFactory<MonitorEventFactory> */
     use HasFactory;
     use UsesOwnerScope;
+    use HasHashedId;
 
     protected $fillable = [
         'category',

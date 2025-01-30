@@ -16,7 +16,7 @@ class MonitorResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
+            'id' => $this->hashId,
             'url' => $this->raw_url,
             'uptime_check_enabled' => $this->uptime_check_enabled,
             'look_for_string' => $this->look_for_string,
