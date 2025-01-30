@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Events\IncrementUptimeCount;
 use App\Models\Traits\UsesOwnerScope;
+use App\Services\HashId\Traits\HasHashedId;
 use Database\Factories\MonitorFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -16,6 +17,7 @@ class Monitor extends SpatieMonitor
     /** @use HasFactory<MonitorFactory> */
     use HasFactory;
     use UsesOwnerScope;
+    use HasHashedId;
 
     protected $fillable = [
         'url',
