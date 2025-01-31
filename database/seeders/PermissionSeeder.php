@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Enums\Attributes\Description;
+use App\Models\Enums\Attributes\DisplayName;
 use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Database\Seeder;
@@ -13,11 +15,36 @@ class PermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        $permissionMap = config('laratrust_seeder.role_crud_permissions');
+        /*
+         * Create and associate non-crud permissions
+         */
+        foreach (\App\Models\Enums\Permission::cases() as $permission) {
+            Permission::query()->updateOrCreate(
+                attributes: [
+                    'name' => $permission->value,
+                ],
+                values: [
+                    'description' => $permission->getMeta(Description::class),
+                    'display_name' => $permission->getMeta(DisplayName::class),
+                ]
+            );
+        }
+
+        $permissionMap = config('laratrust_seeder.role_permissions');
+
+        foreach ($permissionMap as $roleName => $permissions) {
+            $role = Role::query()->where('name', $roleName)->first();
+            $permissions = Permission::query()->whereIn('name', $permissions)->pluck('id');
+            $role->permissions()->sync($permissions);
+        }
+
+        /*
+         * Create and associate CRUD permissions
+         */
+        $crudPermissionMap = config('laratrust_seeder.role_crud_permissions');
         $crudMap = collect(config('laratrust_seeder.crud_map'));
 
-        foreach ($permissionMap as $roleName => $crudPermissions) {
-
+        foreach ($crudPermissionMap as $roleName => $crudPermissions) {
             $role = Role::query()->where('name', $roleName)->first();
             $permissionsToSync = [];
 

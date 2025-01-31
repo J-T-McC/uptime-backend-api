@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Enums\Attributes\Description;
+use App\Models\Enums\Attributes\DisplayName;
 use App\Models\Enums\Role;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -21,7 +22,7 @@ class RoleSeeder extends Seeder
                 ],
                 values: [
                     'description' => $role->getMeta(Description::class),
-                    'display_name' => $role->getMeta(Description::class),
+                    'display_name' => $role->getMeta(DisplayName::class),
                 ]
             );
         }

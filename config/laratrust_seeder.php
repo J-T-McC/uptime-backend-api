@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Models\Enums\Permission;
 use App\Models\Enums\Role;
 
 return [
@@ -18,7 +19,9 @@ return [
 
     'role_permissions' => [
         // non-crud related permissions
-        Role::ADMIN->value => []
+        Role::ADMIN->value => [
+            Permission::ACCESS_ADMINISTRATION_PANEL->value,
+        ]
     ],
 
     'crud_map' => [

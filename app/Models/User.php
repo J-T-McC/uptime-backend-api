@@ -4,6 +4,8 @@ namespace App\Models;
 
 use App\Services\HashId\Traits\HasHashedId;
 use Database\Factories\UserFactory;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -12,7 +14,7 @@ use Illuminate\Notifications\Notifiable;
 use Laratrust\Traits\HasRolesAndPermissions;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail, FilamentUser
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory;
@@ -90,5 +92,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function channels(): HasMany
     {
         return $this->hasMany(Channel::class);
+    }
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return $this->can(\App\Models\Enums\Permission::ACCESS_ADMINISTRATION_PANEL->value);
     }
 }
