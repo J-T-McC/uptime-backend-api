@@ -96,6 +96,6 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser
 
     public function canAccessPanel(Panel $panel): bool
     {
-        return $this->can(\App\Models\Enums\Permission::ACCESS_ADMINISTRATION_PANEL->value);
+        return $this->isAbleTo(\App\Models\Enums\Permission::ACCESS_ADMINISTRATION_PANEL->value);
     }
 }

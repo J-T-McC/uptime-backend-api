@@ -34,8 +34,7 @@ class PermissionSeeder extends Seeder
 
         foreach ($permissionMap as $roleName => $permissions) {
             $role = Role::query()->where('name', $roleName)->first();
-            $permissions = Permission::query()->whereIn('name', $permissions)->pluck('id');
-            $role->permissions()->sync($permissions);
+            $role->syncPermissions(Permission::query()->whereIn('name', $permissions)->get());
         }
 
         /*
@@ -60,7 +59,7 @@ class PermissionSeeder extends Seeder
                 }
             }
 
-            $role->permissions()->sync($permissionsToSync);
+            $role->permissions()->syncWithoutDetaching($permissionsToSync);
         }
     }
 }
