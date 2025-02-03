@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 // ex. email verification redirects the request to 'home' route defined in fortify config
 Route::get('/home', function () {
     return response()->json([]);
-});
+})->name('api.home');
 
 Route::middleware(['auth:sanctum', ApplyOwnerScope::class])->group(function () {
     Route::get('/authenticated', function () {
