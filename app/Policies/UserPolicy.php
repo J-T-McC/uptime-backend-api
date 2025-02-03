@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Enums\CrudAction;
+use App\Enums\Role;
 use App\Models\User;
 
 class UserPolicy
@@ -30,5 +31,20 @@ class UserPolicy
     public function delete(User $user, User $User): bool
     {
         return $user->canPerformCrudAction(CrudAction::DELETE, User::class);
+    }
+
+    public function attachAnyRole(User $user): bool
+    {
+        return $user->canPerformCrudAction(CrudAction::CREATE, Role::class);
+    }
+
+    public function attachRole(User $user): bool
+    {
+        return $user->canPerformCrudAction(CrudAction::CREATE, Role::class);
+    }
+
+    public function detachRole(User $user): bool
+    {
+        return $user->canPerformCrudAction(CrudAction::DELETE, Role::class);
     }
 }

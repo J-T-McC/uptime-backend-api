@@ -11,6 +11,7 @@ return [
         Role::ADMIN->value => [
             'users' => 'i,c,r,u,d',
             'roles' => 'i,c,r,u,d',
+            'permissions' => 'i,r,u',
             'channels' => 'i,r,d',
             'monitors' => 'i,c,r,u,d',
             'teams' => 'i,c,r,u,d',

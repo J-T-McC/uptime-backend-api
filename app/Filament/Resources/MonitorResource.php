@@ -19,6 +19,16 @@ class MonitorResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-magnifying-glass';
 
+    public static function getNavigationGroup(): ?string
+    {
+        return 'Application Resources';
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        return 0;
+    }
+
     public static function form(Form $form): Form
     {
         return $form
