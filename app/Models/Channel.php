@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Events\ChannelCreated;
 use App\Events\ChannelUpdated;
-use App\Models\Traits\UsesOwnerScope;
 use App\Services\HashId\Traits\HasHashedId;
 use Database\Factories\ChannelFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -16,7 +15,6 @@ class Channel extends Model
 {
     /** @use HasFactory<ChannelFactory> */
     use HasFactory;
-    use UsesOwnerScope;
     use HasHashedId;
 
     /**

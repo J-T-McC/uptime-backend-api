@@ -2,10 +2,9 @@
 
 namespace App\Models;
 
-use App\Models\Enums\Category;
-use App\Models\Enums\CertificateStatus;
-use App\Models\Enums\UptimeStatus;
-use App\Models\Traits\UsesOwnerScope;
+use App\Enums\Category;
+use App\Enums\CertificateStatus;
+use App\Enums\UptimeStatus;
 use App\Services\HashId\Traits\HasHashedId;
 use Database\Factories\MonitorEventFactory;
 use Illuminate\Database\Eloquent\Builder;
@@ -17,7 +16,6 @@ class MonitorEvent extends Model
 {
     /** @use HasFactory<MonitorEventFactory> */
     use HasFactory;
-    use UsesOwnerScope;
     use HasHashedId;
 
     protected $fillable = [

@@ -1,33 +1,34 @@
 <?php
 
 
-use App\Models\Enums\Permission;
-use App\Models\Enums\Role;
+use App\Enums\CrudAction;
+use App\Enums\Permission;
+use App\Enums\Role;
 
 return [
-    'role_crud_permissions' => [
+    // default laratrust crud permission map
+    'roles_structure' => [
         Role::ADMIN->value => [
-            'users' => 'c,r,u,d',
-            'roles' => 'c,r,u,d',
-            'channels' => 'c,r,u,d',
-            'monitors' => 'c,r,u,d',
-            'teams' => 'c,r,u,d',
-            'monitor_events' => 'c,r,u,d',
-            'monitor_uptime_event_counts' => 'c,r,u,d',
+            'users' => 'i,c,r,u,d',
+            'roles' => 'i,c,r,u,d',
+            'channels' => 'i,r,d',
+            'monitors' => 'i,c,r,u,d',
+            'teams' => 'i,c,r,u,d',
+            'monitor_events' => 'i,c,r,u,d',
+            'monitor_uptime_event_counts' => 'i,c,r,u,d',
         ],
     ],
-
+    'permissions_map' => [
+        'i' => CrudAction::INDEX->value,
+        'c' => CrudAction::CREATE->value,
+        'r' => CrudAction::READ->value,
+        'u' => CrudAction::UPDATE->value,
+        'd' => CrudAction::DELETE->value,
+    ],
+    // non-crud related permissions
     'role_permissions' => [
-        // non-crud related permissions
         Role::ADMIN->value => [
             Permission::ACCESS_ADMINISTRATION_PANEL->value,
         ]
-    ],
-
-    'crud_map' => [
-        'c' => 'create',
-        'r' => 'read',
-        'u' => 'update',
-        'd' => 'delete',
     ],
 ];

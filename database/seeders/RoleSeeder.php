@@ -2,10 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\Enums\Attributes\Description;
-use App\Models\Enums\Attributes\DisplayName;
-use App\Models\Enums\Role;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Enums\Attributes\Description;
+use App\Enums\Attributes\DisplayName;
+use App\Enums\Role;
 use Illuminate\Database\Seeder;
 
 class RoleSeeder extends Seeder

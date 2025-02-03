@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Enums\Attributes\Description;
-use App\Models\Enums\Attributes\DisplayName;
+use App\Enums\Attributes\Description;
+use App\Enums\Attributes\DisplayName;
 use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Database\Seeder;
@@ -18,7 +18,7 @@ class PermissionSeeder extends Seeder
         /*
          * Create and associate non-crud permissions
          */
-        foreach (\App\Models\Enums\Permission::cases() as $permission) {
+        foreach (\App\Enums\Permission::cases() as $permission) {
             Permission::query()->updateOrCreate(
                 attributes: [
                     'name' => $permission->value,
@@ -40,8 +40,8 @@ class PermissionSeeder extends Seeder
         /*
          * Create and associate CRUD permissions
          */
-        $crudPermissionMap = config('laratrust_seeder.role_crud_permissions');
-        $crudMap = collect(config('laratrust_seeder.crud_map'));
+        $crudPermissionMap = config('laratrust_seeder.roles_structure');
+        $crudMap = collect(config('laratrust_seeder.permissions_map'));
 
         foreach ($crudPermissionMap as $roleName => $crudPermissions) {
             $role = Role::query()->where('name', $roleName)->first();

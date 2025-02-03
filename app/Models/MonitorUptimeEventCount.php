@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Traits\UsesOwnerScope;
 use App\Services\HashId\Traits\HasHashedId;
 use Database\Factories\MonitorUptimeEventCountFactory;
 use Illuminate\Database\Eloquent\Builder;
@@ -14,7 +13,6 @@ class MonitorUptimeEventCount extends Model
 {
     /** @use HasFactory<MonitorUptimeEventCountFactory> */
     use HasFactory;
-    use UsesOwnerScope;
     use HasHashedId;
 
     protected $fillable = ['monitor_id', 'user_id', 'filter_date'];

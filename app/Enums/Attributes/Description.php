@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Enums\Attributes;
+namespace App\Enums\Attributes;
 
 use Attribute;
 

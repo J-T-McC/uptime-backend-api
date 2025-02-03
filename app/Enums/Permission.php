@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Models\Enums;
+namespace App\Enums;
 
-use App\Models\Enums\Attributes\Description;
-use App\Models\Enums\Attributes\DisplayName;
-use App\Models\Enums\Traits\HasMeta;
+use App\Enums\Attributes\Description;
+use App\Enums\Attributes\DisplayName;
+use App\Enums\Traits\HasMeta;
 
 enum Permission: string
 {

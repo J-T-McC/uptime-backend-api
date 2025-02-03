@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Enums\Traits;
+namespace App\Enums\Traits;
 
 use ReflectionClassConstant;
 
