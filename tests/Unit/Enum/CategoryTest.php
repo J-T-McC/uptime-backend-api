@@ -2,9 +2,8 @@
 
 namespace Tests\Unit\Enum;
 
+use App\Enums\Category;
 use Tests\TestCase;
-
-use App\Models\Enums\Category;
 
 class CategoryTest extends TestCase
 {

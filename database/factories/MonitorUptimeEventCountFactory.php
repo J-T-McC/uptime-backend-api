@@ -27,8 +27,8 @@ class MonitorUptimeEventCountFactory extends Factory
         $date = Carbon::now()->subDays($this->faker->numberBetween(1, 365));
 
         return [
-            'monitor_id' => Monitor::factory()->create()->id,
-            'user_id' => User::factory()->create()->id,
+            'monitor_id' => Monitor::factory(),
+            'user_id' => User::factory(),
             'up' => $this->faker->numberBetween(1, 30),
             'recovered' => $this->faker->numberBetween(1, 30),
             'down' => $this->faker->numberBetween(1, 30),

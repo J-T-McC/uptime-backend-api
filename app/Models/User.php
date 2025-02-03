@@ -2,27 +2,28 @@
 
 namespace App\Models;
 
+use App\Enums\CrudAction;
 use App\Services\HashId\Traits\HasHashedId;
 use Database\Factories\UserFactory;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laratrust\Traits\HasRolesAndPermissions;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail, FilamentUser
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory;
     use Notifiable;
     use HasApiTokens;
     use HasHashedId;
-
-    public function getKey(): string
-    {
-        return static::class;
-    }
+    use HasRolesAndPermissions;
 
     /**
      * The attributes that are mass assignable.
@@ -88,5 +89,19 @@ class User extends Authenticatable implements MustVerifyEmail
     public function channels(): HasMany
     {
         return $this->hasMany(Channel::class);
+    }
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return true;
+    }
+
+    public function canPerformCrudAction(CrudAction $action, string $model): bool
+    {
+        /** @var Model $model */
+        $model = (new $model());
+        $table = $model->getTable();
+
+        return $this->isAbleTo($table . '-' . $action->value);
     }
 }

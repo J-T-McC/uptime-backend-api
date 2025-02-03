@@ -7,6 +7,7 @@ use App\Http\Controllers\LatestMonitorEventsController;
 use App\Http\Controllers\MonitorChannelController;
 use App\Http\Controllers\MonitorController;
 use App\Http\Controllers\VerifyChannelController;
+use App\Http\Middleware\ApplyOwnerScope;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Route;
 
@@ -14,9 +15,9 @@ use Illuminate\Support\Facades\Route;
 // ex. email verification redirects the request to 'home' route defined in fortify config
 Route::get('/home', function () {
     return response()->json([]);
-});
+})->name('api.home');
 
-Route::middleware(['auth:sanctum'])->group(function () {
+Route::middleware(['auth:sanctum', ApplyOwnerScope::class])->group(function () {
     Route::get('/authenticated', function () {
         return new UserResource(auth()->user());
     });

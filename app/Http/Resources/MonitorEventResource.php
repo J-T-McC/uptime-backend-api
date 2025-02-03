@@ -2,9 +2,9 @@
 
 namespace App\Http\Resources;
 
-use App\Models\Enums\Category;
-use App\Models\Enums\CertificateStatus;
-use App\Models\Enums\UptimeStatus;
+use App\Enums\Category;
+use App\Enums\CertificateStatus;
+use App\Enums\UptimeStatus;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 

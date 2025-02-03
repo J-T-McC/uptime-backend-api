@@ -23,7 +23,7 @@ class MonitorFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::factory()->create()->id,
+            'user_id' => User::factory(),
             'url' => $this->faker->unique->url,
             'uptime_check_method' => 'get',
         ];

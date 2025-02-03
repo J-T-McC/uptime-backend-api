@@ -18,7 +18,7 @@ class VerifyChannelControllerTest extends AuthenticatedTestCase
     public function it_verifies_channel()
     {
         // Collect
-        $channel = Channel::factory()->createQuietly([
+        $channel = Channel::factory()->for($this->testUser)->createQuietly([
             'verified' => false,
             'endpoint' => 'endpoint',
         ]);
@@ -40,7 +40,7 @@ class VerifyChannelControllerTest extends AuthenticatedTestCase
     public function it_fails_verification_if_endpoint_changes()
     {
         // Collect
-        $channel = Channel::factory()->createQuietly([
+        $channel = Channel::factory()->for($this->testUser)->createQuietly([
             'verified' => false,
             'endpoint' => 'old-endpoint',
         ]);
@@ -64,7 +64,7 @@ class VerifyChannelControllerTest extends AuthenticatedTestCase
     public function it_rejects_invalid_signature()
     {
         // Collect
-        $channel = Channel::factory()->createQuietly([
+        $channel = Channel::factory()->for($this->testUser)->createQuietly([
             'verified' => false,
         ]);
         $url = (new CreateSignedVerifyChannelUrl())->handle($channel);

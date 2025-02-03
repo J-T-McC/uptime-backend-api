@@ -2,9 +2,8 @@
 
 namespace Tests\Unit\Enum;
 
+use App\Enums\CertificateStatus;
 use Tests\TestCase;
-
-use App\Models\Enums\CertificateStatus;
 
 class CertificateStatusTest extends TestCase
 {
