@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\MonitorResource\Pages;
 use App\Filament\Resources\MonitorResource\RelationManagers;
+use App\Filament\Resources\MonitorResource\RelationManagers\ChannelsRelationManager;
 use App\Models\Monitor;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -121,7 +122,7 @@ class MonitorResource extends Resource
     public static function getRelations(): array
     {
         return [
-
+            ChannelsRelationManager::class,
         ];
     }
 
@@ -129,7 +130,7 @@ class MonitorResource extends Resource
     {
         return [
             'index' => Pages\ListMonitors::route('/'),
-            'create' => Pages\CreateMonitor::route('/create'),
+//            'create' => Pages\CreateMonitor::route('/create'),
             'edit' => Pages\EditMonitor::route('/{record}/edit'),
         ];
     }

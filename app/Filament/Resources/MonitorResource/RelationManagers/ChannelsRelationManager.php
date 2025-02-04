@@ -1,0 +1,61 @@
+<?php
+
+namespace App\Filament\Resources\MonitorResource\RelationManagers;
+
+use Filament\Forms;
+use Filament\Forms\Form;
+use Filament\Resources\RelationManagers\RelationManager;
+use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+
+class ChannelsRelationManager extends RelationManager
+{
+    protected static string $relationship = 'channels';
+
+    public function table(Table $table): Table
+    {
+        return $table
+            ->recordTitleAttribute('endpoint')
+            ->columns([
+                TextColumn::make('id')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('user.email')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('type')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('endpoint')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('description')
+                    ->searchable(),
+                TextColumn::make('verified'),
+                TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable(),
+                TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+            ])
+            ->filters([
+                //
+            ])
+            ->headerActions([
+//                Tables\Actions\CreateAction::make(),
+            ])
+            ->actions([
+//                Tables\Actions\EditAction::make(),
+//                Tables\Actions\DeleteAction::make(),
+            ])
+            ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+//                    Tables\Actions\DeleteBulkAction::make(),
+                ]),
+            ]);
+    }
+}
