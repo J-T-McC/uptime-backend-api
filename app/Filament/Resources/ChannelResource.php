@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ChannelResource\Pages;
 use App\Filament\Resources\ChannelResource\RelationManagers;
+use App\Filament\Resources\ChannelResource\RelationManagers\MonitorsRelationManager;
 use App\Models\Channel;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -28,6 +29,22 @@ class ChannelResource extends Resource
     public static function getNavigationSort(): ?int
     {
         return 1;
+    }
+
+    public static function form(Form $form): Form
+    {
+        return $form
+            ->schema([
+                Forms\Components\TextInput::make('id')->readOnly(),
+                Forms\Components\Select::make('user_id')
+                    ->disabled()
+                    ->relationship('user', 'email'),
+                Forms\Components\TextInput::make('endpoint')->readOnly(),
+                Forms\Components\TextInput::make('description')->readOnly(),
+                Forms\Components\Toggle::make('verified')->rules([
+                    'boolean'
+                ])->disabled(),
+            ])->columns(1);
     }
 
     public static function table(Table $table): Table
@@ -63,7 +80,7 @@ class ChannelResource extends Resource
                 //
             ])
             ->actions([
-//                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -75,7 +92,7 @@ class ChannelResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            MonitorsRelationManager::class,
         ];
     }
 
@@ -84,7 +101,7 @@ class ChannelResource extends Resource
         return [
             'index' => Pages\ListChannels::route('/'),
 //            'create' => Pages\CreateChannel::route('/create'),
-//            'edit' => Pages\EditChannel::route('/{record}/edit'),
+            'edit' => Pages\EditChannel::route('/{record}/edit'),
         ];
     }
 }
