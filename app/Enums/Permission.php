@@ -13,4 +13,8 @@ enum Permission: string
     #[Description('Grants access to the administration panel')]
     #[DisplayName('Access Administration Panel')]
     case ACCESS_ADMINISTRATION_PANEL = 'access_administration_panel';
+
+    #[Description('Grants access to the laravel pulse panel')]
+    #[DisplayName('Access Pulse Panel')]
+    case ACCESS_PULSE_PANEL = 'access_pulse_panel';
 }

@@ -30,6 +30,7 @@ return [
     'role_permissions' => [
         Role::ADMIN->value => [
             Permission::ACCESS_ADMINISTRATION_PANEL->value,
+            Permission::ACCESS_PULSE_PANEL->value,
         ]
     ],
 ];

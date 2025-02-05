@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Monitor;
+use Filament\Facades\Filament;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
