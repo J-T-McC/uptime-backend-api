@@ -1,5 +1,7 @@
 <?php
 
+use App\Listeners\FlushGlobalScopes;
+use App\Listeners\RememberGlobalScopes;
 use Laravel\Octane\Contracts\OperationTerminated;
 use Laravel\Octane\Events\RequestHandled;
 use Laravel\Octane\Events\RequestReceived;
@@ -68,12 +70,12 @@ return [
         WorkerStarting::class => [
             EnsureUploadedFilesAreValid::class,
             EnsureUploadedFilesCanBeMoved::class,
+            RememberGlobalScopes::class,
         ],
 
         RequestReceived::class => [
             ...Octane::prepareApplicationForNextOperation(),
             ...Octane::prepareApplicationForNextRequest(),
-            //
         ],
 
         RequestHandled::class => [
@@ -82,6 +84,7 @@ return [
 
         RequestTerminated::class => [
             // FlushUploadedFiles::class,
+            FlushGlobalScopes::class,
         ],
 
         TaskReceived::class => [
