@@ -12,15 +12,16 @@ class HashIdTest extends TestCase
 {
     protected HashId $hashId;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
-        $this->hashId = new HashId();
+        $this->hashId = new HashId;
     }
 
     /**
      * @test
+     *
      * @covers ::encode
      */
     public function it_encodes_an_id(): void
@@ -39,6 +40,7 @@ class HashIdTest extends TestCase
 
     /**
      * @test
+     *
      * @covers ::decode
      */
     public function it_decodes_an_encoded_id(): void
@@ -57,6 +59,7 @@ class HashIdTest extends TestCase
 
     /**
      * @test
+     *
      * @covers ::decode
      */
     public function it_decodes_a_numeric_string(): void
@@ -74,6 +77,7 @@ class HashIdTest extends TestCase
 
     /**
      * @test
+     *
      * @covers ::decode
      */
     public function it_returns_null_for_invalid_string(): void

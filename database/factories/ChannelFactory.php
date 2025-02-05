@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Channel;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Channel;
 
 class ChannelFactory extends Factory
 {
@@ -17,8 +17,6 @@ class ChannelFactory extends Factory
 
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
     public function definition(): array
     {

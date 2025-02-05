@@ -23,7 +23,7 @@ return [
         ],
 
         'notifications' => [
-            //values are arbitrary but required for the spatie library to track the event
+            // values are arbitrary but required for the spatie library to track the event
             \App\Notifications\UptimeCheckFailed::class => ['enabled'],
             \App\Notifications\UptimeCheckRecovered::class => ['enabled'],
             \App\Notifications\UptimeCheckSucceeded::class => [],
@@ -37,7 +37,7 @@ return [
          * The location from where you are running this Laravel application. This location will be
          * mentioned in all notifications that will be sent.
          */
-//        'location' => '',
+        //        'location' => '',
 
         /*
          * To keep reminding you that a site is down, notifications

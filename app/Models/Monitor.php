@@ -15,6 +15,7 @@ class Monitor extends SpatieMonitor
 {
     /** @use HasFactory<MonitorFactory> */
     use HasFactory;
+
     use HasHashedId;
 
     protected $fillable = [
@@ -68,8 +69,6 @@ class Monitor extends SpatieMonitor
     /**
      * Override parents duplication logic
      * Original prevents different users from monitoring the same url
-     * @param SpatieMonitor $monitor
-     * @return bool
      */
     protected static function alreadyExists(SpatieMonitor $monitor): bool
     {
@@ -80,13 +79,12 @@ class Monitor extends SpatieMonitor
      * Spatie event library does not fire event for repeated failures
      * This allows us to record the additional failures for our counts
      * See @Spatie\UptimeMonitor\Models\Traits\SupportsUptimeCheck
-     * @param string $reason
      */
     public function uptimeCheckFailed(string $reason): void
     {
         parent::uptimeCheckFailed($reason);
 
-        if (!$this->shouldFireUptimeCheckFailedEvent()) {
+        if (! $this->shouldFireUptimeCheckFailedEvent()) {
             event(new IncrementUptimeCount($this));
         }
     }

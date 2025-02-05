@@ -27,11 +27,11 @@ class NotificationDispatcherTest extends TestCase
 {
     private array $channelTypes;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
-        $this->channelTypes = (new ChannelFactory())->channels();
+        $this->channelTypes = (new ChannelFactory)->channels();
     }
 
     /**
@@ -50,9 +50,9 @@ class NotificationDispatcherTest extends TestCase
             );
 
             Notification::assertSentTo(
-                [(new AnonymousNotifiable())],
+                [(new AnonymousNotifiable)],
                 CertificateCheckFailed::class,
-                fn($notification, $channels, $notifiable) => $notifiable->routes[$type] === $endpoint
+                fn ($notification, $channels, $notifiable) => $notifiable->routes[$type] === $endpoint
             );
         });
     }
@@ -78,13 +78,12 @@ class NotificationDispatcherTest extends TestCase
             );
 
             Notification::assertSentTo(
-                [(new AnonymousNotifiable())],
+                [(new AnonymousNotifiable)],
                 CertificateExpiresSoon::class,
-                fn($notification, $channels, $notifiable) => $notifiable->routes[$type] === $endpoint
+                fn ($notification, $channels, $notifiable) => $notifiable->routes[$type] === $endpoint
             );
         });
     }
-
 
     /**
      * @test
@@ -121,21 +120,22 @@ class NotificationDispatcherTest extends TestCase
             );
 
             Notification::assertSentTo(
-                [(new AnonymousNotifiable())],
+                [(new AnonymousNotifiable)],
                 UptimeCheckFailed::class,
-                fn($notification, $channels, $notifiable) => $notifiable->routes[$type] === $endpoint
+                fn ($notification, $channels, $notifiable) => $notifiable->routes[$type] === $endpoint
             );
         });
     }
 
     /**
      * Only dispatch succeeded upon recovery
+     *
      * @test
      */
     public function does_not_notify_any_channel_types_on_uptime_check_succeeded_event()
     {
         $this->checkAllChannelsForNotificationEvent(function ($monitor) {
-            //override our faker url with one we know will succeed
+            // override our faker url with one we know will succeed
             $monitor->uptime_status = 'up';
 
             Event::dispatch(
@@ -163,9 +163,9 @@ class NotificationDispatcherTest extends TestCase
             );
 
             Notification::assertSentTo(
-                [(new AnonymousNotifiable())],
+                [(new AnonymousNotifiable)],
                 UptimeCheckRecovered::class,
-                fn($notification, $channels, $notifiable) => $notifiable->routes[$type] === $endpoint
+                fn ($notification, $channels, $notifiable) => $notifiable->routes[$type] === $endpoint
             );
         });
     }
@@ -180,12 +180,12 @@ class NotificationDispatcherTest extends TestCase
         $channel = Channel::factory([
             'type' => 'mail',
             'verified' => false,
-            'endpoint' => 'email@example.com'
+            'endpoint' => 'email@example.com',
         ])->createQuietly();
 
         $monitor->channels()->sync([$channel->id]);
         $event = new \Spatie\UptimeMonitor\Events\CertificateCheckFailed($monitor, new SslCertificate([]));
-        $notification = new CertificateCheckFailed();
+        $notification = new CertificateCheckFailed;
         $notification->setEvent($event);
 
         // Act
@@ -197,7 +197,6 @@ class NotificationDispatcherTest extends TestCase
 
     /**
      * Generate a monitors with notification channels to test
-     * @param $cb
      */
     public function checkAllChannelsForNotificationEvent($cb)
     {
@@ -209,7 +208,7 @@ class NotificationDispatcherTest extends TestCase
             $channel = Channel::factory([
                 'type' => $type,
                 'verified' => true,
-                'endpoint' => $endpoint
+                'endpoint' => $endpoint,
             ])->createQuietly();
 
             Notification::assertNothingSent();

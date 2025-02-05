@@ -9,7 +9,7 @@ abstract class AuthenticatedTestCase extends TestCase
 {
     protected User $testUser;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

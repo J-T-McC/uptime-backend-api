@@ -28,13 +28,13 @@ class ApplyOwnerScope
     /**
      * Handle an incoming request.
      *
-     * @param Closure(Request): (Response) $next
+     * @param  Closure(Request): (Response)  $next
      */
     public function handle(Request $request, Closure $next): Response
     {
         // scope the authenticated user to their own resources
         foreach ($this->models as $model) {
-            $model::addGlobalScope(new OwnerScope());
+            $model::addGlobalScope(new OwnerScope);
         }
 
         return $next($request);

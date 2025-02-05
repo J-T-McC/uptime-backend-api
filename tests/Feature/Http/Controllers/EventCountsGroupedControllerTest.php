@@ -13,6 +13,7 @@ class EventCountsGroupedControllerTest extends AuthenticatedTestCase
 {
     /**
      * @test
+     *
      * @covers ::index
      */
     public function it_lists_event_counts()
@@ -29,6 +30,7 @@ class EventCountsGroupedControllerTest extends AuthenticatedTestCase
 
     /**
      * @test
+     *
      * @covers ::show
      */
     public function it_shows_event_counts_for_a_monitor()

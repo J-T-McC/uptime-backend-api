@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\MonitorResource\Pages;
-use App\Filament\Resources\MonitorResource\RelationManagers;
 use App\Filament\Resources\MonitorResource\RelationManagers\ChannelsRelationManager;
 use App\Models\Monitor;
 use Filament\Forms;
@@ -38,8 +37,8 @@ class MonitorResource extends Resource
                     ->required()
                     ->url()
                     ->afterStateHydrated(
-                    // required or filament edit UI breaks on page load
-                        fn ($state, $set) => $set('url', (string)$state)
+                        // required or filament edit UI breaks on page load
+                        fn ($state, $set) => $set('url', (string) $state)
                     ),
                 Forms\Components\Select::make('user_id')
                     ->relationship('user', 'email')
@@ -48,7 +47,7 @@ class MonitorResource extends Resource
                 Forms\Components\TextInput::make('look_for_string')->nullable(),
                 Forms\Components\TextInput::make('uptime_check_interval_in_minutes')->required()->rules([
                     'numeric',
-                    'min:1'
+                    'min:1',
                 ])->default(1),
                 Forms\Components\Select::make('uptime_check_method')->required()->options([
                     'get' => 'get',
@@ -62,7 +61,7 @@ class MonitorResource extends Resource
                     'trace' => 'trace',
                 ]),
                 Forms\Components\Toggle::make('uptime_check_enabled')->rules([
-                    'boolean'
+                    'boolean',
                 ])->default(1),
                 Forms\Components\Toggle::make('certificate_check_enabled')->rules([
                     'boolean',
@@ -114,7 +113,7 @@ class MonitorResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-//                    Tables\Actions\DeleteBulkAction::make(),
+                    //                    Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -130,7 +129,7 @@ class MonitorResource extends Resource
     {
         return [
             'index' => Pages\ListMonitors::route('/'),
-//            'create' => Pages\CreateMonitor::route('/create'),
+            //            'create' => Pages\CreateMonitor::route('/create'),
             'edit' => Pages\EditMonitor::route('/{record}/edit'),
         ];
     }

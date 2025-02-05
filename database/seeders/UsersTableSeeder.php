@@ -2,10 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
-
-use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
 class UsersTableSeeder extends Seeder
@@ -21,14 +20,14 @@ class UsersTableSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
             'password' => Hash::make('password'),
-            'email_verified_at' => Carbon::now()->toDateTime()
+            'email_verified_at' => Carbon::now()->toDateTime(),
         ]);
 
         User::insertOrIgnore([
             'name' => 'Test User 2',
             'email' => 'test2@example.com',
             'password' => Hash::make('password'),
-            'email_verified_at' => Carbon::now()->toDateTime()
+            'email_verified_at' => Carbon::now()->toDateTime(),
         ]);
     }
 }

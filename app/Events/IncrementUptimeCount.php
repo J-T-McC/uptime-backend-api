@@ -11,7 +11,7 @@ class IncrementUptimeCount implements ShouldQueue
 
     /**
      * Create a new event instance.
-     * @param Monitor $monitor
+     *
      * @return void
      */
     public function __construct(Monitor $monitor)

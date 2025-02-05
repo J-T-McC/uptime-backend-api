@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Models\User;
+use Illuminate\Auth\Notifications\ResetPassword;
+use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -12,8 +14,6 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Auth\Notifications\ResetPassword;
-use Illuminate\Auth\Notifications\VerifyEmail;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -38,6 +38,7 @@ class AppServiceProvider extends ServiceProvider
 
         ResetPassword::createUrlUsing(function ($notifiable, $token) {
             $domain = config('app.spa_url');
+
             return "{$domain}/password/reset/{$token}";
         });
 
@@ -51,8 +52,8 @@ class AppServiceProvider extends ServiceProvider
                 ]
             );
 
-            //signature needs to be generated using our endpoint url
-            //replacing domain with spa url so email directs to front end with a valid signature for backend
+            // signature needs to be generated using our endpoint url
+            // replacing domain with spa url so email directs to front end with a valid signature for backend
             return str_replace(config('app.url'), config('app.spa_url'), $url);
         });
 

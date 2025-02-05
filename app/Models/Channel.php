@@ -15,6 +15,7 @@ class Channel extends Model
 {
     /** @use HasFactory<ChannelFactory> */
     use HasFactory;
+
     use HasHashedId;
 
     /**

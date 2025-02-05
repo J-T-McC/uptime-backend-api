@@ -14,9 +14,8 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
     /**
      * Validate and update the given user's profile information.
      *
-     * @param User $user
-     * @param array<string, string> $input
-     * @return void
+     * @param  array<string, string>  $input
+     *
      * @throws ValidationException
      */
     public function update(User $user, array $input): void
@@ -49,9 +48,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
     /**
      * Update the given verified user's profile information.
      *
-     * @param User $user
-     * @param array<string, string> $input
-     * @return void
+     * @param  array<string, string>  $input
      */
     protected function updateVerifiedUser(User $user, array $input): void
     {

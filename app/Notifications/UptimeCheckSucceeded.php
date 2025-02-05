@@ -14,7 +14,7 @@ class UptimeCheckSucceeded extends SpatieUptimeCheckSucceeded
     /**
      * Get the notification's delivery channels.
      *
-     * @param mixed $notifiable
+     * @param  mixed  $notifiable
      * @return array<int, string>
      */
     public function via($notifiable): array
@@ -24,11 +24,11 @@ class UptimeCheckSucceeded extends SpatieUptimeCheckSucceeded
 
     public function toDiscord(): DiscordMessage
     {
-        return (new  DiscordMessage())
+        return (new DiscordMessage)
             ->success()
             ->title($this->getMessageText())
             ->description([
-                $this->getMessageText()
+                $this->getMessageText(),
             ])
             ->footer($this->getLocationDescription())
             ->timestamp(Carbon::now());

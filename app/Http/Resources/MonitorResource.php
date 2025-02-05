@@ -10,7 +10,6 @@ class MonitorResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param Request $request
      * @return array<string, mixed>
      */
     public function toArray(Request $request): array
@@ -23,7 +22,7 @@ class MonitorResource extends JsonResource
             'uptime_status' => $this->uptime_status,
             'certificate_check_enabled' => $this->certificate_check_enabled,
             'certificate_status' => $this->certificate_status,
-            'channels' => ChannelResource::collection($this->whenLoaded('channels'))
+            'channels' => ChannelResource::collection($this->whenLoaded('channels')),
         ];
     }
 }

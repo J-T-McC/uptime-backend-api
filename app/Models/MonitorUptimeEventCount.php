@@ -13,6 +13,7 @@ class MonitorUptimeEventCount extends Model
 {
     /** @use HasFactory<MonitorUptimeEventCountFactory> */
     use HasFactory;
+
     use HasHashedId;
 
     protected $fillable = ['monitor_id', 'user_id', 'filter_date'];
@@ -34,8 +35,7 @@ class MonitorUptimeEventCount extends Model
     }
 
     /**
-     * @param Builder<$this> $query
-     * @param Monitor|null $monitor
+     * @param  Builder<$this>  $query
      * @return Builder<$this>
      */
     public function scopeMonitorFilter(Builder $query, ?Monitor $monitor = null)

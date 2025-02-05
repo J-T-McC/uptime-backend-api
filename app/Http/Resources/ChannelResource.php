@@ -10,7 +10,6 @@ class ChannelResource extends JsonResource
     /**
      * Transform the resource collection into an array.
      *
-     * @param Request $request
      * @return array<string, mixed>
      */
     public function toArray(Request $request): array
@@ -21,7 +20,7 @@ class ChannelResource extends JsonResource
             'endpoint' => $this->endpoint,
             'type' => $this->type,
             'verified' => $this->verified,
-            'pivot' => $this->when($this->pivot, $this->pivot)
+            'pivot' => $this->when($this->pivot, $this->pivot),
         ];
     }
 }

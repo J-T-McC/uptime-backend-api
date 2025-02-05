@@ -29,6 +29,7 @@ return [
 
     /**
      * Migrate files|folders from the outgoing production build to your new release using a relative path and pattern
+     *
      * @see https://www.php.net/manual/en/function.glob.php
      */
     'migrate' => [
@@ -51,6 +52,6 @@ return [
      *
      * If your build does not use git, use rand.
      */
-    'directory-naming' => 'git'
+    'directory-naming' => 'git',
 
 ];

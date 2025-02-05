@@ -18,7 +18,8 @@ use Tests\TestCase;
  */
 class ApplyOwnerScopeTest extends TestCase
 {
-    public function test_it_is_assigned_to_expected_routes() {
+    public function test_it_is_assigned_to_expected_routes()
+    {
         // Collect
         $routes = Route::getRoutes()->getRoutes();
 
@@ -39,7 +40,7 @@ class ApplyOwnerScopeTest extends TestCase
     public function test_it_applies_owner_scope_to_expected_models(): void
     {
         // Collect
-        $middleware = new ApplyOwnerScope();
+        $middleware = new ApplyOwnerScope;
         $requestMock = $this->mock(Request::class);
         $responseMock = $this->mock(Response::class);
 

@@ -16,14 +16,16 @@ use Illuminate\Notifications\Notifiable;
 use Laratrust\Traits\HasRolesAndPermissions;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable implements MustVerifyEmail, FilamentUser
+class User extends Authenticatable implements FilamentUser, MustVerifyEmail
 {
+    use HasApiTokens;
+
     /** @use HasFactory<UserFactory> */
     use HasFactory;
-    use Notifiable;
-    use HasApiTokens;
+
     use HasHashedId;
     use HasRolesAndPermissions;
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -93,9 +95,6 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser
 
     /**
      * Default admin panel permission method for Filament.
-     *
-     * @param Panel $panel
-     * @return bool
      */
     public function canAccessPanel(Panel $panel): bool
     {
@@ -104,7 +103,6 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser
 
     /**
      * Define if the user can access the Laravel pulse panel.
-     * @return bool
      */
     public function canAccessPulsePanel(): bool
     {
@@ -114,9 +112,9 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser
     public function canPerformCrudAction(CrudAction $action, string $model): bool
     {
         /** @var Model $model */
-        $model = (new $model());
+        $model = (new $model);
         $table = $model->getTable();
 
-        return $this->isAbleTo($table . '-' . $action->value);
+        return $this->isAbleTo($table.'-'.$action->value);
     }
 }

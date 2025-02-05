@@ -8,8 +8,6 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class PermissionsRelationManager extends RelationManager
 {
@@ -58,13 +56,13 @@ class PermissionsRelationManager extends RelationManager
                 Tables\Actions\AttachAction::make()->preloadRecordSelect()->multiple(),
             ])
             ->actions([
-//                Tables\Actions\AttachAction::make(),
+                //                Tables\Actions\AttachAction::make(),
                 Tables\Actions\DetachAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-//                    Tables\Actions\AttachAction::make(),
-//                    Tables\Actions\DetachAction::make(),
+                    //                    Tables\Actions\AttachAction::make(),
+                    //                    Tables\Actions\DetachAction::make(),
                 ]),
             ]);
     }

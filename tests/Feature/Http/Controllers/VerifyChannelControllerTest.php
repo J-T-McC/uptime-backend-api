@@ -13,6 +13,7 @@ class VerifyChannelControllerTest extends AuthenticatedTestCase
 {
     /**
      * @test
+     *
      * @covers ::__invoke
      */
     public function it_verifies_channel()
@@ -22,7 +23,7 @@ class VerifyChannelControllerTest extends AuthenticatedTestCase
             'verified' => false,
             'endpoint' => 'endpoint',
         ]);
-        $url = (new CreateSignedVerifyChannelUrl())->handle($channel);
+        $url = (new CreateSignedVerifyChannelUrl)->handle($channel);
 
         // Act
         $response = $this->getJson($url);
@@ -35,6 +36,7 @@ class VerifyChannelControllerTest extends AuthenticatedTestCase
 
     /**
      * @test
+     *
      * @covers ::__invoke
      */
     public function it_fails_verification_if_endpoint_changes()
@@ -44,7 +46,7 @@ class VerifyChannelControllerTest extends AuthenticatedTestCase
             'verified' => false,
             'endpoint' => 'old-endpoint',
         ]);
-        $url = (new CreateSignedVerifyChannelUrl())->handle($channel);
+        $url = (new CreateSignedVerifyChannelUrl)->handle($channel);
 
         $channel->updateQuietly(['endpoint' => 'new-endpoint']);
 
@@ -58,6 +60,7 @@ class VerifyChannelControllerTest extends AuthenticatedTestCase
 
     /**
      * @test
+     *
      * @covers ::__invoke
      * @covers \App\Http\Requests\VerifyChannelRequest::authorize
      */
@@ -67,7 +70,7 @@ class VerifyChannelControllerTest extends AuthenticatedTestCase
         $channel = Channel::factory()->for($this->testUser)->createQuietly([
             'verified' => false,
         ]);
-        $url = (new CreateSignedVerifyChannelUrl())->handle($channel);
+        $url = (new CreateSignedVerifyChannelUrl)->handle($channel);
         $url = str_replace('signature=', 'signature=invalid', $url);
 
         // Act

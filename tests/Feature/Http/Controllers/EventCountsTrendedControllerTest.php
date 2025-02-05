@@ -12,6 +12,7 @@ class EventCountsTrendedControllerTest extends AuthenticatedTestCase
 {
     /**
      * @test
+     *
      * @covers ::index
      */
     public function it_lists_trended_event_counts()
@@ -29,6 +30,7 @@ class EventCountsTrendedControllerTest extends AuthenticatedTestCase
 
     /**
      * @test
+     *
      * @covers ::show
      */
     public function it_lists_trended_event_counts_for_a_monitor()

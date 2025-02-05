@@ -18,7 +18,7 @@ class StoreChannelRequest extends FormRequest
     {
         $type = $this->input('type');
 
-        $endpointRules = config('uptime-monitor.notifications.service-endpoint-rules.' . $type, '');
+        $endpointRules = config('uptime-monitor.notifications.service-endpoint-rules.'.$type, '');
 
         return [
             'type' => [
@@ -28,9 +28,9 @@ class StoreChannelRequest extends FormRequest
                 Rule::unique('channels')
                     ->where('user_id', $this->user()?->id)
                     ->where('type', $type)
-                    ->where('endpoint', $this->input('endpoint'))
+                    ->where('endpoint', $this->input('endpoint')),
             ],
-            'endpoint' => 'required|string' . $endpointRules,
+            'endpoint' => 'required|string'.$endpointRules,
             'description' => 'string|nullable',
         ];
     }

@@ -8,7 +8,7 @@ use Throwable;
 final class InvalidChanelException extends Exception
 {
     public function __construct(
-        string $message = "Notification channel not defined",
+        string $message = 'Notification channel not defined',
         int $code = 0,
         ?Throwable $previous = null
     ) {

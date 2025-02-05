@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreChannelRequest;
 use App\Http\Requests\UpdateChannelRequest;
-use App\Models\Channel;
 use App\Http\Resources\ChannelResource;
+use App\Models\Channel;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 
@@ -13,8 +13,6 @@ class ChannelController extends Controller
 {
     /**
      * List the resource.
-     *
-     * @return AnonymousResourceCollection
      */
     public function index(): AnonymousResourceCollection
     {
@@ -25,9 +23,6 @@ class ChannelController extends Controller
 
     /**
      * Create a resource.
-     *
-     * @param StoreChannelRequest $request
-     * @return ChannelResource
      */
     public function store(StoreChannelRequest $request): ChannelResource
     {
@@ -40,22 +35,14 @@ class ChannelController extends Controller
 
     /**
      * Show a resource.
-     *
-     * @param Channel $channel
-     * @return ChannelResource
      */
     public function show(Channel $channel): ChannelResource
     {
         return ChannelResource::make($channel);
     }
 
-
     /**
      * Update a resource.
-     *
-     * @param UpdateChannelRequest $request
-     * @param Channel $channel
-     * @return ChannelResource
      */
     public function update(UpdateChannelRequest $request, Channel $channel): ChannelResource
     {
@@ -66,9 +53,6 @@ class ChannelController extends Controller
 
     /**
      * Delete a resource.
-     *
-     * @param Channel $channel
-     * @return Response
      */
     public function destroy(Channel $channel): Response
     {

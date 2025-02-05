@@ -10,7 +10,6 @@ class UserResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param Request $request
      * @return array<string, string>
      */
     public function toArray(Request $request): array
