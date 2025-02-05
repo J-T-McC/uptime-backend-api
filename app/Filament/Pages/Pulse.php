@@ -2,7 +2,6 @@
 
 namespace App\Filament\Pages;
 
-use App\Filament\Widgets\LaravelPulseLink;
 use Dotswan\FilamentLaravelPulse\Widgets\PulseCache;
 use Dotswan\FilamentLaravelPulse\Widgets\PulseExceptions;
 use Dotswan\FilamentLaravelPulse\Widgets\PulseQueues;
@@ -31,6 +30,9 @@ class Pulse extends Dashboard
     protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
 
     protected static ?string $navigationLabel = 'Laravel Pulse';
+
+    protected static ?string $title = 'Laravel Pulse';
+
 
     public function getColumns(): int|string|array
     {
