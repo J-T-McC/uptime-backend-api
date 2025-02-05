@@ -23,6 +23,10 @@
             .fi-sidebar {
                 position: sticky;
             }
+
+            nav .fi-icon-btn-icon {
+                display: none;
+            }
         }
     </style>
 </x-pulse>
