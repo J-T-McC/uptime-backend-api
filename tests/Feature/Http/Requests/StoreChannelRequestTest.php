@@ -9,6 +9,7 @@ class StoreChannelRequestTest extends AuthenticatedTestCase
 {
     /**
      * @test
+     *
      * @covers \App\Http\Requests\StoreChannelRequest::rules
      */
     public function it_validates_store_channels_request()

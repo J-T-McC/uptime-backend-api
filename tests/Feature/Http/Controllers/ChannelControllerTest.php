@@ -15,6 +15,7 @@ class ChannelControllerTest extends AuthenticatedTestCase
 
     /**
      * @test
+     *
      * @covers ::destroy
      */
     public function it_deletes_channels()
@@ -29,6 +30,7 @@ class ChannelControllerTest extends AuthenticatedTestCase
 
     /**
      * @test
+     *
      * @covers ::index
      */
     public function it_lists_channels()
@@ -43,6 +45,7 @@ class ChannelControllerTest extends AuthenticatedTestCase
 
     /**
      * @test
+     *
      * @covers ::show
      */
     public function it_shows_channels()
@@ -57,13 +60,14 @@ class ChannelControllerTest extends AuthenticatedTestCase
 
     /**
      * @test
+     *
      * @covers ::store
      */
     public function it_stores_channels()
     {
         $response = $this->postJson(route('channels.store'), [
             'type' => 'mail',
-            'endpoint' => $this->faker->safeEmail
+            'endpoint' => $this->faker->safeEmail,
         ]);
 
         $response->assertCreated();
@@ -71,6 +75,7 @@ class ChannelControllerTest extends AuthenticatedTestCase
 
     /**
      * @test
+     *
      * @covers ::update
      */
     public function it_updates_channels()

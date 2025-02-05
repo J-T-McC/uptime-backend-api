@@ -9,6 +9,7 @@ class UpdateChannelRequestTest extends AuthenticatedTestCase
 {
     /**
      * @test
+     *
      * @covers \App\Http\Requests\UpdateChannelRequest::rules
      */
     public function it_validates_update_channels_request()

@@ -9,6 +9,5 @@ readonly class DisplayName
 {
     public function __construct(
         public string $displayName,
-    ) {
-    }
+    ) {}
 }

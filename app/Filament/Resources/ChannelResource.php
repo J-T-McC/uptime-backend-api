@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ChannelResource\Pages;
-use App\Filament\Resources\ChannelResource\RelationManagers;
 use App\Filament\Resources\ChannelResource\RelationManagers\MonitorsRelationManager;
 use App\Models\Channel;
 use Filament\Forms;
@@ -13,7 +12,6 @@ use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ChannelResource extends Resource
 {
@@ -42,7 +40,7 @@ class ChannelResource extends Resource
                 Forms\Components\TextInput::make('endpoint')->readOnly(),
                 Forms\Components\TextInput::make('description')->readOnly(),
                 Forms\Components\Toggle::make('verified')->rules([
-                    'boolean'
+                    'boolean',
                 ])->disabled(),
             ])->columns(1);
     }
@@ -74,7 +72,7 @@ class ChannelResource extends Resource
                     ->sortable(),
                 TextColumn::make('updated_at')
                     ->dateTime()
-                    ->sortable()
+                    ->sortable(),
             ])
             ->filters([
                 //
@@ -84,7 +82,7 @@ class ChannelResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-//                    Tables\Actions\DeleteBulkAction::make(),
+                    //                    Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -100,7 +98,7 @@ class ChannelResource extends Resource
     {
         return [
             'index' => Pages\ListChannels::route('/'),
-//            'create' => Pages\CreateChannel::route('/create'),
+            //            'create' => Pages\CreateChannel::route('/create'),
             'edit' => Pages\EditChannel::route('/{record}/edit'),
         ];
     }

@@ -28,7 +28,7 @@ class VerifyChannelListener
         }
 
         $notification = new VerifyChannel($channel);
-        $notifiable = new AnonymousNotifiable();
+        $notifiable = new AnonymousNotifiable;
         $notifiable->route($channel->type, $channel->endpoint);
 
         DispatchNotification::dispatch($notifiable, $notification);

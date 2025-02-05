@@ -12,9 +12,9 @@ enum CertificateStatus: int
     public static function getStatusFromName(string $name): self
     {
         return [
-                'valid' => self::VALID,
-                'invalid' => self::INVALID,
-                'expired' => self::EXPIRED
-            ][$name] ?? self::UNKNOWN;
+            'valid' => self::VALID,
+            'invalid' => self::INVALID,
+            'expired' => self::EXPIRED,
+        ][$name] ?? self::UNKNOWN;
     }
 }

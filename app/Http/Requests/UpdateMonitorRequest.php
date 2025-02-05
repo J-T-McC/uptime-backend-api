@@ -27,12 +27,12 @@ class UpdateMonitorRequest extends FormRequest
                 Rule::unique('monitors')
                     ->where('user_id', $this->user()?->id)
                     ->where('url', $this->input('url'))
-                    ->whereNot('id', (string)$monitor->id),
-                'active_url'
+                    ->whereNot('id', (string) $monitor->id),
+                'active_url',
             ],
             'certificate_check_enabled' => 'boolean',
             'look_for_string' => 'string|nullable',
-            'uptime_check_enabled' => 'boolean'
+            'uptime_check_enabled' => 'boolean',
         ];
     }
 }

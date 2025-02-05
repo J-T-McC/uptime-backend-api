@@ -17,11 +17,10 @@ class VerifyChannel extends Notification
     use Queueable;
 
     protected const string TITLE_TEXT = 'New Uptime Channel Created';
+
     protected const string ACTION_TEXT = 'Verify Channel';
 
-    public function __construct(public readonly Channel $channel)
-    {
-    }
+    public function __construct(public readonly Channel $channel) {}
 
     /**
      * Get the notification's delivery channels.
@@ -38,7 +37,7 @@ class VerifyChannel extends Notification
      */
     public function toMail(): MailMessage
     {
-        return (new MailMessage())
+        return (new MailMessage)
             ->subject(static::TITLE_TEXT)
             ->line($this->getMessageText())
             ->action(static::ACTION_TEXT, $this->getVerifyUrl());
@@ -46,7 +45,7 @@ class VerifyChannel extends Notification
 
     public function toDiscord(): DiscordMessage
     {
-        return (new DiscordMessage())
+        return (new DiscordMessage)
             ->success()
             ->title(static::TITLE_TEXT)
             ->description([
@@ -58,7 +57,7 @@ class VerifyChannel extends Notification
 
     public function toSlack(): SlackMessage
     {
-        return (new SlackMessage())
+        return (new SlackMessage)
             ->success()
             ->attachment(function (SlackAttachment $attachment) {
                 $attachment
@@ -78,7 +77,7 @@ class VerifyChannel extends Notification
 
     public function getVerifyUrl(): string
     {
-        $url = (new CreateSignedVerifyChannelUrl())->handle($this->channel);
+        $url = (new CreateSignedVerifyChannelUrl)->handle($this->channel);
 
         return str_replace(config('app.url'), config('app.spa_url'), $url);
     }

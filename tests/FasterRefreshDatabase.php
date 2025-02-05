@@ -16,11 +16,12 @@ trait FasterRefreshDatabase
 
     /**
      * Only migrates fresh if necessary
+     *
      * @return void
      */
     protected function refreshTestDatabase()
     {
-        if (!RefreshDatabaseState::$migrated) {
+        if (! RefreshDatabaseState::$migrated) {
             $this->runMigrationsIfNecessary();
 
             $this->app[Kernel::class]->setArtisan(null);
@@ -98,7 +99,7 @@ trait FasterRefreshDatabase
 
     private function identicalChecksum(): bool
     {
-        if (!$this->isChecksumExists()) {
+        if (! $this->isChecksumExists()) {
             return false;
         }
 

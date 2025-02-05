@@ -14,7 +14,7 @@ class CertificateCheckFailed extends SpatieCertificateCheckFailed
     /**
      * Get the notification's delivery channels.
      *
-     * @param mixed $notifiable
+     * @param  mixed  $notifiable
      * @return array<int, string>
      */
     public function via($notifiable): array
@@ -24,7 +24,7 @@ class CertificateCheckFailed extends SpatieCertificateCheckFailed
 
     public function toDiscord(): DiscordMessage
     {
-        return (new  DiscordMessage())
+        return (new DiscordMessage)
             ->error()
             ->title($this->getMessageText())
             ->description([

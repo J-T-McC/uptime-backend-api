@@ -12,9 +12,9 @@ enum UptimeStatus: int
     public static function getStatusFromName(string $name): self
     {
         return [
-                'up' => self::ONLINE,
-                'recovered' => self::RECOVERED,
-                'down' => self::OFFLINE,
-            ][$name] ?? self::UNKNOWN;
+            'up' => self::ONLINE,
+            'recovered' => self::RECOVERED,
+            'down' => self::OFFLINE,
+        ][$name] ?? self::UNKNOWN;
     }
 }

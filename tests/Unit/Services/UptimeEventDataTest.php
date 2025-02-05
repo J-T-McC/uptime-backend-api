@@ -2,9 +2,9 @@
 
 namespace Tests\Unit\Services;
 
-use Carbon\Carbon;
-use App\Services\UptimeEventData;
 use App\Models\MonitorUptimeEventCount;
+use App\Services\UptimeEventData;
+use Carbon\Carbon;
 use Tests\TestCase;
 
 /**
@@ -18,21 +18,21 @@ class UptimeEventDataTest extends TestCase
     public function generates_correct_aggregate_trended()
     {
         $this->seedTrendData();
-        $uptimeEventData = new UptimeEventData();
+        $uptimeEventData = new UptimeEventData;
         $trended = $uptimeEventData->trended();
 
         $expectedResults = [
-            'Jan 1st' => "97.2917",
-            'Jan 2nd' => "69.4444",
-            'Jan 3rd' => "27.7778",
-            'Jan 5th' => "100.0000",
-            'Jan 6th' => "99.9306",
-            'Jan 7th' => "0.0000",
-            'Jan 8th' => "65.2778",
-            'Jan 9th' => "69.4444",
+            'Jan 1st' => '97.2917',
+            'Jan 2nd' => '69.4444',
+            'Jan 3rd' => '27.7778',
+            'Jan 5th' => '100.0000',
+            'Jan 6th' => '99.9306',
+            'Jan 7th' => '0.0000',
+            'Jan 8th' => '65.2778',
+            'Jan 9th' => '69.4444',
         ];
 
-        $trended->each(fn($series) => $this->assertTrue($series->percent === $expectedResults[$series->category]));
+        $trended->each(fn ($series) => $this->assertTrue($series->percent === $expectedResults[$series->category]));
     }
 
     /**
@@ -41,15 +41,15 @@ class UptimeEventDataTest extends TestCase
     public function generates_correct_aggregate_90days()
     {
         $this->seed90DayData();
-        $uptimeEventData = new UptimeEventData();
+        $uptimeEventData = new UptimeEventData;
         $results = $uptimeEventData->past90Days();
 
         $expectedResults = [
-            'Down' => "0.0694",
-            'Up' => "99.9306",
+            'Down' => '0.0694',
+            'Up' => '99.9306',
         ];
 
-        $results->each(fn($series) => $this->assertTrue($series->percent === $expectedResults[$series->category]));
+        $results->each(fn ($series) => $this->assertTrue($series->percent === $expectedResults[$series->category]));
     }
 
     public function seed90DayData()
@@ -68,7 +68,7 @@ class UptimeEventDataTest extends TestCase
     public function seedTrendData()
     {
         $seedData = [
-            //73.6285
+            // 73.6285
             '2020-01-01' => [
                 'up' => 1400,
                 'down' => 39,
@@ -90,7 +90,7 @@ class UptimeEventDataTest extends TestCase
                 'recovered' => 0,
             ],
 
-            //58.6632
+            // 58.6632
             '2020-01-06' => [
                 'up' => 1438,
                 'down' => 1,
@@ -115,7 +115,7 @@ class UptimeEventDataTest extends TestCase
 
         foreach ($seedData as $date => $counts) {
             MonitorUptimeEventCount::factory()->create(array_merge([
-                'filter_date' => $date
+                'filter_date' => $date,
             ], $counts));
         }
     }

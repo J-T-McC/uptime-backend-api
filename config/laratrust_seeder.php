@@ -1,6 +1,5 @@
 <?php
 
-
 use App\Enums\CrudAction;
 use App\Enums\Permission;
 use App\Enums\Role;
@@ -31,6 +30,6 @@ return [
         Role::ADMIN->value => [
             Permission::ACCESS_ADMINISTRATION_PANEL->value,
             Permission::ACCESS_PULSE_PANEL->value,
-        ]
+        ],
     ],
 ];

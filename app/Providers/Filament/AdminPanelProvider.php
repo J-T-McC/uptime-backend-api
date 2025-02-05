@@ -3,8 +3,6 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Pages\Pulse;
-use App\Filament\Pages\PulseStatistics;
-use App\Filament\Widgets\LaravelPulseLink;
 use Closure;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;

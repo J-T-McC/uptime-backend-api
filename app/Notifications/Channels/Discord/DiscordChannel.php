@@ -13,22 +13,20 @@ use Illuminate\Notifications\Notification;
 class DiscordChannel
 {
     /**
-     * @param User|AnonymousNotifiable $notifiable
-     * @param Notification $notification
      * @throws InvalidChanelException
      * @throws GuzzleException
      */
     public function send(User|AnonymousNotifiable $notifiable, Notification $notification): void
     {
-        if (!$route = $notifiable->routeNotificationFor('discord')) {
+        if (! $route = $notifiable->routeNotificationFor('discord')) {
             return;
         }
 
-        if (!method_exists($notification, 'toDiscord')) {
-            throw new InvalidChanelException();
+        if (! method_exists($notification, 'toDiscord')) {
+            throw new InvalidChanelException;
         }
 
-        (new Client())->post($route, [
+        (new Client)->post($route, [
             RequestOptions::JSON => $notification->toDiscord()->toArray(),
         ]);
     }

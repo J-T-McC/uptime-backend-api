@@ -10,16 +10,16 @@ trait HasHashedId
 {
     public function resolveRouteBindingQuery($query, $value, $field = null): Builder
     {
-        return parent::resolveRouteBindingQuery($query, (new HashId())->decode($value), $field);
+        return parent::resolveRouteBindingQuery($query, (new HashId)->decode($value), $field);
     }
 
     /**
      * @return Attribute<string, never>
-    */
+     */
     public function hashId(): Attribute
     {
         return Attribute::make(
-            get: fn () => (new HashId())->encode($this->id),
+            get: fn () => (new HashId)->encode($this->id),
         );
     }
 }

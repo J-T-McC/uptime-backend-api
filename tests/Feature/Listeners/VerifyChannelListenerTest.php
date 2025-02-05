@@ -29,7 +29,9 @@ class VerifyChannelListenerTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider typeProvider
+     *
      * @covers ::handle
      */
     public function it_dispatches_notification_to_expected_channel_upon_channel_created_event(string $channelType): void
@@ -41,14 +43,14 @@ class VerifyChannelListenerTest extends TestCase
             'type' => $channelType,
         ]);
         $event = new ChannelCreated($channel);
-        $listener = new VerifyChannelListener();
+        $listener = new VerifyChannelListener;
 
         // Act
         $listener->handle($event);
 
         // Assert
         Notification::assertSentTo(
-            notifiable: [(new AnonymousNotifiable())],
+            notifiable: [(new AnonymousNotifiable)],
             notification: VerifyChannel::class,
             callback: function ($notification, $channels, $notifiable) use ($channelType, $channel) {
                 return count($notifiable->routes) === 1 && $notifiable->routes[$channelType] === $channel->endpoint;
@@ -58,7 +60,9 @@ class VerifyChannelListenerTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider typeProvider
+     *
      * @covers ::handle
      */
     public function it_dispatches_notification_to_expected_channel_upon_channel_updated_event(string $channelType): void
@@ -72,7 +76,7 @@ class VerifyChannelListenerTest extends TestCase
         // make the endpoint property dirty
         $channel->endpoint = 'https://example.com/new/endpoint';
         $event = new ChannelUpdated($channel);
-        $listener = new VerifyChannelListener();
+        $listener = new VerifyChannelListener;
 
         // Act
         $listener->handle($event);
@@ -80,7 +84,7 @@ class VerifyChannelListenerTest extends TestCase
         // Assert
         $this->assertFalse($channel->refresh()->verified);
         Notification::assertSentTo(
-            notifiable: [(new AnonymousNotifiable())],
+            notifiable: [(new AnonymousNotifiable)],
             notification: VerifyChannel::class,
             callback: function ($notification, $channels, $notifiable) use ($channelType, $channel) {
                 return count($notifiable->routes) === 1 && $notifiable->routes[$channelType] === $channel->endpoint;
@@ -90,7 +94,9 @@ class VerifyChannelListenerTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider typeProvider
+     *
      * @covers ::handle
      */
     public function it_doesnt_dispatch_notification_upon_channel_updated_event_when_endpoint_unchanged(
@@ -104,7 +110,7 @@ class VerifyChannelListenerTest extends TestCase
         ]);
         // make the endpoint property dirty
         $event = new ChannelUpdated($channel);
-        $listener = new VerifyChannelListener();
+        $listener = new VerifyChannelListener;
 
         // Act
         $listener->handle($event);

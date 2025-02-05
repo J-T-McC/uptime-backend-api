@@ -13,6 +13,7 @@ class MonitorControllerTest extends AuthenticatedTestCase
 {
     /**
      * @test
+     *
      * @covers ::destroy
      */
     public function it_deletes_monitors()
@@ -27,6 +28,7 @@ class MonitorControllerTest extends AuthenticatedTestCase
 
     /**
      * @test
+     *
      * @covers ::index
      */
     public function it_lists_monitors()
@@ -34,7 +36,7 @@ class MonitorControllerTest extends AuthenticatedTestCase
         Monitor::factory()
             ->count(10)
             ->createQuietly(['user_id' => $this->testUser->id])
-            ->each(fn(Monitor $monitor) => $monitor->channels()->sync(
+            ->each(fn (Monitor $monitor) => $monitor->channels()->sync(
                 Channel::factory()->createQuietly(['user_id' => $this->testUser->id])
             ));
 
@@ -46,6 +48,7 @@ class MonitorControllerTest extends AuthenticatedTestCase
 
     /**
      * @test
+     *
      * @covers ::show
      */
     public function it_shows_monitors()
@@ -60,12 +63,13 @@ class MonitorControllerTest extends AuthenticatedTestCase
 
     /**
      * @test
+     *
      * @covers ::store
      */
     public function it_stores_monitors()
     {
         $response = $this->postJson(route('monitors.store'), [
-            'url' => 'http://example.com'
+            'url' => 'http://example.com',
         ]);
 
         $response->assertCreated();
@@ -73,6 +77,7 @@ class MonitorControllerTest extends AuthenticatedTestCase
 
     /**
      * @test
+     *
      * @covers ::update
      */
     public function it_updates_monitors()
@@ -80,7 +85,7 @@ class MonitorControllerTest extends AuthenticatedTestCase
         $monitor = Monitor::factory()->createQuietly();
 
         $response = $this->putJson(route('monitors.update', $monitor), [
-            'url' => 'http://example.com'
+            'url' => 'http://example.com',
         ]);
 
         $response->assertOk();

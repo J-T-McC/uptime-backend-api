@@ -16,17 +16,17 @@ return [
     */
 
     'paths' => [
-      'api/*',
-      'login',
-      'logout',
-      'register',
-      'forgot-password',
-      'reset-password',
-      'user/password',
-      'user/profile-information',
-      'email/verify/*',
-      'email/verification-notification',
-      'sanctum/csrf-cookie'
+        'api/*',
+        'login',
+        'logout',
+        'register',
+        'forgot-password',
+        'reset-password',
+        'user/password',
+        'user/profile-information',
+        'email/verify/*',
+        'email/verification-notification',
+        'sanctum/csrf-cookie',
     ],
 
     'allowed_methods' => ['*'],

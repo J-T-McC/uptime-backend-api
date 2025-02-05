@@ -3,11 +3,11 @@
 namespace Tests;
 
 use EnricoStahn\JsonAssert\AssertClass as JsonAssert;
+use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Testing\TestResponse;
 use JMac\Testing\Traits\AdditionalAssertions;
-use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\ExpectationFailedException;
 
@@ -15,9 +15,9 @@ abstract class TestCase extends BaseTestCase
 {
     use AdditionalAssertions, FasterRefreshDatabase;
 
-    const SCHEMA_ROOT = __DIR__ . '/Schemas/';
+    const SCHEMA_ROOT = __DIR__.'/Schemas/';
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -26,11 +26,6 @@ abstract class TestCase extends BaseTestCase
 
     /**
      * Test form validation rules for a route
-     *
-     * @param string $route
-     * @param array $requestBody
-     * @param string|array $responseKey
-     * @param string $method
      */
     protected function assertRequestRules(
         string $route,
@@ -68,25 +63,19 @@ abstract class TestCase extends BaseTestCase
 
     /**
      * Assert response matches json schema
-     *
-     * @param TestResponse $response
-     * @param string $schema
      */
     protected function assertResponseJson(TestResponse $response, string $schema)
     {
-        JsonAssert::assertJsonMatchesSchema(self::getResponseData($response), self::SCHEMA_ROOT . $schema);
+        JsonAssert::assertJsonMatchesSchema(self::getResponseData($response), self::SCHEMA_ROOT.$schema);
     }
 
     /**
      * Assert response collection matches json schema
-     *
-     * @param TestResponse $response
-     * @param string $schema
      */
     protected function assertResponseCollectionJson(TestResponse $response, string $schema)
     {
         foreach (self::getResponseData($response) as $data) {
-            JsonAssert::assertJsonMatchesSchema($data, self::SCHEMA_ROOT . $schema);
+            JsonAssert::assertJsonMatchesSchema($data, self::SCHEMA_ROOT.$schema);
         }
     }
 

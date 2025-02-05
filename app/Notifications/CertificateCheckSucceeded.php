@@ -14,7 +14,7 @@ class CertificateCheckSucceeded extends SpatieCertificateCheckSucceeded
     /**
      * Get the notification's delivery channels.
      *
-     * @param mixed $notifiable
+     * @param  mixed  $notifiable
      * @return array<int, string>
      */
     public function via($notifiable): array
@@ -24,11 +24,11 @@ class CertificateCheckSucceeded extends SpatieCertificateCheckSucceeded
 
     public function toDiscord(): DiscordMessage
     {
-        return (new  DiscordMessage())
+        return (new DiscordMessage)
             ->success()
             ->title($this->getMessageText())
             ->description([
-                "Expires {$this->getMonitor()->formattedCertificateExpirationDate('forHumans')}"
+                "Expires {$this->getMonitor()->formattedCertificateExpirationDate('forHumans')}",
             ])
             ->footer($this->getMonitor()->certificate_issuer ?? '')
             ->timestamp(Carbon::now());

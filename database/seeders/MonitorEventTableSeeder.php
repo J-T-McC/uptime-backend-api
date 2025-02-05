@@ -2,10 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
-
-use App\Models\Monitor;
 use App\Models\MonitorEvent;
+use Illuminate\Database\Seeder;
 
 class MonitorEventTableSeeder extends Seeder
 {

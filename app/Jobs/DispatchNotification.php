@@ -18,9 +18,7 @@ class DispatchNotification implements ShouldQueue
     use Queueable;
     use SerializesModels;
 
-    public function __construct(private Notifiable|AnonymousNotifiable $notifiable, private Notification $notification)
-    {
-    }
+    public function __construct(private Notifiable|AnonymousNotifiable $notifiable, private Notification $notification) {}
 
     public function handle(): void
     {

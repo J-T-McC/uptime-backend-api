@@ -13,7 +13,6 @@ class MonitorEventResource extends JsonResource
     /**
      * Transform the resource collection into an array.
      *
-     * @param Request $request
      * @return array<string, mixed>
      */
     public function toArray(Request $request)
@@ -26,7 +25,7 @@ class MonitorEventResource extends JsonResource
                 UptimeStatus::from($this->status)->name,
             'error' => $this->error,
             'created_at' => $this->created_at,
-            'monitor' => new MonitorResource($this->monitor)
+            'monitor' => new MonitorResource($this->monitor),
         ];
     }
 }

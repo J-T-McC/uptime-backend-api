@@ -7,13 +7,19 @@ use Carbon\Carbon;
 class DiscordMessage
 {
     const COLOR_SUCCESS = '0B6623';
+
     const COLOR_WARNING = 'FD6A02';
+
     const COLOR_ERROR = 'ED2939';
 
     protected ?string $title = null;
+
     protected ?string $description = null;
+
     protected ?string $timestamp = null;
+
     protected ?string $footer = null;
+
     protected ?string $color = null;
 
     public function title(string $title): self
@@ -24,12 +30,12 @@ class DiscordMessage
     }
 
     /**
-     * @param array<int, string>|string $descriptionLines
+     * @param  array<int, string>|string  $descriptionLines
      * @return $this
      */
     public function description(array|string $descriptionLines): self
     {
-        if (!is_array($descriptionLines)) {
+        if (! is_array($descriptionLines)) {
             $descriptionLines = [$descriptionLines];
         }
 

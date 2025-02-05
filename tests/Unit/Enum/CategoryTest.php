@@ -11,7 +11,7 @@ class CategoryTest extends TestCase
 
     const expected = [
         'UPTIME' => 1,
-        'CERTIFICATE' => 2
+        'CERTIFICATE' => 2,
     ];
 
     const model = Category::class;

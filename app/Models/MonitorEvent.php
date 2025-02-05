@@ -16,13 +16,14 @@ class MonitorEvent extends Model
 {
     /** @use HasFactory<MonitorEventFactory> */
     use HasFactory;
+
     use HasHashedId;
 
     protected $fillable = [
         'category',
         'status',
         'error',
-        'user_id'
+        'user_id',
     ];
 
     /**
@@ -42,8 +43,7 @@ class MonitorEvent extends Model
     }
 
     /**
-     * @param Builder<$this> $query
-     * @param Monitor|null $monitor
+     * @param  Builder<$this>  $query
      * @return Builder<$this>
      */
     public function scopeMonitorFilter(Builder $query, ?Monitor $monitor = null): Builder
@@ -52,7 +52,7 @@ class MonitorEvent extends Model
     }
 
     /**
-     * @param Builder<$this> $query
+     * @param  Builder<$this>  $query
      * @return Builder<$this>
      */
     public function scopeUptime(Builder $query): Builder
@@ -61,7 +61,7 @@ class MonitorEvent extends Model
     }
 
     /**
-     * @param Builder<$this> $query
+     * @param  Builder<$this>  $query
      * @return Builder<$this>
      */
     public function scopeCertificate(Builder $query): Builder
@@ -70,7 +70,7 @@ class MonitorEvent extends Model
     }
 
     /**
-     * @param Builder<$this> $query
+     * @param  Builder<$this>  $query
      * @return Builder<$this>
      */
     public function scopeApplyStatusRequirements(Builder $query): Builder

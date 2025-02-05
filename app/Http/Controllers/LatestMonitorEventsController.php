@@ -9,9 +9,6 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class LatestMonitorEventsController extends Controller
 {
-    /**
-     * @return AnonymousResourceCollection
-     */
     public function index(): AnonymousResourceCollection
     {
         return MonitorEventResource::collection(
@@ -25,9 +22,6 @@ class LatestMonitorEventsController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @param Monitor $monitor
-     * @return AnonymousResourceCollection
      */
     public function show(Monitor $monitor): AnonymousResourceCollection
     {

@@ -54,7 +54,7 @@ class MonitorEventSubscriber
             'category' => Category::CERTIFICATE,
             'status' => CertificateStatus::getStatusFromName($event->monitor->certificate_status)->value,
             'error' => $error,
-            'user_id' => $event->monitor->user_id
+            'user_id' => $event->monitor->user_id,
         ]);
     }
 

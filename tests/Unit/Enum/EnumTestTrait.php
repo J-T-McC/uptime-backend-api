@@ -12,12 +12,12 @@ trait EnumTestTrait
         // Collect
         $class = self::model;
         $toMatch = [];
-        foreach($class::cases() as $case) {
+        foreach ($class::cases() as $case) {
             $toMatch[$case->name] = $case->value;
         }
 
         // Assert
-        foreach(static::expected as $name => $value) {
+        foreach (static::expected as $name => $value) {
             $this->assertTrue(empty(array_diff_assoc(static::expected, $toMatch)));
         }
     }

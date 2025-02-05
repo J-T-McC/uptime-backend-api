@@ -18,18 +18,16 @@ class MonitorEventFactory extends Factory
 
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
     public function definition(): array
     {
         return [
             'category' => 1,
-            'status' => !$this->faker->numberBetween(0, 3) ? $this->faker->numberBetween(1, 3) : 1,
+            'status' => ! $this->faker->numberBetween(0, 3) ? $this->faker->numberBetween(1, 3) : 1,
             'monitor_id' => Monitor::factory(),
             'user_id' => User::factory(),
             'error' => $this->faker->realText(100),
-            'created_at' => $this->faker->dateTimeBetween('-90 days', 'now')
+            'created_at' => $this->faker->dateTimeBetween('-90 days', 'now'),
         ];
     }
 }

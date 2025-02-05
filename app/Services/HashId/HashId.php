@@ -24,7 +24,7 @@ readonly class HashId
     public function decode(string $hashId): ?int
     {
         if (is_numeric($hashId)) {
-            return (int)$hashId;
+            return (int) $hashId;
         }
 
         return $this->squid->decode($hashId)[0] ?? null;
