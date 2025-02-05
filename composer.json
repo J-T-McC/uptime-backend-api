@@ -22,6 +22,7 @@
         "spiral/roadrunner-cli": "^2.6.0",
         "spiral/roadrunner-http": "^3.3.0",
         "sqids/sqids": "^0.5.0",
+        "stechstudio/filament-impersonate": "^3.15",
         "symfony/http-client": "^7.1",
         "symfony/mailgun-mailer": "^7.1"
     },

@@ -14,6 +14,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use STS\FilamentImpersonate\Tables\Actions\Impersonate;
 
 class UserResource extends Resource
 {
@@ -80,6 +81,7 @@ class UserResource extends Resource
                 //
             ])
             ->actions([
+                Impersonate::make()->redirectTo(config('app.spa_url')),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
