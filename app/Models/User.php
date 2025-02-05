@@ -91,9 +91,24 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser
         return $this->hasMany(Channel::class);
     }
 
+    /**
+     * Default admin panel permission method for Filament.
+     *
+     * @param Panel $panel
+     * @return bool
+     */
     public function canAccessPanel(Panel $panel): bool
     {
         return $this->isAbleTo(\App\Enums\Permission::ACCESS_ADMINISTRATION_PANEL->value);
+    }
+
+    /**
+     * Define if the user can access the Laravel pulse panel.
+     * @return bool
+     */
+    public function canAccessPulsePanel(): bool
+    {
+        return $this->isAbleTo(\App\Enums\Permission::ACCESS_PULSE_PANEL->value);
     }
 
     public function canPerformCrudAction(CrudAction $action, string $model): bool
