@@ -24,13 +24,11 @@ class AssignRoleToUser extends Command
 
     /**
      * Execute the console command.
-     *
-     *
      */
-    public function handle(  ): void
+    public function handle(): void
     {
-        $roleId = $this->option( 'role-id');
-        $userId = $this->option( 'user-id');
+        $roleId = $this->option('role-id');
+        $userId = $this->option('user-id');
 
         $role = Role::query()->findOrFail($roleId);
         $user = User::query()->findOrFail($userId);
