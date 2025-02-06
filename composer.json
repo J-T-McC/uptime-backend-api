@@ -24,8 +24,15 @@
         "sqids/sqids": "^0.5.0",
         "stechstudio/filament-impersonate": "^3.15",
         "symfony/http-client": "^7.1",
-        "symfony/mailgun-mailer": "^7.1"
+        "symfony/mailgun-mailer": "^7.1",
+        "laravel-notification-channels/pagerduty": "dev-master"
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/J-T-McC/pagerduty"
+        }
+    ],
     "require-dev": {
         "ext-json": "*",
         "brianium/paratest": "^7.1",
@@ -81,7 +88,7 @@
             "@php artisan migrate --graceful --ansi"
         ],
         "lint": [
-            "./vendor/bin/pint --repair",
+            "./vendor/bin/pint",
             "./vendor/bin/phpstan"
         ]
     }

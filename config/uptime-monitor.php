@@ -11,6 +11,7 @@ return [
             'mail',
             'slack',
             \App\Notifications\Channels\Discord\DiscordChannel::class,
+            \NotificationChannels\PagerDuty\PagerDutyChannel::class,
         ],
 
         /*
@@ -20,6 +21,7 @@ return [
             'mail' => '|email',
             'slack' => '|url|active_url',
             'discord' => '|url|active_url',
+            'PagerDuty' => '|string|size:32',
         ],
 
         'notifications' => [
