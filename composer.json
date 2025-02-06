@@ -9,7 +9,7 @@
         "dotswan/filament-laravel-pulse": "^1.1",
         "filament/filament": "^3.2",
         "guzzlehttp/guzzle": "^7.0.1",
-        "jtmcc/atomic-deployments": "^0.4.1",
+        "jtmcc/atomic-deployments": "^1.0.0",
         "laravel/fortify": "^1.7",
         "laravel/framework": "^11.9",
         "laravel/octane": "^2.4",
