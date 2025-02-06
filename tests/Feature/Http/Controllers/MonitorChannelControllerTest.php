@@ -18,16 +18,22 @@ class MonitorChannelControllerTest extends AuthenticatedTestCase
      */
     public function it_associates_channels_with_monitors()
     {
-        $monitor = Monitor::factory()->createQuietly();
+        // Collect
+        $monitor = Monitor::factory()->for($this->testUser)->createQuietly();
 
         $body = [
-            'id['.Channel::factory()->createQuietly()->id.']' => true,
-            'id['.Channel::factory()->createQuietly()->id.']' => true,
-            'id['.Channel::factory()->createQuietly()->id.']' => true,
+            Channel::factory()->for($this->testUser)->createQuietly()->hashId => true,
+            Channel::factory()->for($this->testUser)->createQuietly()->hashId => true,
+            Channel::factory()->for($this->testUser)->createQuietly()->hashId => true,
+            Channel::factory()->for($this->testUser)->createQuietly()->hashId => false,
+            Channel::factory()->createQuietly()->hashId => false,
         ];
 
+        // Act
         $response = $this->putJson(route('monitors-channels.update', $monitor), $body);
 
+        // Assert
         $response->assertNoContent();
+        $this->assertCount(3, $monitor->channels);
     }
 }

@@ -45,7 +45,7 @@ return [
          * To keep reminding you that a site is down, notifications
          * will be resent every given number of minutes.
          */
-        'resend_uptime_check_failed_notification_every_minutes' => 30,
+        'resend_uptime_check_failed_notification_every_minutes' => 1,
 
         /*
          * The date format used in notifications.
@@ -78,20 +78,20 @@ return [
          * monitors concurrently. Set this to a lower value if you're getting weird errors
          * running the uptime check.
          */
-        'concurrent_checks' => 10,
+        'concurrent_checks' => 15,
 
         /*
          * The uptime check for a monitor will fail if the url does not respond after the
          * given number of seconds.
          */
-        'timeout_per_site' => 10,
+        'timeout_per_site' => 30,
 
         /*
          * Because networks can be a bit unreliable the package can make three attempts
          * to connect to a server in one uptime check. You can specify the time in
          * milliseconds between each attempt.
          */
-        'retry_connection_after_milliseconds' => 100,
+        'retry_connection_after_milliseconds' => 500,
 
         /*
          * If you want to change the default Guzzle client behaviour, you can do so by
