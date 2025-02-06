@@ -45,7 +45,7 @@ return [
          * To keep reminding you that a site is down, notifications
          * will be resent every given number of minutes.
          */
-        'resend_uptime_check_failed_notification_every_minutes' => 1,
+        'resend_uptime_check_failed_notification_every_minutes' => 30,
 
         /*
          * The date format used in notifications.
