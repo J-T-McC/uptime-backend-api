@@ -2,9 +2,13 @@
 
 namespace App\Notifications;
 
+use App\Actions\GetPagerDutyDedupKey;
+use App\Enums\Category;
+use App\Enums\PagerDutySeverity;
 use App\Notifications\Channels\Discord\DiscordMessage;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
+use NotificationChannels\PagerDuty\PagerDutyMessage;
 use Spatie\UptimeMonitor\Notifications\Notifications\CertificateExpiresSoon as SpatieCertificateExpiresSoon;
 
 class CertificateExpiresSoon extends SpatieCertificateExpiresSoon
@@ -28,9 +32,26 @@ class CertificateExpiresSoon extends SpatieCertificateExpiresSoon
             ->error()
             ->title($this->getMessageText())
             ->description([
-                $this->getMonitor()->certificate_check_failure_reason ?? 'No reason provided',
+                "Expires {$this->getMonitor()->formattedCertificateExpirationDate('forHumans')}",
             ])
             ->footer($this->getMonitor()->certificate_issuer ?? '')
             ->timestamp(Carbon::now());
+    }
+
+    public function toPagerDuty(mixed $notifiable): PagerDutyMessage
+    {
+        $dedupKey = app(GetPagerDutyDedupKey::class)->handle(
+            monitor: $this->getMonitor(),
+            category: Category::CERTIFICATE
+        );
+
+        return PagerDutyMessage::create()
+            ->setDedupKey($dedupKey)
+            ->setTimestamp(Carbon::now())
+            ->setSource($this->getMonitor()->url ?? config('app.url'))
+            ->setSeverity(PagerDutySeverity::INFO->value)
+            ->setSummary("SSL certificate for {$this->getMonitor()->url} expires soon")
+            ->addCustomDetail('message', "Expires {$this->getMonitor()->formattedCertificateExpirationDate('forHumans')}")
+            ->addCustomDetail('certificate_issuer', $this->getMonitor()->certificate_issuer ?? '');
     }
 }

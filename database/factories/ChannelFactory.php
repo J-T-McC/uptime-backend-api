@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Channel;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 class ChannelFactory extends Factory
 {
@@ -38,6 +39,7 @@ class ChannelFactory extends Factory
             'mail' => $this->faker->safeEmail,
             'slack' => $this->faker->url,
             'discord' => $this->faker->url,
+            'PagerDuty' => Str::random(32),
         ];
     }
 }

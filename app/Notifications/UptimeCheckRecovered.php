@@ -2,9 +2,13 @@
 
 namespace App\Notifications;
 
+use App\Actions\GetPagerDutyDedupKey;
+use App\Enums\Category;
+use App\Enums\PagerDutySeverity;
 use App\Notifications\Channels\Discord\DiscordMessage;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
+use NotificationChannels\PagerDuty\PagerDutyMessage;
 use Spatie\UptimeMonitor\Notifications\Notifications\UptimeCheckRecovered as SpatieUptimeCheckRecovered;
 
 class UptimeCheckRecovered extends SpatieUptimeCheckRecovered
@@ -32,5 +36,22 @@ class UptimeCheckRecovered extends SpatieUptimeCheckRecovered
             ])
             ->footer($this->getLocationDescription())
             ->timestamp(Carbon::now());
+    }
+
+    public function toPagerDuty(mixed $notifiable): PagerDutyMessage
+    {
+        $dedupKey = app(GetPagerDutyDedupKey::class)->handle(
+            monitor: $this->getMonitor(),
+            category: Category::CERTIFICATE
+        );
+
+        return PagerDutyMessage::create()
+            ->setDedupKey($dedupKey)
+            ->setTimestamp(Carbon::now())
+            ->setSource($this->getMonitor()->url ?? config('app.url'))
+            ->setSeverity(PagerDutySeverity::INFO->value)
+            ->setSummary($this->getMessageText())
+            ->setTimestamp(Carbon::now())
+            ->resolve();
     }
 }
