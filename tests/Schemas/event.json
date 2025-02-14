@@ -10,7 +10,15 @@
             "$ref": "#/$defs/Category"
         },
         "status": {
-            "$ref": "#/$defs/CertificateOrUptimeStatus"
+            "type": "string",
+            "anyOf": [
+                {
+                    "$ref": "monitor.json#/$defs/UptimeStatus"
+                },
+                {
+                    "$ref": "monitor.json#/$defs/CertificateStatus"
+                }
+            ]
         },
         "error": {
             "type": "string"
@@ -42,16 +50,6 @@
             "enum": [
                 "UPTIME",
                 "CERTIFICATE"
-            ]
-        },
-        "CertificateOrUptimeStatus": {
-            "type": "string",
-            "enum": [
-                "not yet checked",
-                "up",
-                "down",
-                "valid",
-                "invalid"
             ]
         }
     }
