@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "Monitor",
     "type": "object",
     "properties": {
@@ -7,34 +7,53 @@
             "type": "string"
         },
         "url": {
-            "type": "string"
+            "type": "string",
+            "format": "uri"
         },
         "uptime_check_enabled": {
-            "type": "boolean"
+            "type": "boolean",
+            "default": true
         },
         "look_for_string": {
-            "type": [
-                "null",
-                "string"
+            "oneOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
             ]
         },
         "uptime_status": {
-            "type": "string"
+            "$ref": "#/$defs/UptimeStatus"
         },
         "certificate_check_enabled": {
-            "type": "boolean"
+            "type": "boolean",
+            "default": false
         },
         "certificate_status": {
-            "type": "string"
+            "$ref": "#/$defs/CertificateStatus"
+        },
+        "created_at": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "updated_at": {
+            "type": "string",
+            "format": "date-time"
         },
         "channels": {
-            "type": [
-                "array",
-                "null"
-            ],
-            "items": {
-                "$ref": "channel.json"
-            }
+            "oneOf": [
+                {
+                    "type": "array",
+                    "items": {
+                        "$ref": "channel.json"
+                    }
+                },
+                {
+                    "type": "null"
+                }
+            ]
         }
     },
     "required": [
@@ -42,6 +61,27 @@
         "url",
         "uptime_check_enabled",
         "uptime_status",
-        "certificate_check_enabled"
-    ]
+        "certificate_check_enabled",
+        "certificate_status",
+        "created_at",
+        "updated_at"
+    ],
+    "$defs": {
+        "UptimeStatus": {
+            "type": "string",
+            "enum": [
+                "not yet checked",
+                "up",
+                "down"
+            ]
+        },
+        "CertificateStatus": {
+            "type": "string",
+            "enum": [
+                "not yet checked",
+                "valid",
+                "invalid"
+            ]
+        }
+    }
 }

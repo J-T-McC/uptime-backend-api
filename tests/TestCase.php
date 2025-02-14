@@ -2,7 +2,6 @@
 
 namespace Tests;
 
-use EnricoStahn\JsonAssert\AssertClass as JsonAssert;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Notification;
@@ -10,6 +9,8 @@ use Illuminate\Testing\TestResponse;
 use JMac\Testing\Traits\AdditionalAssertions;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\ExpectationFailedException;
+use Swaggest\JsonSchema\Schema;
+use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -64,18 +65,30 @@ abstract class TestCase extends BaseTestCase
     /**
      * Assert response matches json schema
      */
-    protected function assertResponseJson(TestResponse $response, string $schema)
+    protected function assertResponseJson(TestResponse $response, string $schema): void
     {
-        JsonAssert::assertJsonMatchesSchema(self::getResponseData($response), self::SCHEMA_ROOT.$schema);
+        if (! file_exists(self::SCHEMA_ROOT.$schema)) {
+            throw new FileNotFoundException($schema);
+        }
+
+        $schema = Schema::import(self::SCHEMA_ROOT.$schema);
+
+        $schema->in(self::getResponseData($response));
     }
 
     /**
      * Assert response collection matches json schema
      */
-    protected function assertResponseCollectionJson(TestResponse $response, string $schema)
+    protected function assertResponseCollectionJson(TestResponse $response, string $schema): void
     {
+        if (! file_exists(self::SCHEMA_ROOT.$schema)) {
+            throw new FileNotFoundException($schema);
+        }
+
+        $schema = Schema::import(self::SCHEMA_ROOT.$schema);
+
         foreach (self::getResponseData($response) as $data) {
-            JsonAssert::assertJsonMatchesSchema($data, self::SCHEMA_ROOT.$schema);
+            $schema->in($data);
         }
     }
 
