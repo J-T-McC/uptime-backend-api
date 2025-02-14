@@ -20,6 +20,8 @@ class ChannelResource extends JsonResource
             'endpoint' => $this->endpoint,
             'type' => $this->type,
             'verified' => $this->verified,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
             'pivot' => $this->when($this->pivot, $this->pivot),
         ];
     }

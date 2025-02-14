@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "Event",
     "type": "object",
     "properties": {
@@ -7,16 +7,29 @@
             "type": "string"
         },
         "category": {
-            "type": "string"
+            "$ref": "#/$defs/Category"
         },
         "status": {
-            "type": "string"
+            "type": "string",
+            "anyOf": [
+                {
+                    "$ref": "monitor.json#/$defs/UptimeStatus"
+                },
+                {
+                    "$ref": "monitor.json#/$defs/CertificateStatus"
+                }
+            ]
         },
         "error": {
             "type": "string"
         },
         "created_at": {
-            "type": "string"
+            "type": "string",
+            "format": "date-time"
+        },
+        "updated_at": {
+            "type": "string",
+            "format": "date-time"
         },
         "monitor": {
             "type": "object",
@@ -30,5 +43,14 @@
         "error",
         "created_at",
         "monitor"
-    ]
+    ],
+    "$defs": {
+        "Category": {
+            "type": "string",
+            "enum": [
+                "UPTIME",
+                "CERTIFICATE"
+            ]
+        }
+    }
 }
