@@ -21,6 +21,7 @@ class ChannelTableSeeder extends Seeder
             'user_id' => 1,
             'endpoint' => 'test1@example.com',
             'description' => 'Primary ticket inbox',
+            'verified' => 1,
         ]);
 
         $mailChannel2 = Channel::query()->firstOrCreate([
@@ -28,6 +29,7 @@ class ChannelTableSeeder extends Seeder
             'user_id' => 1,
             'endpoint' => 'test2@example.com',
             'description' => 'Personal inbox',
+            'verified' => 1,
         ]);
 
         $slackChannel = Channel::query()->firstOrCreate([
@@ -49,20 +51,25 @@ class ChannelTableSeeder extends Seeder
         $notFound = Monitor::query()->find(3);
         $sslExpired = Monitor::query()->find(4);
 
-        $online->channels()->attach($mailChannel1);
+        $online->channels()->sync($mailChannel1);
 
-        $offline->channels()->attach($mailChannel1);
-        $offline->channels()->attach($slackChannel);
-        $offline->channels()->attach($discordChannel);
+        $offline->channels()->sync([
+            $mailChannel1,
+            $slackChannel,
+            $discordChannel,
+        ]);
 
-        $notFound->channels()->attach($mailChannel1);
-        $notFound->channels()->attach($mailChannel2);
-        $notFound->channels()->attach($slackChannel);
-        $notFound->channels()->attach($discordChannel);
+        $notFound->channels()->sync([
+            $mailChannel1,
+            $mailChannel2,
+            $slackChannel,
+            $discordChannel,
+        ]);
 
-        $sslExpired->channels()->attach($mailChannel1);
-        $sslExpired->channels()->attach($slackChannel);
-        $sslExpired->channels()->attach($discordChannel);
-
+        $sslExpired->channels()->sync([
+            $mailChannel1,
+            $slackChannel,
+            $discordChannel,
+        ]);
     }
 }

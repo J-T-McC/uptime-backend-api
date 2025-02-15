@@ -17,6 +17,7 @@ class LocalDatabaseSeeder extends Seeder
             MonitorTableSeeder::class,
             ChannelTableSeeder::class,
             MonitorEventTableSeeder::class,
+            MonitorUptimeEventCountTableSeeder::class,
         ]);
     }
 }
