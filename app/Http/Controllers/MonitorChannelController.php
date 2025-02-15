@@ -15,6 +15,7 @@ class MonitorChannelController extends Controller
     public function update(Request $request, Monitor $monitor): Response
     {
         $channelsToAttach = [];
+
         foreach ($request->all() as $input => $value) {
             if ($value) {
                 $channelsToAttach[] = (new HashId)->decode($input);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Monitor;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -9,6 +10,8 @@ class MonitorResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
+     *
+     * @mixin Monitor
      *
      * @return array<string, mixed>
      */

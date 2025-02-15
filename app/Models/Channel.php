@@ -63,6 +63,6 @@ class Channel extends Model
      */
     public function monitors(): BelongsToMany
     {
-        return $this->belongsToMany(Monitor::class);
+        return $this->belongsToMany(Monitor::class)->withTimestamps();
     }
 }

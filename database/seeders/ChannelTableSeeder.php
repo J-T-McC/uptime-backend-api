@@ -4,50 +4,50 @@ namespace Database\Seeders;
 
 use App\Models\Channel;
 use App\Models\Monitor;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class ChannelTableSeeder extends Seeder
 {
+    use WithoutModelEvents;
+
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
-
-        $mailChannel1 = Channel::create([
+        $mailChannel1 = Channel::query()->firstOrCreate([
             'type' => 'mail',
             'user_id' => 1,
             'endpoint' => 'test1@example.com',
             'description' => 'Primary ticket inbox',
         ]);
 
-        $mailChannel2 = Channel::create([
+        $mailChannel2 = Channel::query()->firstOrCreate([
             'type' => 'mail',
             'user_id' => 1,
             'endpoint' => 'test2@example.com',
             'description' => 'Personal inbox',
         ]);
 
-        $slackChannel = Channel::create([
+        $slackChannel = Channel::query()->firstOrCreate([
             'type' => 'slack',
             'user_id' => 1,
             'endpoint' => env('SLACK_WEBHOOK'),
             'description' => 'Dev team slack room',
         ]);
 
-        $discordChannel = Channel::create([
+        $discordChannel = Channel::query()->firstOrCreate([
             'type' => 'discord',
             'user_id' => 1,
             'endpoint' => env('DISCORD_URL'),
             'description' => 'My alert channel on my gaming discord server',
         ]);
 
-        $online = Monitor::find(1);
-        $offline = Monitor::find(2);
-        $notFound = Monitor::find(3);
-        $sslExpired = Monitor::find(4);
+        $online = Monitor::query()->find(1);
+        $offline = Monitor::query()->find(2);
+        $notFound = Monitor::query()->find(3);
+        $sslExpired = Monitor::query()->find(4);
 
         $online->channels()->attach($mailChannel1);
 

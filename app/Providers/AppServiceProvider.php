@@ -61,6 +61,10 @@ class AppServiceProvider extends ServiceProvider
             return $user->canAccessPulsePanel();
         });
 
+        Gate::define('viewApiDocs', function (User $user) {
+            return true;
+        });
+
         $this->registerRateLimiters();
     }
 

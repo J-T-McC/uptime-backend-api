@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Crypt;
 
 class VerifyChannelController extends Controller
 {
+    /**
+     * Channel Verification.
+     *
+     * Verify the channel via the encrypted channel ID and hashed endpoint.
+     */
     public function __invoke(VerifyChannelRequest $request): Response
     {
         /** @var string $encryptedChannelId */
