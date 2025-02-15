@@ -39,7 +39,7 @@ class Monitor extends SpatieMonitor
      */
     public function channels(): BelongsToMany
     {
-        return $this->belongsToMany(Channel::class);
+        return $this->belongsToMany(Channel::class)->withTimestamps();
     }
 
     /**

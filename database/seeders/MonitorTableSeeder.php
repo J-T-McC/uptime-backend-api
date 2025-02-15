@@ -2,21 +2,21 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\UptimeMonitor\Models\Monitor;
 
 class MonitorTableSeeder extends Seeder
 {
+    use WithoutModelEvents;
+
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
-
         // online
-        Monitor::insertOrIgnore([
+        Monitor::query()->insertOrIgnore([
             'user_id' => 1,
             'url' => 'https://httpstat.us/200',
             'uptime_check_interval_in_minutes' => 1,
@@ -24,7 +24,7 @@ class MonitorTableSeeder extends Seeder
         ]);
 
         // timeout
-        Monitor::insertOrIgnore([
+        Monitor::query()->insertOrIgnore([
             'user_id' => 1,
             'url' => 'https://httpstat.us/524',
             'uptime_check_interval_in_minutes' => 1,
@@ -32,7 +32,7 @@ class MonitorTableSeeder extends Seeder
         ]);
 
         // not found
-        Monitor::insertOrIgnore([
+        Monitor::query()->insertOrIgnore([
             'user_id' => 1,
             'url' => 'https://httpstat.us/404',
             'uptime_check_interval_in_minutes' => 1,
@@ -40,7 +40,7 @@ class MonitorTableSeeder extends Seeder
         ]);
 
         // expired ssl
-        Monitor::insertOrIgnore([
+        Monitor::query()->insertOrIgnore([
             'user_id' => 1,
             'url' => 'https://expired.badssl.com/',
             'uptime_check_interval_in_minutes' => 1,
@@ -48,7 +48,7 @@ class MonitorTableSeeder extends Seeder
         ]);
 
         // online, user 2
-        Monitor::insertOrIgnore([
+        Monitor::query()->insertOrIgnore([
             'user_id' => 2,
             'url' => 'https://httpstat.us/200',
             'uptime_check_interval_in_minutes' => 1,
@@ -56,12 +56,11 @@ class MonitorTableSeeder extends Seeder
         ]);
 
         // online, user 2
-        Monitor::insertOrIgnore([
+        Monitor::query()->insertOrIgnore([
             'user_id' => 2,
             'url' => 'https://httpstat.us/404',
             'uptime_check_interval_in_minutes' => 1,
             'certificate_check_enabled' => 0,
         ]);
-
     }
 }

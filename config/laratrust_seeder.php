@@ -30,6 +30,7 @@ return [
         Role::ADMIN->value => [
             Permission::ACCESS_ADMINISTRATION_PANEL->value,
             Permission::ACCESS_PULSE_PANEL->value,
+//            Permission::ACCESS_OPENAPI_DOCS->value,
         ],
     ],
 ];

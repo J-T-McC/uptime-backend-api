@@ -17,4 +17,8 @@ enum Permission: string
     #[Description('Grants access to the laravel pulse panel')]
     #[DisplayName('Access Pulse Panel')]
     case ACCESS_PULSE_PANEL = 'access_pulse_panel';
+
+    #[Description('Grants access to the openapi docs')]
+    #[DisplayName('Access OpenAPI Docs')]
+    case ACCESS_OPENAPI_DOCS = 'access_openapi_docs';
 }
