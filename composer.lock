@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b6a3b5e4b984575889cc849017efb6b7",
+    "content-hash": "2265a0cc903ce47a1398e687d4422de6",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -2784,16 +2784,16 @@
         },
         {
             "name": "laravel-notification-channels/pagerduty",
-            "version": "dev-master",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/J-T-McC/pagerduty.git",
-                "reference": "3ae192d24b796bafc5f632efaeefe145e4f98527"
+                "url": "https://github.com/laravel-notification-channels/pagerduty.git",
+                "reference": "697248082b29f8b47ca0d20b9fc59d0d44a51828"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/J-T-McC/pagerduty/zipball/3ae192d24b796bafc5f632efaeefe145e4f98527",
-                "reference": "3ae192d24b796bafc5f632efaeefe145e4f98527",
+                "url": "https://api.github.com/repos/laravel-notification-channels/pagerduty/zipball/697248082b29f8b47ca0d20b9fc59d0d44a51828",
+                "reference": "697248082b29f8b47ca0d20b9fc59d0d44a51828",
                 "shasum": ""
             },
             "require": {
@@ -2807,23 +2807,13 @@
                 "mockery/mockery": "^1.6.10",
                 "phpunit/phpunit": "^10.5.35|^11.3.6"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
                     "NotificationChannels\\PagerDuty\\": "src"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "NotificationChannels\\PagerDuty\\Test\\": "tests"
-                }
-            },
-            "scripts": {
-                "test": [
-                    "vendor/bin/phpunit"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -2838,17 +2828,18 @@
             "description": "A Laravel notification channel for sending PagerDuty events.",
             "homepage": "https://github.com/laravel-notification-channels/pagerduty",
             "keywords": [
+                "PagerDuty",
                 "alerting",
                 "laravel",
                 "laravel-package",
                 "notification-channel",
-                "notifications",
-                "pagerduty"
+                "notifications"
             ],
             "support": {
-                "source": "https://github.com/J-T-McC/pagerduty/tree/master"
+                "issues": "https://github.com/laravel-notification-channels/pagerduty/issues",
+                "source": "https://github.com/laravel-notification-channels/pagerduty/tree/1.0.0"
             },
-            "time": "2025-02-06T00:36:26+00:00"
+            "time": "2025-02-19T00:03:08+00:00"
         },
         {
             "name": "laravel/fortify",
@@ -13572,9 +13563,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "laravel-notification-channels/pagerduty": 20
-    },
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
