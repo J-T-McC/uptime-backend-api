@@ -11,7 +11,7 @@
         "filament/filament": "^3.2",
         "guzzlehttp/guzzle": "^7.0.1",
         "jtmcc/atomic-deployments": "^1.0.0",
-        "laravel-notification-channels/pagerduty": "dev-master",
+        "laravel-notification-channels/pagerduty": "^1.0",
         "laravel/fortify": "^1.7",
         "laravel/framework": "^11.9",
         "laravel/octane": "^2.4",
@@ -28,12 +28,6 @@
         "symfony/http-client": "^7.1",
         "symfony/mailgun-mailer": "^7.1"
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/J-T-McC/pagerduty"
-        }
-    ],
     "require-dev": {
         "ext-json": "*",
         "brianium/paratest": "^7.1",
