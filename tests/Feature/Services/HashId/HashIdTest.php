@@ -3,11 +3,10 @@
 namespace Tests\Feature\Services\HashId;
 
 use App\Services\HashId\HashId;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Tests\TestCase;
 
-/**
- * @coversDefaultClass \App\Services\HashId\HashId
- */
+#[CoversClass(HashId::class)]
 class HashIdTest extends TestCase
 {
     protected HashId $hashId;
@@ -20,11 +19,9 @@ class HashIdTest extends TestCase
     }
 
     /**
-     * @test
-     *
-     * @covers ::encode
+     * @see HashId::encode
      */
-    public function it_encodes_an_id(): void
+    public function test_it_encodes_an_id(): void
     {
         // Collect
         $id = 123;
@@ -39,11 +36,9 @@ class HashIdTest extends TestCase
     }
 
     /**
-     * @test
-     *
-     * @covers ::decode
+     * @see HashId::decode
      */
-    public function it_decodes_an_encoded_id(): void
+    public function test_it_decodes_an_encoded_id(): void
     {
         // Collect
         $id = 123;
@@ -58,11 +53,9 @@ class HashIdTest extends TestCase
     }
 
     /**
-     * @test
-     *
-     * @covers ::decode
+     * @see HashId::decode
      */
-    public function it_decodes_a_numeric_string(): void
+    public function test_it_decodes_a_numeric_string(): void
     {
         // Collect
         $numericString = '123';
@@ -76,11 +69,9 @@ class HashIdTest extends TestCase
     }
 
     /**
-     * @test
-     *
-     * @covers ::decode
+     * @see HashId::decode
      */
-    public function it_returns_null_for_invalid_string(): void
+    public function test_it_returns_null_for_invalid_string(): void
     {
         // Collect
         $invalidString = '';

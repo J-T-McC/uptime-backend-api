@@ -4,10 +4,7 @@ namespace Tests\Unit\Enum;
 
 trait EnumTestTrait
 {
-    /**
-     * @test
-     */
-    public function property_names_and_values_have_not_changed()
+    public function test_property_names_and_values_have_not_changed(): void
     {
         // Collect
         $class = self::model;

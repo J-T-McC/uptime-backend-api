@@ -5,19 +5,16 @@ namespace Tests\Feature\Actions;
 use App\Actions\GetPagerDutyDedupKey;
 use App\Enums\Category;
 use App\Models\Monitor;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Tests\TestCase;
 
-/**
- * @coversDefaultClass  \App\Actions\GetPagerDutyDedupKey
- */
+#[CoversClass(GetPagerDutyDedupKey::class)]
 class GetPagerDutyDedupKeyTest extends TestCase
 {
     /**
-     * @test
-     *
-     * @covers ::handle
+     * @see GetPagerDutyDedupKey::handle
      */
-    public function it_returns_dedup_key_for_uptime_category()
+    public function test_it_returns_dedup_key_for_uptime_category(): void
     {
         // Collect
         $monitor = Monitor::factory()->createQuietly();
@@ -31,11 +28,9 @@ class GetPagerDutyDedupKeyTest extends TestCase
     }
 
     /**
-     * @test
-     *
-     * @covers ::handle
+     * @see GetPagerDutyDedupKey::handle
      */
-    public function it_returns_dedup_key_for_certificate_category()
+    public function test_it_returns_dedup_key_for_certificate_category(): void
     {
         // Collect
         $monitor = Monitor::factory()->createQuietly();

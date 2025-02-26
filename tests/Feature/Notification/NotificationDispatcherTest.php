@@ -14,15 +14,15 @@ use Database\Factories\ChannelFactory;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Notification;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Spatie\SslCertificate\SslCertificate;
 use Spatie\UptimeMonitor\Events\CertificateCheckSucceeded;
 use Spatie\UptimeMonitor\Events\UptimeCheckSucceeded;
 use Spatie\UptimeMonitor\Helpers\Period;
 use Tests\TestCase;
 
-/**
- * @see NotificationDispatcher
- */
+#[CoversClass(NotificationDispatcher::class)]
 class NotificationDispatcherTest extends TestCase
 {
     private array $channelTypes;
@@ -35,9 +35,9 @@ class NotificationDispatcherTest extends TestCase
     }
 
     /**
-     * @test
+     * @see NotificationDispatcher::dispatch
      */
-    public function notifies_all_channel_types_on_certificate_check_failed_event()
+    public function test_it_notifies_all_channel_types_on_certificate_check_failed_event()
     {
         $this->checkAllChannelsForNotificationEvent(function ($monitor, $type, $endpoint) {
             $monitor->certificate_status = 'invalid';
@@ -58,9 +58,9 @@ class NotificationDispatcherTest extends TestCase
     }
 
     /**
-     * @test
+     * @see NotificationDispatcher::dispatch
      */
-    public function notifies_all_channel_types_on_certificate_expires_soon_event()
+    public function test_it_notifies_all_channel_types_on_certificate_expires_soon_event()
     {
         Config::set(
             'uptime-monitor.certificate_check.fire_expiring_soon_event_if_certificate_expires_within_days',
@@ -86,9 +86,9 @@ class NotificationDispatcherTest extends TestCase
     }
 
     /**
-     * @test
+     * @see NotificationDispatcher::dispatch
      */
-    public function does_not_notify_any_channel_types_on_certificate_valid_event()
+    public function test_does_not_notify_any_channel_types_on_certificate_valid_event()
     {
         $this->checkAllChannelsForNotificationEvent(function ($monitor) {
             $monitor->certificate_status = 'valid';
@@ -105,9 +105,9 @@ class NotificationDispatcherTest extends TestCase
     }
 
     /**
-     * @test
+     * @see NotificationDispatcher::dispatch
      */
-    public function notifies_all_channel_types_on_uptime_check_failed_event()
+    public function test_it_notifies_all_channel_types_on_uptime_check_failed_event()
     {
         $this->checkAllChannelsForNotificationEvent(function ($monitor, $type, $endpoint) {
             $monitor->uptime_status = 'down';
@@ -128,11 +128,9 @@ class NotificationDispatcherTest extends TestCase
     }
 
     /**
-     * Only dispatch succeeded upon recovery
-     *
-     * @test
+     * @see NotificationDispatcher::dispatch
      */
-    public function does_not_notify_any_channel_types_on_uptime_check_succeeded_event()
+    public function test_it_does_not_notify_any_channel_types_on_uptime_check_succeeded_event()
     {
         $this->checkAllChannelsForNotificationEvent(function ($monitor) {
             // override our faker url with one we know will succeed
@@ -147,9 +145,9 @@ class NotificationDispatcherTest extends TestCase
     }
 
     /**
-     * @test
+     * @see NotificationDispatcher::dispatch
      */
-    public function notifies_all_channel_types_on_uptime_check_recovered_event()
+    public function test_it_notifies_all_channel_types_on_uptime_check_recovered_event()
     {
         $this->checkAllChannelsForNotificationEvent(function ($monitor, $type, $endpoint) {
             $monitor->uptimeCheckFailed('(┛ಠ_ಠ)┛彡┻━┻');
@@ -171,9 +169,9 @@ class NotificationDispatcherTest extends TestCase
     }
 
     /**
-     * @test
+     * @see NotificationDispatcher::dispatch
      */
-    public function it_doesnt_notify_unverified_channels()
+    public function test_it_doesnt_notify_unverified_channels()
     {
         // Collect
         $monitor = Monitor::factory()->createQuietly();
@@ -195,10 +193,8 @@ class NotificationDispatcherTest extends TestCase
         Notification::assertNothingSent();
     }
 
-    /**
-     * Generate a monitors with notification channels to test
-     */
-    public function checkAllChannelsForNotificationEvent($cb)
+    #[CoversNothing]
+    public function checkAllChannelsForNotificationEvent($cb): void
     {
         foreach ($this->channelTypes as $type => $endpoint) {
             Notification::fake();

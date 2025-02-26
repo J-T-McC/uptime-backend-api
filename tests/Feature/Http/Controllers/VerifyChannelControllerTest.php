@@ -3,20 +3,20 @@
 namespace Http\Controllers;
 
 use App\Actions\CreateSignedVerifyChannelUrl;
+use App\Http\Controllers\VerifyChannelController;
+use App\Http\Requests\VerifyChannelRequest;
 use App\Models\Channel;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Tests\AuthenticatedTestCase;
 
-/**
- * @coversDefaultClass  \App\Http\Controllers\VerifyChannelController
- */
+#[CoversClass(VerifyChannelController::class)]
+#[CoversClass(VerifyChannelRequest::class)]
 class VerifyChannelControllerTest extends AuthenticatedTestCase
 {
     /**
-     * @test
-     *
-     * @covers ::__invoke
+     * @see VerifyChannelController::__invoke
      */
-    public function it_verifies_channel()
+    public function test_it_verifies_channel()
     {
         // Collect
         $channel = Channel::factory()->for($this->testUser)->createQuietly([
@@ -35,11 +35,9 @@ class VerifyChannelControllerTest extends AuthenticatedTestCase
     }
 
     /**
-     * @test
-     *
-     * @covers ::__invoke
+     * @see VerifyChannelController::__invoke
      */
-    public function it_fails_verification_if_endpoint_changes()
+    public function test_it_fails_verification_if_endpoint_changes()
     {
         // Collect
         $channel = Channel::factory()->for($this->testUser)->createQuietly([
@@ -59,12 +57,10 @@ class VerifyChannelControllerTest extends AuthenticatedTestCase
     }
 
     /**
-     * @test
-     *
-     * @covers ::__invoke
-     * @covers \App\Http\Requests\VerifyChannelRequest::authorize
+     * @see VerifyChannelController::__invoke
+     * @see VerifyChannelRequest::authorize
      */
-    public function it_rejects_invalid_signature()
+    public function test_it_rejects_invalid_signature()
     {
         // Collect
         $channel = Channel::factory()->for($this->testUser)->createQuietly([

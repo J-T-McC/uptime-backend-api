@@ -10,17 +10,14 @@ use App\Notifications\AnonymousNotifiable;
 use App\Notifications\VerifyChannel;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Notification;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
-/**
- * @coversDefaultClass  \App\Listeners\VerifyChannelListener
- */
+#[CoversClass(VerifyChannelListener::class)]
 class VerifyChannelListenerTest extends TestCase
 {
-    /**
-     * @test
-     */
-    public function it_subscribes_to_channel_events(): void
+    public function test_it_subscribes_to_channel_events(): void
     {
         Event::fake();
         Event::assertListening(ChannelCreated::class, VerifyChannelListener::class);
@@ -28,13 +25,10 @@ class VerifyChannelListenerTest extends TestCase
     }
 
     /**
-     * @test
-     *
-     * @dataProvider typeProvider
-     *
-     * @covers ::handle
+     * @see VerifyChannelListener::handle
      */
-    public function it_dispatches_notification_to_expected_channel_upon_channel_created_event(string $channelType): void
+    #[DataProvider('typeProvider')]
+    public function test_it_dispatches_notification_to_expected_channel_upon_channel_created_event(string $channelType): void
     {
         // Collect
         Notification::fake();
@@ -59,13 +53,10 @@ class VerifyChannelListenerTest extends TestCase
     }
 
     /**
-     * @test
-     *
-     * @dataProvider typeProvider
-     *
-     * @covers ::handle
+     * @see VerifyChannelListener::handle
      */
-    public function it_dispatches_notification_to_expected_channel_upon_channel_updated_event(string $channelType): void
+    #[DataProvider('typeProvider')]
+    public function test_it_dispatches_notification_to_expected_channel_upon_channel_updated_event(string $channelType): void
     {
         // Collect
         Notification::fake();
@@ -93,13 +84,10 @@ class VerifyChannelListenerTest extends TestCase
     }
 
     /**
-     * @test
-     *
-     * @dataProvider typeProvider
-     *
-     * @covers ::handle
+     * @see VerifyChannelListener::handle
      */
-    public function it_doesnt_dispatch_notification_upon_channel_updated_event_when_endpoint_unchanged(
+    #[DataProvider('typeProvider')]
+    public function test_it_doesnt_dispatch_notification_upon_channel_updated_event_when_endpoint_unchanged(
         string $channelType
     ): void {
         // Collect

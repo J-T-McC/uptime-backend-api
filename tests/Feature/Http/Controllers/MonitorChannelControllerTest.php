@@ -2,21 +2,19 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Http\Controllers\MonitorChannelController;
 use App\Models\Channel;
 use App\Models\Monitor;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Tests\AuthenticatedTestCase;
 
-/**
- * @coversDefaultClass  \App\Http\Controllers\MonitorChannelController
- */
+#[CoversClass(MonitorChannelController::class)]
 class MonitorChannelControllerTest extends AuthenticatedTestCase
 {
     /**
-     * @test
-     *
-     * @covers ::update
+     * @see MonitorChannelController::update
      */
-    public function it_associates_channels_with_monitors()
+    public function test_it_associates_channels_with_monitors()
     {
         // Collect
         $monitor = Monitor::factory()->for($this->testUser)->createQuietly();

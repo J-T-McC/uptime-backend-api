@@ -2,20 +2,18 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Http\Controllers\EventCountsTrendedController;
 use App\Models\Monitor;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Tests\AuthenticatedTestCase;
 
-/**
- * @coversDefaultClass  \App\Http\Controllers\EventCountsTrendedController
- */
+#[CoversClass(EventCountsTrendedController::class)]
 class EventCountsTrendedControllerTest extends AuthenticatedTestCase
 {
     /**
-     * @test
-     *
-     * @covers ::index
+     * @see EventCountsTrendedController::index
      */
-    public function it_lists_trended_event_counts()
+    public function test_it_lists_trended_event_counts()
     {
         Monitor::factory()
             ->count(2)
@@ -29,11 +27,9 @@ class EventCountsTrendedControllerTest extends AuthenticatedTestCase
     }
 
     /**
-     * @test
-     *
-     * @covers ::show
+     * @see EventCountsTrendedController::show
      */
-    public function it_lists_trended_event_counts_for_a_monitor()
+    public function test_it_lists_trended_event_counts_for_a_monitor()
     {
         $monitor = Monitor::factory()
             ->hasUptimeEventCounts(10, ['user_id' => $this->testUser->id])

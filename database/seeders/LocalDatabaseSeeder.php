@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Artisan;
 
 class LocalDatabaseSeeder extends Seeder
 {
@@ -19,5 +20,7 @@ class LocalDatabaseSeeder extends Seeder
             MonitorEventTableSeeder::class,
             MonitorUptimeEventCountTableSeeder::class,
         ]);
+
+        Artisan::call('admin:assign-role-to-user --role-id=1 --user-id=1');
     }
 }

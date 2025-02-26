@@ -2,21 +2,19 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Http\Controllers\EventCountsGroupedController;
 use App\Models\Monitor;
 use App\Models\MonitorUptimeEventCount;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Tests\AuthenticatedTestCase;
 
-/**
- * @coversDefaultClass  \App\Http\Controllers\EventCountsGroupedController
- */
+#[CoversClass(EventCountsGroupedController::class)]
 class EventCountsGroupedControllerTest extends AuthenticatedTestCase
 {
     /**
-     * @test
-     *
-     * @covers ::index
+     * @see EventCountsGroupedController::index
      */
-    public function it_lists_event_counts()
+    public function test_it_lists_event_counts()
     {
         MonitorUptimeEventCount::factory()->count(10)->createQuietly(
             ['user_id' => $this->testUser->id, 'filter_date' => now()->subDays(10)->toDateString()]
@@ -29,11 +27,9 @@ class EventCountsGroupedControllerTest extends AuthenticatedTestCase
     }
 
     /**
-     * @test
-     *
-     * @covers ::show
+     * @see EventCountsGroupedController::show
      */
-    public function it_shows_event_counts_for_a_monitor()
+    public function test_it_shows_event_counts_for_a_monitor()
     {
         $monitor = Monitor::factory()
             ->hasUptimeEventCounts(

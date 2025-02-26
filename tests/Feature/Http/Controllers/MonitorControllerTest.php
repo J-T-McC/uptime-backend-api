@@ -2,21 +2,19 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Http\Controllers\MonitorController;
 use App\Models\Channel;
 use App\Models\Monitor;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Tests\AuthenticatedTestCase;
 
-/**
- * @coversDefaultClass  \App\Http\Controllers\MonitorController
- */
+#[CoversClass(MonitorController::class)]
 class MonitorControllerTest extends AuthenticatedTestCase
 {
     /**
-     * @test
-     *
-     * @covers ::destroy
+     * @see MonitorController::destroy
      */
-    public function it_deletes_monitors()
+    public function test_it_deletes_monitors()
     {
         $monitor = Monitor::factory()->createQuietly(['user_id' => $this->testUser->id]);
 
@@ -27,11 +25,9 @@ class MonitorControllerTest extends AuthenticatedTestCase
     }
 
     /**
-     * @test
-     *
-     * @covers ::index
+     * @see MonitorController::index
      */
-    public function it_lists_monitors()
+    public function test_it_lists_monitors()
     {
         Monitor::factory()
             ->count(10)
@@ -47,11 +43,9 @@ class MonitorControllerTest extends AuthenticatedTestCase
     }
 
     /**
-     * @test
-     *
-     * @covers ::show
+     * @see MonitorController::show
      */
-    public function it_shows_monitors()
+    public function test_it_shows_monitors()
     {
         $monitor = Monitor::factory()->createQuietly();
 
@@ -62,11 +56,9 @@ class MonitorControllerTest extends AuthenticatedTestCase
     }
 
     /**
-     * @test
-     *
-     * @covers ::store
+     * @see MonitorController::store
      */
-    public function it_stores_monitors()
+    public function test_it_stores_monitors()
     {
         $response = $this->postJson(route('monitors.store'), [
             'url' => 'http://example.com',
@@ -76,11 +68,9 @@ class MonitorControllerTest extends AuthenticatedTestCase
     }
 
     /**
-     * @test
-     *
-     * @covers ::update
+     * @see MonitorController::update
      */
-    public function it_updates_monitors()
+    public function test_it_updates_monitors()
     {
         $monitor = Monitor::factory()->createQuietly();
 
