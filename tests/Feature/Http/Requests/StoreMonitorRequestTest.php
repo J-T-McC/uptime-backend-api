@@ -2,17 +2,18 @@
 
 namespace Tests\Feature\Http\Requests;
 
+use App\Http\Requests\StoreMonitorRequest;
 use App\Models\Monitor;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Tests\AuthenticatedTestCase;
 
+#[CoversClass(StoreMonitorRequest::class)]
 class StoreMonitorRequestTest extends AuthenticatedTestCase
 {
     /**
-     * @test
-     *
-     * @covers \App\Http\Requests\StoreMonitorRequest::rules
+     * @see StoreMonitorRequest::rules
      */
-    public function it_validates_store_channels_request()
+    public function test_it_validates_store_channels_request()
     {
         $route = route('monitors.store');
 

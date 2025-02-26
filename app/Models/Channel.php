@@ -19,7 +19,7 @@ class Channel extends Model
     use HasHashedId;
 
     /**
-     * @var array<int, string>
+     * @var list<string>
      */
     protected $fillable = [
         'endpoint',

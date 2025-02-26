@@ -2,17 +2,18 @@
 
 namespace Tests\Feature\Http\Requests;
 
+use App\Http\Requests\UpdateChannelRequest;
 use App\Models\Channel;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Tests\AuthenticatedTestCase;
 
+#[CoversClass(UpdateChannelRequest::class)]
 class UpdateChannelRequestTest extends AuthenticatedTestCase
 {
     /**
-     * @test
-     *
-     * @covers \App\Http\Requests\UpdateChannelRequest::rules
+     * @see UpdateChannelRequest::rules
      */
-    public function it_validates_update_channels_request()
+    public function test_it_validates_update_channels_request()
     {
         $channels = Channel::factory()->count(2)->createQuietly(['user_id' => $this->testUser->id]);
         $route = route('channels.update', $channels->first());

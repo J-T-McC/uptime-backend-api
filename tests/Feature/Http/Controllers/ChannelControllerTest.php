@@ -2,23 +2,21 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Http\Controllers\ChannelController;
 use App\Models\Channel;
 use Illuminate\Foundation\Testing\WithFaker;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Tests\AuthenticatedTestCase;
 
-/**
- * @coversDefaultClass  \App\Http\Controllers\ChannelController
- */
+#[CoversClass(ChannelController::class)]
 class ChannelControllerTest extends AuthenticatedTestCase
 {
     use WithFaker;
 
     /**
-     * @test
-     *
-     * @covers ::destroy
+     * @see ChannelController::destroy
      */
-    public function it_deletes_channels()
+    public function test_it_deletes_channels(): void
     {
         $channel = Channel::factory()->createQuietly(['user_id' => $this->testUser->id]);
 
@@ -29,11 +27,9 @@ class ChannelControllerTest extends AuthenticatedTestCase
     }
 
     /**
-     * @test
-     *
-     * @covers ::index
+     * @see ChannelController::index
      */
-    public function it_lists_channels()
+    public function test_it_lists_channels(): void
     {
         Channel::factory()->count(10)->createQuietly(['user_id' => $this->testUser->id]);
 
@@ -44,11 +40,9 @@ class ChannelControllerTest extends AuthenticatedTestCase
     }
 
     /**
-     * @test
-     *
-     * @covers ::show
+     * @see ChannelController::show
      */
-    public function it_shows_channels()
+    public function test_it_shows_channels(): void
     {
         $channel = Channel::factory()->createQuietly();
 
@@ -59,11 +53,9 @@ class ChannelControllerTest extends AuthenticatedTestCase
     }
 
     /**
-     * @test
-     *
-     * @covers ::store
+     * @see ChannelController::store
      */
-    public function it_stores_channels()
+    public function test_it_stores_channels(): void
     {
         $response = $this->postJson(route('channels.store'), [
             'type' => 'mail',
@@ -74,11 +66,9 @@ class ChannelControllerTest extends AuthenticatedTestCase
     }
 
     /**
-     * @test
-     *
-     * @covers ::update
+     * @see ChannelController::update
      */
-    public function it_updates_channels()
+    public function test_it_updates_channels(): void
     {
         $channel = Channel::factory()->createQuietly();
 

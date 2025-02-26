@@ -10,14 +10,16 @@ use App\Models\MonitorUptimeEventCount;
 use App\Models\Scopes\OwnerScope;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
-/**
- * @covers \App\Http\Middleware\ApplyOwnerScope
- */
+#[CoversClass(ApplyOwnerScope::class)]
 class ApplyOwnerScopeTest extends TestCase
 {
+    /**
+     * @see ApplyOwnerScope::handle
+     */
     public function test_it_is_assigned_to_expected_routes()
     {
         // Collect
@@ -37,6 +39,9 @@ class ApplyOwnerScopeTest extends TestCase
         }
     }
 
+    /**
+     * @see ApplyOwnerScope::handle
+     */
     public function test_it_applies_owner_scope_to_expected_models(): void
     {
         // Collect

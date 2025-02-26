@@ -5,17 +5,17 @@ namespace Tests\Unit\Services;
 use App\Models\MonitorUptimeEventCount;
 use App\Services\UptimeEventData;
 use Carbon\Carbon;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Tests\TestCase;
 
-/**
- * @see UptimeEventData
- */
+#[CoversClass(UptimeEventData::class)]
 class UptimeEventDataTest extends TestCase
 {
     /**
-     * @test
+     * @see UptimeEventData::trended
      */
-    public function generates_correct_aggregate_trended()
+    public function test_it_generates_correct_aggregate_trended(): void
     {
         $this->seedTrendData();
         $uptimeEventData = new UptimeEventData;
@@ -36,9 +36,9 @@ class UptimeEventDataTest extends TestCase
     }
 
     /**
-     * @test
+     * @see UptimeEventData::past90Days
      */
-    public function generates_correct_aggregate_90days()
+    public function test_it_generates_correct_aggregate_90days(): void
     {
         $this->seed90DayData();
         $uptimeEventData = new UptimeEventData;
@@ -52,7 +52,8 @@ class UptimeEventDataTest extends TestCase
         $results->each(fn ($series) => $this->assertTrue($series->percent === $expectedResults[$series->category]));
     }
 
-    public function seed90DayData()
+    #[CoversNothing]
+    public function seed90DayData(): void
     {
         for ($i = 0; $i < 100; $i++) {
             $date = Carbon::now('UTC')->subDays($i)->format('Y-m-d');
@@ -65,7 +66,8 @@ class UptimeEventDataTest extends TestCase
         }
     }
 
-    public function seedTrendData()
+    #[CoversNothing]
+    public function seedTrendData(): void
     {
         $seedData = [
             // 73.6285

@@ -2,17 +2,18 @@
 
 namespace Tests\Feature\Http\Requests;
 
+use App\Http\Requests\UpdateMonitorRequest;
 use App\Models\Monitor;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Tests\AuthenticatedTestCase;
 
+#[CoversClass(UpdateMonitorRequest::class)]
 class UpdateMonitorRequestTest extends AuthenticatedTestCase
 {
     /**
-     * @test
-     *
-     * @covers \App\Http\Requests\StoreMonitorRequest::rules
+     * @see UpdateMonitorRequest::rules
      */
-    public function it_validates_store_channels_request()
+    public function test_it_validates_store_channels_request()
     {
         $monitors = Monitor::factory()->count(2)->createQuietly(['user_id' => $this->testUser->id]);
         $route = route('monitors.update', $monitors->first());

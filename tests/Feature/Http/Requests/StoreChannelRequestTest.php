@@ -2,17 +2,18 @@
 
 namespace Tests\Feature\Http\Requests;
 
+use App\Http\Requests\StoreChannelRequest;
 use App\Models\Channel;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Tests\AuthenticatedTestCase;
 
+#[CoversClass(StoreChannelRequest::class)]
 class StoreChannelRequestTest extends AuthenticatedTestCase
 {
     /**
-     * @test
-     *
-     * @covers \App\Http\Requests\StoreChannelRequest::rules
+     * @see StoreChannelRequest::rules
      */
-    public function it_validates_store_channels_request()
+    public function test_it_validates_store_channels_request()
     {
         $route = route('channels.store');
 
