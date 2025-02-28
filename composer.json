@@ -7,11 +7,11 @@
     "require": {
         "php": "^8.3",
         "dedoc/scramble": "^0.12.8",
-        "dotswan/filament-laravel-pulse": "dev-l12-compatibility",
+        "dotswan/filament-laravel-pulse": "^1.1.7",
         "filament/filament": "^3.2",
         "guzzlehttp/guzzle": "^7.0.1",
         "jtmcc/atomic-deployments": "^1.0.0",
-        "laravel-notification-channels/pagerduty": "dev-master",
+        "laravel-notification-channels/pagerduty": "^1.1.0",
         "laravel/fortify": "^1.7",
         "laravel/framework": "^12.0",
         "laravel/octane": "^2.8",
@@ -42,16 +42,6 @@
         "spatie/laravel-ignition": "^2.0",
         "swaggest/json-schema": "^0.12.43"
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/J-T-McC/pagerduty.git"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/laravel-shift/filament-laravel-pulse.git"
-        }
-    ],
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
