@@ -5,6 +5,7 @@ namespace Tests\Feature\Http\Controllers;
 use App\Http\Controllers\MonitorController;
 use App\Models\Channel;
 use App\Models\Monitor;
+use JTMcC\LaraSchemaValidation\SchemaValidator;
 use PHPUnit\Framework\Attributes\CoversClass;
 use Tests\AuthenticatedTestCase;
 
@@ -39,7 +40,7 @@ class MonitorControllerTest extends AuthenticatedTestCase
         $response = $this->getJson(route('monitors.index'));
 
         $response->assertOk();
-        $this->assertResponseCollectionJson($response, 'monitor.json');
+        SchemaValidator::validateResponseCollection($response, 'monitor.json');
     }
 
     /**
@@ -52,7 +53,7 @@ class MonitorControllerTest extends AuthenticatedTestCase
         $response = $this->getJson(route('monitors.show', $monitor));
 
         $response->assertOk();
-        $this->assertResponseJson($response, 'monitor.json');
+        SchemaValidator::validateResponse($response, 'monitor.json');
     }
 
     /**

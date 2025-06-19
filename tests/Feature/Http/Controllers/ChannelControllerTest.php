@@ -5,6 +5,7 @@ namespace Tests\Feature\Http\Controllers;
 use App\Http\Controllers\ChannelController;
 use App\Models\Channel;
 use Illuminate\Foundation\Testing\WithFaker;
+use JTMcC\LaraSchemaValidation\SchemaValidator;
 use PHPUnit\Framework\Attributes\CoversClass;
 use Tests\AuthenticatedTestCase;
 
@@ -36,7 +37,7 @@ class ChannelControllerTest extends AuthenticatedTestCase
         $response = $this->getJson(route('channels.index'));
 
         $response->assertOk();
-        $this->assertResponseCollectionJson($response, 'channel.json');
+        SchemaValidator::validateResponseCollection($response, 'channel.json');
     }
 
     /**
@@ -49,7 +50,7 @@ class ChannelControllerTest extends AuthenticatedTestCase
         $response = $this->getJson(route('channels.show', $channel));
 
         $response->assertOk();
-        $this->assertResponseJson($response, 'channel.json');
+        SchemaValidator::validateResponse($response, 'channel.json');
     }
 
     /**

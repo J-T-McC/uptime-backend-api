@@ -1,6 +1,6 @@
 <?php
 
-namespace Http\Controllers;
+namespace Tests\Feature\Http\Controllers;
 
 use App\Actions\CreateSignedVerifyChannelUrl;
 use App\Http\Controllers\VerifyChannelController;

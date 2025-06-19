@@ -4,6 +4,7 @@ namespace Tests\Feature\Http\Controllers;
 
 use App\Http\Controllers\LatestMonitorEventsController;
 use App\Models\Monitor;
+use JTMcC\LaraSchemaValidation\SchemaValidator;
 use PHPUnit\Framework\Attributes\CoversClass;
 use Tests\AuthenticatedTestCase;
 
@@ -20,7 +21,7 @@ class LatestMonitorEventsControllerTest extends AuthenticatedTestCase
         $response = $this->getJson(route('latest-monitor-events.index'));
 
         $response->assertOk();
-        $this->assertResponseCollectionJson($response, 'event.json');
+        SchemaValidator::validateResponseCollection($response, 'event.json');
     }
 
     /**
@@ -33,6 +34,6 @@ class LatestMonitorEventsControllerTest extends AuthenticatedTestCase
         $response = $this->getJson(route('latest-monitor-events.show', $monitor));
 
         $response->assertOk();
-        $this->assertResponseCollectionJson($response, 'event.json');
+        SchemaValidator::validateResponseCollection($response, 'event.json');
     }
 }

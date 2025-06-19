@@ -5,6 +5,9 @@ namespace App\Http\Queries;
 use App\Models\Monitor;
 use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * @extends QueryBuilder<Monitor>
+ */
 class IndexMonitorsQuery extends QueryBuilder
 {
     public function __construct()

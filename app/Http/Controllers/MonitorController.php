@@ -9,14 +9,13 @@ use App\Http\Resources\MonitorResource;
 use App\Models\Monitor;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 class MonitorController extends Controller
 {
     /**
      * List the resource.
      *
-     * @return AnonymousResourceCollection<LengthAwarePaginator<MonitorResource>>
+     * @return AnonymousResourceCollection<MonitorResource>
      */
     public function index(IndexMonitorsQuery $query): AnonymousResourceCollection
     {

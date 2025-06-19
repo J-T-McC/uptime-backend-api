@@ -8,14 +8,13 @@ use App\Http\Resources\ChannelResource;
 use App\Models\Channel;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 class ChannelController extends Controller
 {
     /**
      * List the resource.
      *
-     * @return AnonymousResourceCollection<LengthAwarePaginator<ChannelResource>>
+     * @return AnonymousResourceCollection<ChannelResource>
      */
     public function index(): AnonymousResourceCollection
     {
