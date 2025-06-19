@@ -4,6 +4,7 @@ namespace Tests\Feature\Http\Controllers;
 
 use App\Http\Controllers\EventCountsTrendedController;
 use App\Models\Monitor;
+use JTMcC\LaraSchemaValidation\SchemaValidator;
 use PHPUnit\Framework\Attributes\CoversClass;
 use Tests\AuthenticatedTestCase;
 
@@ -23,7 +24,7 @@ class EventCountsTrendedControllerTest extends AuthenticatedTestCase
         $response = $this->getJson(route('event-counts-trended.index'));
 
         $response->assertOk();
-        $this->assertResponseJson($response, 'trended-event-count.json');
+        SchemaValidator::validateResponse($response, 'trended-event-count.json');
     }
 
     /**
@@ -37,7 +38,7 @@ class EventCountsTrendedControllerTest extends AuthenticatedTestCase
 
         $response = $this->getJson(route('event-counts-trended.show', $monitor));
 
-        $this->assertResponseJson($response, 'trended-event-count.json');
+        SchemaValidator::validateResponse($response, 'trended-event-count.json');
         $response->assertOk();
     }
 }

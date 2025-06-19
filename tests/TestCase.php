@@ -9,14 +9,12 @@ use Illuminate\Testing\TestResponse;
 use JMac\Testing\Traits\AdditionalAssertions;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\ExpectationFailedException;
-use Swaggest\JsonSchema\Schema;
-use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 
 abstract class TestCase extends BaseTestCase
 {
     use AdditionalAssertions, FasterRefreshDatabase;
 
-    const SCHEMA_ROOT = __DIR__.'/Schemas/';
+    const SCHEMA_ROOT = __DIR__.'/schemas/';
 
     protected function setUp(): void
     {
@@ -60,45 +58,5 @@ abstract class TestCase extends BaseTestCase
                 EOT
             );
         }
-    }
-
-    /**
-     * Assert response matches json schema
-     */
-    protected function assertResponseJson(TestResponse $response, string $schema): void
-    {
-        if (! file_exists(self::SCHEMA_ROOT.$schema)) {
-            throw new FileNotFoundException($schema);
-        }
-
-        $schema = Schema::import(self::SCHEMA_ROOT.$schema);
-
-        $schema->in(self::getResponseData($response));
-    }
-
-    /**
-     * Assert response collection matches json schema
-     */
-    protected function assertResponseCollectionJson(TestResponse $response, string $schema): void
-    {
-        if (! file_exists(self::SCHEMA_ROOT.$schema)) {
-            throw new FileNotFoundException($schema);
-        }
-
-        $schema = Schema::import(self::SCHEMA_ROOT.$schema);
-
-        foreach (self::getResponseData($response) as $data) {
-            $schema->in($data);
-        }
-    }
-
-    protected static function getResponseData(TestResponse $response)
-    {
-        $data = json_decode($response->content());
-        if (is_object($data) && property_exists($data, 'data')) {
-            $data = $data->data;
-        }
-
-        return $data;
     }
 }

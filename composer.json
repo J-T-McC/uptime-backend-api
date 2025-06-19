@@ -33,14 +33,14 @@
         "brianium/paratest": "^7.1",
         "fakerphp/faker": "^1.9.1",
         "jasonmccreary/laravel-test-assertions": "^2.0",
+        "jtmcc/lara-schema-validation": "^0.0.1",
         "larastan/larastan": "^3.1",
         "laravel/pint": "^1.16",
         "laravel/sail": "^1.41",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.6",
         "phpunit/phpunit": "^11.5.3",
-        "spatie/laravel-ignition": "^2.0",
-        "swaggest/json-schema": "^0.12.43"
+        "spatie/laravel-ignition": "^2.0"
     },
     "config": {
         "optimize-autoloader": true,

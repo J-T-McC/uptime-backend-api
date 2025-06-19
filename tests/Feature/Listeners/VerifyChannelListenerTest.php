@@ -1,6 +1,6 @@
 <?php
 
-namespace Listeners;
+namespace Tests\Feature\Listeners;
 
 use App\Events\ChannelCreated;
 use App\Events\ChannelUpdated;

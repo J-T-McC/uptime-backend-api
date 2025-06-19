@@ -5,6 +5,7 @@ namespace Tests\Feature\Http\Controllers;
 use App\Http\Controllers\EventCountsGroupedController;
 use App\Models\Monitor;
 use App\Models\MonitorUptimeEventCount;
+use JTMcC\LaraSchemaValidation\SchemaValidator;
 use PHPUnit\Framework\Attributes\CoversClass;
 use Tests\AuthenticatedTestCase;
 
@@ -23,7 +24,7 @@ class EventCountsGroupedControllerTest extends AuthenticatedTestCase
         $response = $this->getJson(route('event-counts-grouped.index'));
 
         $response->assertOk();
-        $this->assertResponseJson($response, 'event-count.json');
+        SchemaValidator::validateResponse($response, 'event-count.json');
     }
 
     /**
@@ -43,6 +44,6 @@ class EventCountsGroupedControllerTest extends AuthenticatedTestCase
         $response = $this->getJson(route('event-counts-grouped.show', $monitor));
 
         $response->assertOk();
-        $this->assertResponseJson($response, 'event-count.json');
+        SchemaValidator::validateResponse($response, 'event-count.json');
     }
 }
